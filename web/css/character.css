@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "webfont";
+  font-display: swap;
+  src: url("https://at.alicdn.com/t/webfont_q518gqmdjqr.eot");
+  /* IE9*/
+  src: url("https://at.alicdn.com/t/webfont_q518gqmdjqr.eot?#iefix") format("embedded-opentype"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.woff2") format("woff2"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.woff") format("woff"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.ttf") format("truetype"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.svg#Alibaba-PuHuiTi-Regular") format("svg");
+  /* iOS 4.1- */ }
+
+* {
+  font-family: "webfont";
+  color: #6b6b6b; }
+
+ul li {
+  color: #64b5f6; }
+
+.app-logo {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  right: 30px;
+  top: 25px;
+  z-index: 10; }
+
+img {
+  width: 40vw;
+  position: absolute;
+  right: 10px;
+  bottom: 0px; }

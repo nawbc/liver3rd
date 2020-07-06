@@ -1,0 +1,141 @@
+name: liver3rd
+description: for honkai impact 3rd and genshin impact
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 0.0.1
+
+environment:
+  sdk: ">=2.3.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^2.1.3
+  flutter_svg: ^0.17.2
+  data_plugin: ^0.0.15
+  html: ^0.14.0+3
+  cached_network_image: ^2.0.0
+  provider: ^4.0.4
+  permission_handler: ^4.4.0
+  shared_preferences: ^0.5.2
+  flutter_local_notifications: ^1.2.2
+  device_info: ^0.4.2+1
+  flutter_datetime_picker: ^1.3.5
+  flutter_screenutil: ^1.0.2
+  url_launcher: ^5.4.2
+  workmanager: ^0.2.2
+  simple_animations: ^1.3.11
+  loading_animations: ^2.1.0
+  flutter_time_picker_spinner: ^1.0.6
+  webview_flutter: ^0.3.21
+  path_provider: ^1.6.5
+  flutter_point_tab_bar: ^0.1.0
+  bubble_tab_indicator: ^0.1.4
+  flutter_staggered_grid_view: ^0.3.0
+  audioplayers: ^0.14.2
+  share: ^0.6.3+6
+  image_gallery_saver: ^1.2.2
+  custom_switch_button: ^0.5.0
+  date_picker_timeline: ^1.2.0
+  # lcfarm_flutter_umeng: ^0.1.8
+  version: ^1.0.3
+  package_info: ^0.4.0+16
+  flutter_swiper: ^1.1.6
+  photo_view: ^0.9.2
+  flutter_speed_dial: ^1.2.5
+  flutter_html: ^0.11.1
+  multi_image_picker: ^4.6.6+rc.1
+  extended_text_field: ^0.5.0
+  video_player_header: ^0.10.2+4
+  uuid: ^2.0.4
+  flutter_cache_manager: ^1.2.2
+  socket_io_client: ^0.9.10
+  socket_io: ^0.9.3
+  # tencent_im_plugin: ^0.2.31
+  bubble_showcase: ^0.2.0+3
+  color_thief_flutter: ^1.0.2
+  preload_page_view: ^0.1.4
+  firebase_admob: ^0.9.3+2
+  firebase_analytics: ^5.0.15
+  f_logs: ^1.2.2
+  admob_flutter: ^1.0.0-beta.5
+  
+  
+  
+  # speech_bubble: ^0.0.6
+  
+  
+  # extended_text: ^0.7.1
+  # flutter_inappwebview:
+  #   git:
+  #     url: git://github.com/pichillilorenzo/flutter_inappwebview.git
+
+
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+linter:
+  rules:
+    - non_constant_identifier_names
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/present.svg
+    - assets/images/setting.svg
+    - assets/images/user.svg
+    - assets/images/question.svg
+    - assets/images/copy.svg
+    - assets/images/game.svg
+    - assets/images/shop.svg
+    - assets/images/back.svg
+    - assets/images/male.svg
+    - assets/images/female.svg
+    - assets/images/bh_logo.png
+    - assets/images/ys_logo.png
+    - assets/images/female.svg
+    - assets/images/comic.svg
+    - assets/images/load_error.svg
+    - assets/images/community.svg
+    - assets/images/home.svg
+    - assets/images/empty.png
+    - assets/images/wechatpay.jpg
+    - assets/images/alipay.jpg
+    - assets/images/play.svg
+    - assets/images/pause.svg
+    - assets/images/next.svg
+    - assets/images/music_mode.svg
+    - assets/images/download.svg
+    - assets/images/send.svg
+    - assets/images/flower.svg
+    - assets/images/ship.svg
+    - assets/images/pointer.svg
+    - assets/images/workspace.svg
+    - assets/images/badge.svg
+    - assets/images/star.svg
+    - assets/images/like.svg
+    - assets/images/comment.svg
+    - assets/images/eye.svg
+    - assets/images/picture.svg
+    - assets/images/mirror.svg
+    - assets/images/anchor.svg
+    - assets/images/bh_level.png
+    - assets/images/ys_level.png
+    - assets/images/donut.svg
+    - assets/images/film.svg
+    - assets/images/magnet.svg
+    - assets/images/crown.svg
+    - assets/images/ic_launcher_round.png

@@ -1,0 +1,283 @@
+@import "./setting.scss";
+
+body,
+h1,
+h4 {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  user-select: none;
+  font-family: "webfont";
+  color: $font-color;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+button {
+  border: none;
+  outline: none;
+}
+
+@mixin around {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#paper-back {
+  width: 100%;
+  height: 100vh;
+  background-color: $primary-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 33px;
+  nav {
+    padding: 120px 34px;
+    a {
+      display: block;
+      margin-bottom: 25px;
+      text-decoration: none;
+      color: rgba(#fff, 0.7);
+    }
+  }
+
+  .close {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 30px;
+      height: 5px;
+      top: 50%;
+      background-color: $basic-background-color;
+      border-radius: 2px;
+    }
+    &:before {
+      transform: translateY(-50%) rotate(45deg);
+    }
+    &:after {
+      transform: translateY(-50%) rotate(-45deg);
+    }
+  }
+}
+
+#paper-window {
+  height: 100%;
+  width: 100vw;
+  position: relative;
+  z-index: 2;
+  overflow-x: hidden;
+
+  &.tilt {
+    overflow: hidden;
+    pointer-events: none;
+    #paper-front {
+      transform: rotate(10deg) translateZ(0);
+    }
+  }
+
+  #paper-front {
+    width: 100vw;
+    height: 100%;
+    pointer-events: auto;
+    position: relative;
+    z-index: 3;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 20px rgba(#000, 0.7);
+    transform-origin: center 70%;
+    transition: all 0.3s ease;
+
+    #container {
+      width: 100%;
+      height: 100%;
+      .app-intro {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 100px 280px;
+
+        .app-logo {
+          width: 100px;
+          height: 100px;
+        }
+
+        .title-wrapper {
+          display: inline-block;
+          div {
+            display: inline-block;
+            margin-left: 10px;
+            position: relative;
+            bottom: 10px;
+          }
+        }
+
+        .button-wrapper {
+          padding-right: 100px;
+          display: flex;
+          .download-button {
+            transition: transform 400ms;
+            position: relative;
+            padding-left: 60px;
+            .pic-1 {
+              position: absolute;
+              width: 130px;
+              top: -76px;
+              right: -58px;
+            }
+
+            div {
+              width: 130px;
+              height: 50px;
+              border-radius: 50px;
+              @include around();
+            }
+
+            div,
+            div * {
+              color: #fff;
+            }
+            &:hover {
+            }
+            &:active {
+              transform: scale(0.8);
+            }
+          }
+          .download-button:nth-child(1) div {
+            background-color: $ham-color;
+          }
+          .download-button:nth-child(2) div {
+            background-color: $cool-color;
+            .pic-2 {
+              width: 30px;
+            }
+          }
+        }
+      }
+
+      .swiper-container {
+        .swiper-slide {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          img {
+            width: 398px;
+          }
+        }
+      }
+
+      .footer {
+        padding: 200px 100px 50px 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        a {
+          img {
+            width: 23px;
+            height: 23px;
+          }
+          span {
+            vertical-align: super;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 1048px) {
+      #container {
+        .app-intro {
+          display: block;
+          padding: 40px;
+          padding-top: 80px;
+          position: relative;
+          .app-logo {
+            width: 40px;
+            height: 40px;
+            position: fixed;
+            right: 30px;
+            top: 25px;
+            z-index: 10;
+          }
+          h1 {
+            margin: 14px 0px;
+          }
+          .button-wrapper {
+            display: flex;
+            flex-direction: column;
+            padding-right: 0px;
+            align-items: center;
+            justify-content: center;
+
+            .download-button {
+              margin-top: 80px;
+              padding-left: 0;
+              // .pic {
+              //   right: -30px;
+              // }
+              div {
+                width: 70vw;
+              }
+            }
+            .download-button:nth-child(2) {
+              margin-top: 40px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .hamburger {
+    position: fixed;
+    z-index: 4;
+    top: 30px;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    user-select: none;
+    span {
+      position: relative;
+
+      &,
+      &:before,
+      &:after {
+        display: block;
+        width: 30px;
+        height: 5px;
+        background-color: $ham-color;
+        border-radius: 2px;
+      }
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+      }
+
+      &:before {
+        bottom: -10px;
+      }
+      &:after {
+        bottom: -20px;
+      }
+    }
+  }
+}

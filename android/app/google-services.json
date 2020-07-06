@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "610062826349",
+    "firebase_url": "https://liver3rd.firebaseio.com",
+    "project_id": "liver3rd",
+    "storage_bucket": "liver3rd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610062826349:android:7342729192620b23eef864",
+        "android_client_info": {
+          "package_name": "com.sewerganger.liver3rd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610062826349-gkr58499dm13aq9r527h85vn3lha1o7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVtT9BsZZaUJ8y7zC8JQQ-lruMPCwT2tg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610062826349-gkr58499dm13aq9r527h85vn3lha1o7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-3792814125136208~3396365783"
+    }
+  ],
+  "configuration_version": "1"
+}

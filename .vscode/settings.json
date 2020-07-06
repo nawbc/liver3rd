@@ -1,0 +1,32 @@
+{
+  "cSpell.ignoreWords": [
+    "agent",
+    "alipay",
+    "audioplayers",
+    "container",
+    "d",
+    "datetime",
+    "easyrefresh",
+    "flutter",
+    "genshin",
+    "honkai",
+    "im",
+    "inappwebview",
+    "lcfarm",
+    "mobclick",
+    "oktoast",
+    "pichillilorenzo",
+    "picker",
+    "plugin",
+    "screenutil",
+    "sewerganger",
+    "swiper",
+    "tencent",
+    "tencent im plugin",
+    "umeng",
+    "uuid",
+    "wechatpay",
+    "workmanager"
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
+}

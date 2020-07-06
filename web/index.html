@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./images/ic_launcher_round.png">
+  <link rel="stylesheet" href="./css/style.css" type="text/css">
+  <script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js"></script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/css/swiper.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/js/swiper.js"></script>
+  <title>肝肝肝, 源自热爱</title>
+</head>
+
+<body>
+  <div id="paper-back">
+    <nav>
+      <div class="close"></div>
+      <a href="./">首页&</a>
+      <a href="https://github.com/sewerganger/liver3rd/">开源</a>
+      <a href="character.html">特色</a>
+      <a href="#">感谢</a>
+    </nav>
+  </div>
+  <div id="paper-window">
+    <div id="paper-front">
+      <div class="hamburger"><span></span></div>
+
+      <div id="container">
+        <div class="app-intro">
+          <div class='title-wrapper'>
+            <img class="app-logo" src="./images/ic_launcher_round.png" />
+            <div>
+              <h1>肝肝肝, 源自热爱</h1>
+              <h4>第三方米游社， 更多的功能， 更美的UI， 只为米忽悠增添色彩</h4>
+            </div>
+          </div>
+          <div class="button-wrapper">
+            <div class="download-button">
+              <a href="https://qcloudc5d77d.coding.net/s/f4cc0f1a-37a7-4bf4-bcfb-fbd0a0c39c27">
+                <img class="pic-1" src="./images/pic.png">
+                <div>下载</div>
+              </a>
+            </div>
+            <div class="download-button">
+              <a href="coolmarket://u/1111781">
+                <div><img class="pic-2" src="./images/coolapklogo.png">
+                  &nbsp;<span>酷安</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="./images/1.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src=" ./images/2.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/3.jpg" />
+            </div>
+
+            <div class="swiper-slide">
+              <img src="./images/4.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/5.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/6.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/7.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/8.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/9.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/10.jpg" />`
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <section>
+            <a href="https://github.com/sewerganger/liver3rd/">
+              <img src="./images/github.svg">
+              <span>软件开源 GPL-3.0</span>
+            </a>
+          </section>
+          <section>
+            <a href="https://github.com/sewerganger/liver3rd/">
+              <span>作者: sewerganger</span>
+            </a>
+          </section>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <script>
+    var paperMenu = {
+
+      $paperFront: $('#paper-front'),
+      $hamburger: $('.hamburger'),
+      offset: 1800,
+      pageHeight: $('#paper-front').outerHeight(),
+
+      open: function () {
+        $('#paper-window').addClass('tilt');
+        this.$hamburger.off('click');
+        $('#container, .hamburger').on('click', this.close.bind(this));
+        this.hamburgerFix(true);
+      },
+      close: function () {
+        $('#paper-window').removeClass('tilt');
+        $('#container, .hamburger').off('click');
+        this.$hamburger.on('click', this.open.bind(this));
+        this.hamburgerFix(false);
+        console.log('closing...');
+      },
+      updateTransformOrigin: function () {
+
+        scrollTop = $(window).scrollTop();
+        equation = (scrollTop + this.offset) / this.pageHeight * 100;
+        this.$paperFront.css('transform-origin', 'center ' + equation + '%');
+      },
+      //hamburger icon fix to keep its position
+      hamburgerFix: function (opening) {
+        if (opening) {
+          $('.hamburger').css({
+            position: 'absolute',
+            top: $(window).scrollTop() + 30 + 'px'
+          });
+        } else {
+          setTimeout(function () {
+            $('.hamburger').css({
+              position: 'fixed',
+              top: '30px'
+            });
+          }, 300);
+        }
+      },
+      bindEvents: function () {
+        this.$hamburger.on('click', this.open.bind(this));
+        $('.close').on('click', this.close.bind(this));
+        $(window).on('scroll', this.updateTransformOrigin.bind(this));
+      },
+      init: function () {
+        this.bindEvents();
+        this.updateTransformOrigin();
+      },
+    };
+    paperMenu.init();
+
+    function selectDevice() {
+      var width = window.innerWidth;
+      if (width <= 620) {
+        return 1;
+      } else if (width > 720 && width <= 1440) {
+        return 2;
+      } else {
+        return 4;
+      }
+    }
+
+    new Swiper('.swiper-container', {
+      autoplay: true,
+      delay: 5000,
+      initialSlide: 3,
+      loop: true,
+      effect: 'coverflow',
+      slidesPerView: selectDevice(),
+      centeredSlides: true,
+      coverflowEffect: {
+        slideShadows: false,
+      }
+    })
+
+
+  </script>
+</body>
+
+</html>
