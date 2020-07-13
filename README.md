@@ -12,7 +12,7 @@
 
 功能没有全部实现
 <br>
-- [ ]  发帖 界面完成
+- [ ]  发帖(界面完成)
 - [ ]  部分官方的活动
 - [ ]  部分Api
 - [ ]  部分设置
@@ -31,4 +31,9 @@
 - [extended_nested_scroll_view](https://pub.dev/packages/extended_nested_scroll_view)
 - [navigate](https://pub.dev/packages/navigate)
 
-PS: 本人米卫兵
+#### 更好的开发flutter
+
+vsc 插件：[android-adb-wlan](https://github.com/sewerganger/android-adb-wlan)
+个人开发者支付宝收款(无需营业执照) [alipay-for-developer](https://github.com/sewerganger/alipay-for-developer)
+
+PS: 米卫兵
