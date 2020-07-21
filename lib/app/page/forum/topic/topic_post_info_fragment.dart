@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
-import 'package:liver3rd/app/page/forum/widget/topic_image_card.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
+import 'package:liver3rd/app/page/forum/widget/post_block.dart';
 import 'package:liver3rd/app/store/user.dart';
-import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
+import 'package:liver3rd/app/widget/user_profile_label.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 
-class TopicPictureFragment extends StatefulWidget {
+class TopicPostInfoFragment extends StatefulWidget {
   final double usedHeight;
   final bool isGood;
   final bool isHot;
   final int sortType;
   final int forumId;
 
-  const TopicPictureFragment(
+  const TopicPostInfoFragment(
       {Key key,
       this.usedHeight,
       this.isGood = false,
@@ -27,13 +27,13 @@ class TopicPictureFragment extends StatefulWidget {
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return TopicFragmentState();
+    return _TopicPostInfoFragmentState();
   }
 }
 
-class TopicFragmentState extends State<TopicPictureFragment>
+class _TopicPostInfoFragmentState extends State<TopicPostInfoFragment>
     with AutomaticKeepAliveClientMixin {
-  PostApi _postApi = PostApi();
+  ForumApi _forumApi = ForumApi();
   Map _tmpData = {};
   List _postList = [];
   int _tmpSortType = 1;
@@ -45,6 +45,7 @@ class TopicFragmentState extends State<TopicPictureFragment>
   didChangeDependencies() async {
     super.didChangeDependencies();
     _user = Provider.of<User>(context);
+
     if (_postList.isEmpty) {
       await _refresh();
     }
@@ -52,7 +53,7 @@ class TopicFragmentState extends State<TopicPictureFragment>
 
   Future<void> _refresh() async {
     _postList = [];
-    Map tmp = await _postApi.fetchForumPostList(
+    Map tmp = await _forumApi.fetchForumPostList(
         forumId: widget.forumId,
         isGood: widget.isGood,
         isHot: widget.isHot,
@@ -71,14 +72,13 @@ class TopicFragmentState extends State<TopicPictureFragment>
 
   Future<void> _onLoadPost(BuildContext context) async {
     if (_postLastLocker) {
-      Scaffold.of(context).showSnackBar(CommonWidget.snack('没有新的小h图片'));
+      Scaffold.of(context).showSnackBar(CommonWidget.snack('没有新的帖子'));
       return;
     }
 
     if (_loadPostLocker) {
       _loadPostLocker = false;
-
-      _postApi
+      _forumApi
           .fetchForumPostList(
               forumId: widget.forumId,
               isGood: widget.isGood,
@@ -145,29 +145,56 @@ class TopicFragmentState extends State<TopicPictureFragment>
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     Map post = _postList[index];
-                    Map safeImg = (post['image_list'] is List &&
-                            post['image_list'].isNotEmpty)
-                        ? (post['image_list'][0] ??
-                            {'width': 1, 'height': 1, 'url': ''})
-                        : {'width': 1, 'height': 1, 'url': ''};
-                    return TopicImageCard(
-                      onTap: () {
-                        Navigate.navigate(context, 'post', arg: {
-                          'postId': post['post']['post_id'],
-                        });
+                    bool isUpvoted = post['self_operation']['attitude'] == 1;
+                    return PostBlock(
+                      imgList: post['image_list'],
+                      onTapUpvote: (isCancel) async {
+                        if (_user.isLogin) {
+                          await _forumApi.upvotePost(
+                            postId: post['post']['post_id'],
+                            isCancel: isCancel,
+                          );
+                        } else {
+                          Navigate.navigate(context, 'login');
+                        }
                       },
-                      onTapAvatar: (heroTag) {
-                        Navigate.navigate(context, 'userprofile', arg: {
-                          'uid': post['user']['uid'],
-                          'heroTag': heroTag
-                        });
+                      postContent: post['post']['content'],
+                      title: post['post']['subject'],
+                      stat: post['stat'],
+                      topics: post['topics'],
+                      isUpvoted: isUpvoted,
+                      onImageTap: (i) {
+                        Navigate.navigate(
+                          context,
+                          'photoviewpage',
+                          arg: {
+                            'images': post['image_list'],
+                            'index': i,
+                          },
+                        );
                       },
-                      nickName: post['user']['nickname'],
-                      avatarUrl: post['user']['avatar_url'],
-                      introduce: post['post']['content'],
-                      coverUrl: TinyUtils.thumbnailUrl(safeImg['url'] ?? ''),
-                      imgRate: safeImg['height'] / safeImg['width'],
-                      likeNum: post['stat']['like_num'],
+                      onContentTap: () {
+                        Navigate.navigate(context, 'post',
+                            arg: {'postId': post['post']['post_id']});
+                      },
+                      headBlock: UserProfileLabel(
+                        avatarUrl: post['user']['avatar_url'],
+                        certificationType: post['user']['certification']
+                            ['type'],
+                        createAt: post['post']['created_at'],
+                        level: post['user']['level_exp']['level'],
+                        nickName: post['user']['nickname'],
+                        onAvatarTap: (String heroTag) {
+                          Navigate.navigate(
+                            context,
+                            'userprofile',
+                            arg: {
+                              'heroTag': heroTag,
+                              'uid': post['user']['uid'],
+                            },
+                          );
+                        },
+                      ),
                     );
                   },
                   childCount: _postList.length,

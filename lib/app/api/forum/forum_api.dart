@@ -17,7 +17,7 @@ class ForumApi {
     Response res = await _reqUtils.get(
       url,
       options: Options(headers: headers),
-      queryParameters: query == null ? {} : query,
+      queryParameters: query ?? {},
     );
 
     return res.data;
@@ -88,6 +88,14 @@ class ForumApi {
     return fetcher(allGamesForumUrl);
   }
 
+  Future<Map> fetchGameList() async {
+    return fetcher(gameListUrl);
+  }
+
+  Future<Map> fetchTopicFullInfo(int id) async {
+    return fetcher(getTopicFullInfoUrl, query: {'id': id});
+  }
+
   Future<Map> fetchFollowerPost({String lastId = '', int pageSize = 20}) async {
     return fetcher(followerPostUrl, query: {
       'last_id': lastId,
@@ -155,6 +163,147 @@ class ForumApi {
       'keyword': keyword,
       'last_id': lastId,
       'size': pageSize,
+    });
+  }
+
+  Future<Map> fetchAppHome(int gid, int pageSize) async {
+    return fetcher(appHomeUrl(gid: gid, pageSize: pageSize));
+  }
+
+  Future<Map> fetchRecPosts(Map config) async {
+    return fetcher(homePageRecPostsUrl, query: config);
+  }
+
+  /// 板块api 论坛所有功能 返回置顶内容 [forumId]  1 甲板 4 同人
+  Future<Map> fetchForumMain({int forumId}) async {
+    return fetcher(forumMainUrl(forumId: forumId));
+  }
+
+// https://api-takumi.mihoyo.com/post/api/getForumPostList?forum_id=4&is_good=false&is_hot=false&last_id=&page_size=20&sort_type=1
+  /// 返回非置顶内容 [forum_id] 1 甲板 4 同人图
+  /// [is_good] 精华
+  /// [is_hot] 热门
+  /// [sort_type] 1 发帖 2 回复
+  Future<Map> fetchForumPostList(
+      {int forumId,
+      int pageSize = 20,
+      bool isGood = false,
+      bool isHot = false,
+      int sortType = 1,
+      String lastId = ""}) async {
+    return fetcher(forumPostListUrl, query: {
+      'forum_id': forumId,
+      'is_good': isGood,
+      'is_hot': isHot,
+      'last_id': lastId,
+      'page_size': pageSize,
+      'sort_type': sortType,
+    });
+  }
+
+  // 返回评论
+  Future<Map> fetchPostComment(
+      {String postId,
+      int orderType = 3,
+      String lastId = "0",
+      int size = 20}) async {
+    return fetcher(commentsUrl, query: {
+      'post_id': postId,
+      'order_type': orderType,
+      'size': size,
+      'only_master': false,
+      'last_id': lastId,
+      'is_hot': true,
+    });
+  }
+
+  // 发布回复 [replyId] 回复者的id
+  Future<Map> releaseReply(
+      {String postId,
+      String replyId,
+      String content,
+      String structuredCcontent}) {
+    return postFetcher(releaseReplyUrl, query: {
+      'content': content,
+      'structured_content': structuredCcontent,
+      'post_id': postId,
+      'reply_id': replyId
+    });
+  }
+
+  Future<Map> deleteReply({
+    String postId,
+    String replyId,
+  }) {
+    return postFetcher(releaseReplyUrl,
+        query: {'post_id': postId, 'reply_id': replyId});
+  }
+
+  Future<Map> fetchPostSubComments(
+      {String postId, int floorId, String lastId = "0", int size = 20}) async {
+    return fetcher(subCommentsUrl, query: {
+      'post_id': postId,
+      'floor_id': floorId,
+      'size': size,
+      'last_id': lastId,
+    });
+  }
+
+  Future<Map> fetchRootCommentInfo({String postId, String replyId}) async {
+    return fetcher(rootCommentInfoUrl, query: {
+      'post_id': postId,
+      'reply_id': replyId,
+    });
+  }
+
+  Future<Map> upvotePost({String postId, bool isCancel = false}) async {
+    return postFetcher(
+      upvotePostUrl,
+      query: {
+        'post_id': postId,
+        'is_cancel': isCancel,
+      },
+    );
+  }
+
+  Future<Map> fetchFullPost(String postId) async {
+    return fetcher(getPostFullUrl(postId));
+  }
+
+  Future<Map> sharePost(String postId) async {
+    return fetcher(sharePostUrl(postId));
+  }
+
+  Future<Map> searchPost(
+      {int gids = 1, String keyword = '', bool preview = true}) async {
+    return fetcher(searchUrl, query: {
+      'gids': gids,
+      'keyword': keyword,
+      'preview': preview,
+    });
+  }
+
+  // ?last_id=&list_type=UNKNOWN&page_size=20&topic_id=57
+  Future<Map> fetchTopicPostList(
+      {int topicId,
+      String lastId = '',
+      int pageSize = 20,
+      String listType = 'UNKNOWN'}) async {
+    return fetcher(getTopicPostListUrl, query: {
+      'last_id': lastId,
+      'list_type': listType,
+      'page_size': pageSize,
+      'topic_id': topicId,
+    });
+  }
+
+  Future<Map> fetchNewsList(
+      {int gids = 1, int lastId = 0, int pageSize = 20, int type = 2}) async {
+    return fetcher(getNewsListUrl, query: {
+      'gids': gids,
+      'page_size': pageSize,
+      'last_id': lastId,
+      'type': type,
     });
   }
 }

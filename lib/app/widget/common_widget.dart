@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:liver3rd/app/widget/empty_widget.dart';
 import 'package:loading_animations/loading_animations.dart';
@@ -50,9 +48,9 @@ class CommonWidget {
   }
 
   static button({
-    @required double width,
+    double width,
     String content,
-    @required Function onPressed,
+    VoidCallback onPressed,
     Widget child,
     double height,
     Color color = const Color(0xff90caf9),

@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:uuid/uuid.dart';
 
-class FollowUserCard extends StatelessWidget {
+class FollowUserCard extends StatefulWidget {
   final Color randomColor;
   final String name;
   final int type;
@@ -14,8 +15,10 @@ class FollowUserCard extends StatelessWidget {
   final String avatarUrl;
   final String label;
   final Function onFollow;
+  final bool isFollow;
+  final String uid;
 
-  const FollowUserCard({
+  FollowUserCard({
     Key key,
     this.randomColor = const Color(0xff90caf9),
     this.name = '',
@@ -25,10 +28,41 @@ class FollowUserCard extends StatelessWidget {
     this.onTap,
     this.label = '',
     this.onFollow,
+    this.isFollow = false,
+    this.uid,
   }) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() {
+    return _FollowUserCard();
+  }
+}
+
+class _FollowUserCard extends State<FollowUserCard>
+    with AutomaticKeepAliveClientMixin {
+  bool _isFollowing;
+  UserApi _userApi = UserApi();
+
+  Function get onTap => widget.onTap;
+  String get avatarUrl => widget.avatarUrl;
+  String get name => widget.name;
+  Color get randomColor => widget.randomColor;
+  String get label => widget.label;
+  int get type => widget.type;
+  String get intro => widget.intro;
+  bool get isFollow => widget.isFollow;
+  Function get onFollow => widget.onFollow;
+  String get uid => widget.uid;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFollowing = isFollow;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     double screenWidth = MediaQuery.of(context).size.width;
     String heroTag = Uuid().v1();
     return GestureDetector(
@@ -131,11 +165,30 @@ class FollowUserCard extends StatelessWidget {
                         ]),
                   ),
                   CommonWidget.button(
-                    color: randomColor,
+                    color: _isFollowing ? null : randomColor,
                     textStyle: TextStyle(fontSize: 16),
-                    content: '关注',
+                    content: _isFollowing ? '已关注' : '关注',
                     width: 60,
-                    onPressed: onFollow,
+                    onPressed: () async {
+                      if (_isFollowing) {
+                        await _userApi.unFollowUser(uid);
+
+                        if (mounted) {
+                          setState(() {
+                            _isFollowing = false;
+                          });
+                        }
+                      } else {
+                        await _userApi.followUser(uid);
+
+                        if (mounted) {
+                          setState(() {
+                            _isFollowing = true;
+                          });
+                        }
+                      }
+                      return [];
+                    },
                   )
                 ],
               )
@@ -145,4 +198,7 @@ class FollowUserCard extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

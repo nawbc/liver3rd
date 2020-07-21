@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:flutter_point_tab_bar/pointTabIndicator.dart';
+import 'package:liver3rd/app/utils/const_settings.dart';
+import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
@@ -10,19 +12,20 @@ import 'package:liver3rd/custom/extended_nested_scroll_view/extended_nested_scro
 import 'package:liver3rd/custom/extended_nested_scroll_view/src/old_extended_nested_scroll_view.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 
-class TopicPageFrame extends StatefulWidget {
+class TopicType0 extends StatefulWidget {
   final List<Widget> tabViews;
   final double expandedHeight;
   final List<Tab> tabs;
   final int forumId;
-  final String headerImage;
+  final dynamic headerImage;
   final String introduce;
   final Map topicData;
   final String name;
   final Function(int) onSortButtonPressed;
   final int sortType;
+  final int type;
 
-  const TopicPageFrame({
+  const TopicType0({
     Key key,
     this.tabViews,
     this.expandedHeight,
@@ -34,15 +37,16 @@ class TopicPageFrame extends StatefulWidget {
     this.name,
     this.onSortButtonPressed,
     this.sortType = 1,
+    this.type,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _TopicPageFrame();
+    return _TopicType0();
   }
 }
 
-class _TopicPageFrame extends State<TopicPageFrame> {
+class _TopicType0 extends State<TopicType0> {
   TabController _tabController;
   double _topItemHeight = 50;
 
@@ -56,6 +60,7 @@ class _TopicPageFrame extends State<TopicPageFrame> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: NestedScrollView(
@@ -80,10 +85,13 @@ class _TopicPageFrame extends State<TopicPageFrame> {
                     children: <Widget>[
                       ConstrainedBox(
                         constraints: const BoxConstraints.expand(),
-                        child: CachedNetworkImage(
-                          imageUrl: widget.headerImage,
-                          fit: BoxFit.cover,
-                        ),
+                        child: widget.headerImage != ''
+                            ? CachedNetworkImage(
+                                imageUrl: TinyUtils.thumbnailUrl(
+                                    widget.headerImage ?? ''),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(coverbgPath, fit: BoxFit.cover),
                       ),
                       Center(
                         child: BackdropFilter(
@@ -150,7 +158,10 @@ class _TopicPageFrame extends State<TopicPageFrame> {
                                 (val) => Padding(
                                   padding: EdgeInsets.only(left: 20),
                                   child: GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigate.navigate(context, 'topicinfo',
+                                          arg: {'forumId': val['id']});
+                                    },
                                     child: Chip(
                                       label: Text(
                                         '${val['name']}',
@@ -256,22 +267,23 @@ class _TopicPageFrame extends State<TopicPageFrame> {
             ),
             Expanded(
               child: TabBarView(
-                  controller: _tabController,
-                  children: widget.tabViews
-                      .asMap()
-                      .map(
-                        (index, child) {
-                          return MapEntry(
-                            index,
-                            NestedScrollViewInnerScrollPositionKeyWidget(
-                              Key("topic_tab$index"),
-                              child,
-                            ),
-                          );
-                        },
-                      )
-                      .values
-                      .toList()),
+                controller: _tabController,
+                children: widget.tabViews
+                    .asMap()
+                    .map(
+                      (index, child) {
+                        return MapEntry(
+                          index,
+                          NestedScrollViewInnerScrollPositionKeyWidget(
+                            Key("topic_tab$index"),
+                            child,
+                          ),
+                        );
+                      },
+                    )
+                    .values
+                    .toList(),
+              ),
             )
           ],
         ),
@@ -279,9 +291,3 @@ class _TopicPageFrame extends State<TopicPageFrame> {
     );
   }
 }
-
-Handler forumPostTopicHandler = Handler(
-  pageBuilder: (BuildContext context, arg) {
-    return TopicPageFrame();
-  },
-);

@@ -23,7 +23,6 @@ class _SettingsPageState extends State<SettingsPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _user = Provider.of<User>(context);
-    print(_user.isLogin);
   }
 
   @override

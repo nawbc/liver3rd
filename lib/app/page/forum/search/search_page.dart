@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/user_profile_label.dart';
@@ -116,7 +116,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TextEditingController _searchTextController;
   bool _isInputing = false;
-  PostApi _postApi = PostApi();
+  ForumApi _forumApi = ForumApi();
   List _posts = [];
   List _topics = [];
   List _users = [];
@@ -148,7 +148,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<void> _refresh(String text) async {
-    _postApi.searchPost(gids: widget.gids, keyword: text).then((val) {
+    _forumApi.searchPost(gids: widget.gids, keyword: text).then((val) {
       if (mounted) {
         setState(() {
           Map data = val['data'];
@@ -353,7 +353,7 @@ class _SearchPageState extends State<SearchPage> {
                             return PostBlock(
                               imgList: post['image_list'],
                               onTapUpvote: (isCancel) async {
-                                await _postApi.upvotePost(
+                                await _forumApi.upvotePost(
                                   postId: post['post']['post_id'],
                                   isCancel: isCancel,
                                 );

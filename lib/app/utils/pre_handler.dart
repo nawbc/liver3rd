@@ -1,6 +1,7 @@
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/store/emojis.dart';
+import 'package:liver3rd/app/store/games.dart';
 
 import 'package:liver3rd/app/store/posts.dart';
 import 'package:liver3rd/app/store/redemption.dart';
@@ -80,6 +81,13 @@ class PreHandler {
     Wallpapers wallpapers = Provider.of<Wallpapers>(context, listen: false);
     if (wallpapers.bhWallpapers.isEmpty) {
       await wallpapers.fetchBhWallpapers();
+    }
+  }
+
+  Future<void> preLoadGameList(BuildContext context) async {
+    Games games = Provider.of<Games>(context, listen: false);
+    if (games.gameList.isEmpty) {
+      await games.fetchGameList();
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 
 class SelectGamePage extends StatefulWidget {
@@ -21,10 +22,7 @@ class _SelectGamePageState extends State<SelectGamePage> {
           child: DecoratedBox(
             decoration: BoxDecoration(color: Colors.amber),
             child: Center(
-              child: Image.asset(
-                'assets/images/bh_logo.png',
-                width: 165,
-              ),
+              child: Image.asset(bhLogoPath, width: 165),
             ),
           ),
         ),
@@ -38,10 +36,7 @@ class _SelectGamePageState extends State<SelectGamePage> {
           child: DecoratedBox(
             decoration: BoxDecoration(color: Color(0xff111111)),
             child: Center(
-              child: Image.asset(
-                'assets/images/ys_logo.png',
-                width: 220,
-              ),
+              child: Image.asset(ysLogoPath, width: 220),
             ),
           ),
         ),

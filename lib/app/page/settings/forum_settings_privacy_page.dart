@@ -1,7 +1,6 @@
 import 'package:custom_switch_button/custom_switch_button.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
-import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';

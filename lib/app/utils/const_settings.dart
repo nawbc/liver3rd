@@ -52,3 +52,11 @@ const imagePickerSetting = MaterialOptions(
 
 const String injectRaidersScript =
     'var count = 6;var interval = setInterval(() => {const appGuide = document.querySelector(".app-guide");const mhyHeader = document.querySelector(".mhy-header");const mhyScrollTab = document.querySelector(".mhy-scroll-tab.home-scroll-tab");const guideArticleHeader = document.querySelector(".guide-article-header.no-margin");const refreshLayer = document.querySelector(".pull-to-refresh-layer");const mainPage = document.querySelector(".mhy-main-page.root-page");if (!!appGuide) {appGuide.style.display = "none";count--;}if (!!mhyHeader) {mhyHeader.style.display = "none";count--;}if (!!mhyScrollTab) {mhyScrollTab.style.display = "none";count--;}if (!!guideArticleHeader) {guideArticleHeader.style.display = "none";count--;}if (!!refreshLayer) {refreshLayer.style.display = "none";count--;}if (!!mainPage) {mainPage.style.top = "0px";count--;}if (count <= 0) {clearInterval(interval);}setTimeout(() => {clearInterval(interval);}, 4500);});';
+
+const String coverbgPath = 'assets/images/background1.jpg';
+const String ysLogoPath = 'assets/images/ys_logo.png';
+const String bhLogoPath = 'assets/images/bh_logo.png';
+const String logoPath = 'assets/images/ic_launcher_round.png';
+const String emptyPath = 'assets/images/empty.png';
+const String empty1Path =
+    'https://uploadstatic.mihoyo.com/contentweb/20190926/2019092620221171013.png';

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:liver3rd/app/api/forum/post_api.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/utils/app_text.dart';
@@ -40,7 +40,7 @@ class CommonPostsPage extends StatefulWidget {
 
 class _CommonPostsPage extends State<CommonPostsPage>
     with AutomaticKeepAliveClientMixin {
-  PostApi _postApi = PostApi();
+  ForumApi _forumApi = ForumApi();
   bool _loadPostLocker = true;
   bool _postLastLocker = false;
   ScrollController _scrollController;
@@ -143,7 +143,7 @@ class _CommonPostsPage extends State<CommonPostsPage>
                     imgList: post['image_list'],
                     onTapUpvote: (isCancel) async {
                       if (_user.isLogin) {
-                        await _postApi.upvotePost(
+                        await _forumApi.upvotePost(
                           postId: post['post']['post_id'],
                           isCancel: isCancel,
                         );

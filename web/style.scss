@@ -281,3 +281,12 @@ button {
     }
   }
 }
+
+.md-container {
+  display: flex;
+  justify-content: center;
+  .md > ul {
+    border-top: 1px solid $ham-color;
+    margin: 50px 0;
+  }
+}

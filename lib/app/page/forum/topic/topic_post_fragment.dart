@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
@@ -16,15 +16,17 @@ class TopicPostFragment extends StatefulWidget {
   final bool isHot;
   final int sortType;
   final int forumId;
+  final int type;
 
-  const TopicPostFragment(
-      {Key key,
-      this.usedHeight,
-      this.isGood = false,
-      this.isHot = false,
-      this.sortType = 1,
-      this.forumId})
-      : super(key: key);
+  const TopicPostFragment({
+    Key key,
+    this.usedHeight,
+    this.forumId,
+    this.isGood = false,
+    this.isHot = false,
+    this.sortType = 1,
+    this.type = 0,
+  }) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _TopicPostFragmentState();
@@ -33,7 +35,7 @@ class TopicPostFragment extends StatefulWidget {
 
 class _TopicPostFragmentState extends State<TopicPostFragment>
     with AutomaticKeepAliveClientMixin {
-  PostApi _postApi = PostApi();
+  ForumApi _forumApi = ForumApi();
   Map _tmpData = {};
   List _postList = [];
   int _tmpSortType = 1;
@@ -42,6 +44,7 @@ class _TopicPostFragmentState extends State<TopicPostFragment>
   bool _postLastLocker = false;
   User _user;
 
+  @override
   didChangeDependencies() async {
     super.didChangeDependencies();
     _user = Provider.of<User>(context);
@@ -51,19 +54,43 @@ class _TopicPostFragmentState extends State<TopicPostFragment>
     }
   }
 
+  String topicInfoListType() {
+    if (widget.isGood) {
+      return 'GOOD';
+    } else if (widget.isHot) {
+      return 'HOT';
+    } else {
+      return 'UNKNOWN';
+    }
+  }
+
   Future<void> _refresh() async {
     _postList = [];
-    Map tmp = await _postApi.fetchForumPostList(
-        forumId: widget.forumId,
-        isGood: widget.isGood,
-        isHot: widget.isHot,
-        sortType: widget.sortType,
-        lastId: "");
-    List posts = tmp['data']['list'];
+    List posts;
+    Map tmp;
+    switch (widget.type) {
+      case 0:
+        tmp = await _forumApi.fetchForumPostList(
+            forumId: widget.forumId,
+            isGood: widget.isGood,
+            isHot: widget.isHot,
+            sortType: widget.sortType,
+            lastId: "");
+        posts = tmp['data']['list'] ?? [];
+
+        break;
+      case 1:
+        tmp = await _forumApi.fetchTopicPostList(
+            topicId: widget.forumId, lastId: "", listType: topicInfoListType());
+        posts = tmp['data']['posts'] ?? [];
+        break;
+      default:
+        return;
+    }
     _tmpData = tmp;
     if (mounted) {
       setState(() {
-        if (posts != null && posts.isNotEmpty) {
+        if (posts.isNotEmpty) {
           _postList.addAll(posts);
         }
       });
@@ -78,22 +105,38 @@ class _TopicPostFragmentState extends State<TopicPostFragment>
 
     if (_loadPostLocker) {
       _loadPostLocker = false;
-      _postApi
-          .fetchForumPostList(
+      List posts;
+      Map tmp;
+
+      switch (widget.type) {
+        case 0:
+          tmp = await _forumApi.fetchForumPostList(
               forumId: widget.forumId,
               isGood: widget.isGood,
               isHot: widget.isHot,
               sortType: widget.sortType,
-              lastId: _tmpData['data']['last_id'])
-          .then((val) {
-        _loadPostLocker = true;
-        _tmpData = val;
-        if (mounted) {
-          setState(() {
-            _postList.addAll(val['data']['list'] ?? []);
-          });
-        }
-      });
+              lastId: _tmpData['data']['last_id']);
+          posts = tmp['data']['list'] ?? [];
+          _loadPostLocker = true;
+          break;
+        case 1:
+          tmp = await _forumApi.fetchTopicPostList(
+            topicId: widget.forumId,
+            lastId: _tmpData['data']['last_id'],
+            listType: topicInfoListType(),
+          );
+          posts = tmp['data']['posts'] ?? [];
+          _loadPostLocker = true;
+          break;
+        default:
+          return;
+      }
+      _tmpData = tmp;
+      if (mounted) {
+        setState(() {
+          _postList.addAll(posts);
+        });
+      }
     }
 
     if (_tmpData.isNotEmpty && _tmpData['data']['is_last']) {
@@ -150,7 +193,7 @@ class _TopicPostFragmentState extends State<TopicPostFragment>
                       imgList: post['image_list'],
                       onTapUpvote: (isCancel) async {
                         if (_user.isLogin) {
-                          await _postApi.upvotePost(
+                          await _forumApi.upvotePost(
                             postId: post['post']['post_id'],
                             isCancel: isCancel,
                           );

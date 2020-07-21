@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/widget/icons.dart';
-import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,7 +17,7 @@ class TopicImageCard extends StatefulWidget {
   final String nickName;
   final String introduce;
   final bool isUpvote;
-  final Function(bool) onTapUpvote;
+  final bool Function(bool) onTapUpvote;
   final Function onTap;
   final Function(String) onTapAvatar;
   final String avatarUrl;
@@ -241,15 +240,12 @@ class _TopicImageCardState extends State<TopicImageCard>
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          if (_user.isLogin) {
-                            if (widget.onTapUpvote != null)
-                              widget.onTapUpvote(_isUpvote);
+                          if (widget.onTapUpvote != null &&
+                              widget.onTapUpvote(_isUpvote)) {
                             setState(() {
                               _isUpvote ? _likedNum-- : _likedNum++;
                               _isUpvote = !_isUpvote;
                             });
-                          } else {
-                            Navigate.navigate(context, 'login');
                           }
                         });
                       },

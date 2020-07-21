@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/store/animations.dart';
 import 'package:liver3rd/app/store/emojis.dart';
-
+import 'package:liver3rd/app/store/games.dart';
 import 'package:liver3rd/app/store/posts.dart';
 import 'package:liver3rd/app/store/settings.dart';
 import 'package:liver3rd/app/store/tim.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/store/comics.dart';
-
 import 'package:liver3rd/app/store/valkyries.dart';
 import 'package:liver3rd/app/store/wallpapers.dart';
 import 'package:liver3rd/app/store/redemption.dart';
@@ -36,9 +34,13 @@ class Storager {
         ChangeNotifierProvider<Wallpapers>(
           create: (_) => Wallpapers(),
         ),
-        ChangeNotifierProvider<Animations>(
-          create: (_) => Animations(),
+        ChangeNotifierProvider<Wallpapers>(
+          create: (_) => Wallpapers(),
         ),
+        ChangeNotifierProvider<Games>(
+          create: (_) => Games(),
+        ),
+
         // ChangeNotifierProvider<Notifications>(
         //   create: (_) => Notifications(),
         // ),

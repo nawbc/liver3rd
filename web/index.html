@@ -9,6 +9,7 @@
   <script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js"></script>
   <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/css/swiper.css" rel="stylesheet">
   <script src="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/js/swiper.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/markdown-it/11.0.0/markdown-it.js"></script>
   <title>肝肝肝, 源自热爱</title>
 </head>
 
@@ -37,7 +38,7 @@
           </div>
           <div class="button-wrapper">
             <div class="download-button">
-              <a href="https://qcloudc5d77d.coding.net/s/f4cc0f1a-37a7-4bf4-bcfb-fbd0a0c39c27">
+              <a href="https://qcloudc5d77d.coding.net/s/1c1149ba-f7c3-4de9-aa65-e1af4976b6d4">
                 <img class="pic-1" src="./images/pic.png">
                 <div>下载</div>
               </a>
@@ -88,6 +89,10 @@
             </div>
           </div>
         </div>
+
+        <section class="md-container">
+          <div class="md"></div>
+        </section>
 
         <footer class="footer">
           <section>
@@ -183,6 +188,31 @@
         slideShadows: false,
       }
     })
+
+
+    var mdContainer = document.querySelector('.md');
+
+    var md = markdownit();
+
+    var updaterContent = [
+      `
+- ### 0.0.2 2020/7/21
+  - 完成包括版块, 话题 在内的绝大部分界面 
+  - 修复bug
+  - 下载站 添加更新信息功能
+  - 规范化git仓库提交
+  `,
+
+      `
+- ### 0.0.1 
+  - 首个测试版
+  `
+    ].map((val) => md.render(val)).join('');
+
+    mdContainer.innerHTML = updaterContent;
+
+
+
 
 
   </script>

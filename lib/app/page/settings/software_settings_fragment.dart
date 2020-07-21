@@ -165,8 +165,7 @@ class SoftwareSettingsFragmentState extends State<SoftwareSettingsFragment> {
             color: Colors.grey[200],
             onPress: () async {
               if (await _checkUpdate()) {
-                TinyUtils.openUrl(
-                    'https://gitee.com/sewerganger/liver3rd/releases');
+                TinyUtils.openUrl('http://sewerganger.gitee.io/liver3rd/');
               }
             },
             shadow: null,

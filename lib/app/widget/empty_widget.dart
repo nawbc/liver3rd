@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/utils/const_settings.dart';
 
 class EmptyWidget extends StatelessWidget {
   final String title;
@@ -44,8 +45,7 @@ class EmptyWidget extends StatelessWidget {
                     ),
                   ),
                   CachedNetworkImage(
-                    imageUrl:
-                        'https://uploadstatic.mihoyo.com/contentweb/20190926/2019092620221171013.png',
+                    imageUrl: empty1Path,
                     width: 280,
                     fit: BoxFit.contain,
                   ),
@@ -57,9 +57,7 @@ class EmptyWidget extends StatelessWidget {
                   SizedBox(
                     height: 300,
                     width: 220,
-                    child: Image.asset(
-                      'assets/images/empty.png',
-                    ),
+                    child: Image.asset(emptyPath),
                   ),
                   Text(
                     title == null ? '未发现敌方目标' : title,

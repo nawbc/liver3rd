@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:liver3rd/app/app.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
 import 'package:liver3rd/app/store/posts.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
@@ -34,7 +34,7 @@ class _ForumPageFrameState extends State<ForumPageFrame>
   ScrollController _scrollController;
 
   bool _loadPostLocker = true;
-  PostApi _postApi = PostApi();
+  ForumApi _forumApi = ForumApi();
   Posts _posts;
   List _postList = [];
   Map _pageConfig = {};
@@ -238,7 +238,7 @@ class _ForumPageFrameState extends State<ForumPageFrame>
                       return PostBlock(
                         imgList: post['image_list'],
                         onTapUpvote: (isCancel) async {
-                          await _postApi
+                          await _forumApi
                               .upvotePost(
                             postId: post['post']['post_id'],
                             isCancel: isCancel,

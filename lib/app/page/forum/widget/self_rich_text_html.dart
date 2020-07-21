@@ -66,9 +66,7 @@ class _SelfRichTextHtmlState extends State<SelfRichTextHtml> {
   Widget build(BuildContext context) {
     return Html(
       data: widget.content,
-      defaultTextStyle: TextStyle(
-        fontSize: 14,
-      ),
+      defaultTextStyle: TextStyle(fontSize: 14),
       backgroundColor: Colors.white,
       linkStyle: TextStyle(color: Colors.blue[200]),
       blockSpacing: 7,

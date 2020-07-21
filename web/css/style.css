@@ -201,3 +201,10 @@ button {
         bottom: -10px; }
       #paper-window .hamburger span:after {
         bottom: -20px; }
+
+.md-container {
+  display: flex;
+  justify-content: center; }
+  .md-container .md > ul {
+    border-top: 1px solid #64b5f6;
+    margin: 50px 0; }

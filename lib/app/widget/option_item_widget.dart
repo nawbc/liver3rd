@@ -62,36 +62,40 @@ class OptionItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      if (title != null)
-                        Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: titleColor,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      if (subTitle != null)
-                        Container(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width -
-                                outSidePadding,
-                          ),
-                          child: Text(
-                            subTitle,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: subTitleColor,
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        if (title != null)
+                          Container(
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: titleColor,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
-                        )
-                    ],
+                        if (subTitle != null)
+                          Container(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width -
+                                  outSidePadding,
+                            ),
+                            child: Text(
+                              subTitle,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: subTitleColor,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                      ],
+                    ),
                   ),
                 ),
                 if (extend != null) extend

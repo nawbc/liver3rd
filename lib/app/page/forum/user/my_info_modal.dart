@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
@@ -8,21 +7,18 @@ import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
-import 'package:liver3rd/app/page/forum/forum_utils.dart';
 import 'package:liver3rd/app/utils/complish_missions.dart';
-import 'package:liver3rd/custom/navigate/navigate.dart';
-import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/widget/timing_task.dart';
 import 'package:provider/provider.dart';
 
-class UserModalPage extends StatefulWidget {
+class MyInfoModal extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _UserModalState();
   }
 }
 
-class _UserModalState extends State<UserModalPage> {
+class _UserModalState extends State<MyInfoModal> {
   User _user;
   Map _missions = {};
   Map _missionsState = {};
@@ -181,7 +177,7 @@ class _UserModalState extends State<UserModalPage> {
                                       ),
                                       SizedBox(
                                           width: ScreenUtil().setWidth(20)),
-                                      ForumUtils.selectGender(info['gender'])
+                                      TinyUtils.selectGender(info['gender'])
                                     ],
                                   ),
                                   SizedBox(height: ScreenUtil().setHeight(15)),

@@ -1,44 +1,47 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
+import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
+import 'package:liver3rd/app/widget/user_profile_label.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:provider/provider.dart';
 
-class PostHistoryFragment extends StatefulWidget {
+class FavoriteFragment extends StatefulWidget {
   final String uid;
 
-  const PostHistoryFragment({
-    Key key,
-    this.uid,
-  }) : super(key: key);
+  const FavoriteFragment({Key key, this.uid}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return _PostHistoryFragment();
+    return _FavoriteFragmentState();
   }
 }
 
-class _PostHistoryFragment extends State<PostHistoryFragment>
+class _FavoriteFragmentState extends State<FavoriteFragment>
     with AutomaticKeepAliveClientMixin {
+  User _user;
   UserApi _userApi = UserApi();
-  PostApi _postApi = PostApi();
+  ForumApi _forumApi = ForumApi();
   bool _loadPostLocker = true;
   bool _postLastLocker = false;
-  bool _hasPermission = true;
-  bool _isLoadEmpty = false;
+  ScrollController _scrollController;
   Map _tmpData = {};
   List _postList = [];
+  bool _isLoadEmpty = false;
+  bool _hasPermission = true;
 
   @override
-  didChangeDependencies() {
+  didChangeDependencies() async {
     super.didChangeDependencies();
+    _user = Provider.of<User>(context);
     if (_postList.isEmpty) {
-      _onRefreshPost();
+      await _onRefreshPost();
     }
   }
 
@@ -51,7 +54,7 @@ class _PostHistoryFragment extends State<PostHistoryFragment>
     if (_loadPostLocker) {
       _loadPostLocker = false;
       _userApi
-          .fetchUserPostList(
+          .fetchUserFavoritePostList(
               uid: widget.uid, lastId: _tmpData['data']['last_id'])
           .then((val) {
         _loadPostLocker = true;
@@ -71,14 +74,19 @@ class _PostHistoryFragment extends State<PostHistoryFragment>
 
   Future<void> _onRefreshPost() async {
     _postList = [];
-    Map tmp = await _userApi.fetchUserPostList(uid: widget.uid);
-    _tmpData = tmp;
+    Map tmp = await _userApi.fetchUserFavoritePostList(
+      uid: widget.uid,
+      lastId: _tmpData.isNotEmpty ? _tmpData['data']['last_id'] : '-1',
+    );
+
     if (tmp['data'] == null && tmp['retcode'] == 1001) {
       setState(() {
         _hasPermission = false;
       });
       return;
     }
+
+    _tmpData = tmp;
     List posts = tmp['data']['list'];
 
     if (mounted) {
@@ -95,8 +103,10 @@ class _PostHistoryFragment extends State<PostHistoryFragment>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     return EasyRefresh.custom(
+      firstRefresh: false,
+      emptyWidget: CommonWidget.noDataWidget(_isLoadEmpty, _hasPermission),
+      scrollController: _scrollController,
       header: BezierCircleHeader(
         backgroundColor: Colors.white,
         color: Colors.blue[200],
@@ -105,7 +115,6 @@ class _PostHistoryFragment extends State<PostHistoryFragment>
         backgroundColor: Colors.white,
         color: Colors.blue[200],
       ),
-      emptyWidget: CommonWidget.noDataWidget(_isLoadEmpty, _hasPermission),
       onLoad: () async {
         return _onLoadPost(context);
       },
@@ -124,19 +133,24 @@ class _PostHistoryFragment extends State<PostHistoryFragment>
           : [
               SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  Map post = _postList[index];
+                  Map post = _postList[index]['post'];
                   bool isUpvoted = post['self_operation']['attitude'] == 1;
                   return PostBlock(
                     imgList: post['image_list'],
-                    onTapUpvote: (isUpvoted) {
-                      _postApi.upvotePost(
-                        postId: post['post_id'],
-                        isCancel: !isUpvoted,
-                      );
+                    onTapUpvote: (isCancel) async {
+                      if (_user.isLogin) {
+                        await _forumApi.upvotePost(
+                          postId: post['post']['post_id'],
+                          isCancel: isCancel,
+                        );
+                      } else {
+                        Navigate.navigate(context, 'login');
+                      }
                     },
                     postContent: post['content'],
                     title: post['subject'],
                     stat: post['stat'],
+                    topics: post['topics'],
                     isUpvoted: isUpvoted,
                     onImageTap: (i) {
                       Navigate.navigate(
@@ -152,13 +166,22 @@ class _PostHistoryFragment extends State<PostHistoryFragment>
                       Navigate.navigate(context, 'post',
                           arg: {'postId': post['post_id']});
                     },
-                    headBlock: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(left: 15, bottom: 15),
-                      child: Text(
-                        post['created_at'],
-                        style: TextStyle(fontSize: 20, color: Colors.grey),
-                      ),
+                    headBlock: UserProfileLabel(
+                      avatarUrl: post['user']['avatar_url'],
+                      certificationType: post['user']['certification']['type'],
+                      createAt: post['created_at'],
+                      level: post['user']['level_exp']['level'],
+                      nickName: post['user']['nickname'],
+                      onAvatarTap: (String heroTag) {
+                        Navigate.navigate(
+                          context,
+                          'userprofile',
+                          arg: {
+                            'heroTag': heroTag,
+                            'uid': post['user']['uid'],
+                          },
+                        );
+                      },
                     ),
                   );
                 }, childCount: _postList.length),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/widget/empty_widget.dart';
 
 class ShopAccountPage extends StatefulWidget {
   @override
@@ -10,6 +11,9 @@ class ShopAccountPage extends StatefulWidget {
 class _ShopAccountPage extends State<ShopAccountPage> {
   @override
   Widget build(BuildContext context) {
-    return Text('demo');
+    return EmptyWidget(
+      type: 'ys',
+      title: '施工中',
+    );
   }
 }

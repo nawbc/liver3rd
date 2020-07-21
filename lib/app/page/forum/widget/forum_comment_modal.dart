@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:liver3rd/app/api/forum/post_api.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/comment_block.dart';
 import 'package:liver3rd/app/store/emojis.dart';
 
@@ -12,12 +12,12 @@ import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 
 import 'package:provider/provider.dart';
 
-class ForumCommentPage extends StatefulWidget {
+class ForumCommentModal extends StatefulWidget {
   final String postId;
   final int floorId;
   final String replyId;
 
-  const ForumCommentPage({Key key, this.postId, this.floorId, this.replyId})
+  const ForumCommentModal({Key key, this.postId, this.floorId, this.replyId})
       : super(key: key);
 
   @override
@@ -26,8 +26,8 @@ class ForumCommentPage extends StatefulWidget {
   }
 }
 
-class _ForumCommentPageState extends State<ForumCommentPage> {
-  PostApi _postApi = PostApi();
+class _ForumCommentPageState extends State<ForumCommentModal> {
+  ForumApi _forumApi = ForumApi();
   List _commentList = [];
   Map _commentData = {};
   Map _rootComment = {};
@@ -59,7 +59,7 @@ class _ForumCommentPageState extends State<ForumCommentPage> {
 
     Map rootTmp;
     if (isInit) {
-      rootTmp = await _postApi.fetchRootCommentInfo(
+      rootTmp = await _forumApi.fetchRootCommentInfo(
         postId: widget.postId,
         replyId: widget.replyId,
       );
@@ -67,7 +67,7 @@ class _ForumCommentPageState extends State<ForumCommentPage> {
 
     if (_loadCommentLocker) {
       _loadCommentLocker = false;
-      _postApi
+      _forumApi
           .fetchPostSubComments(
         postId: widget.postId,
         floorId: widget.floorId,

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:data_plugin/bmob/bmob.dart';
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/foundation.dart';

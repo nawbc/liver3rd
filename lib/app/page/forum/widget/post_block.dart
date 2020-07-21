@@ -201,7 +201,10 @@ class _PostBlockState extends State<PostBlock>
                     color: Colors.blue[200],
                     height: 25,
                     maxWidth: 60,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigate.navigate(context, 'topicinfo',
+                          arg: {'forumId': widget.topics[0]['id']});
+                    },
                     content: Text(
                       widget.topics[0]['name'],
                       overflow: TextOverflow.ellipsis,

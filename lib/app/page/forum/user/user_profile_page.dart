@@ -5,9 +5,9 @@ import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:flutter/rendering.dart';
 import 'package:flutter_point_tab_bar/pointTabIndicator.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
-import 'package:liver3rd/app/page/forum/fragment/comment_history_fragment.dart';
-import 'package:liver3rd/app/page/forum/fragment/favorite_fragment.dart';
-import 'package:liver3rd/app/page/forum/fragment/post_history_fragment.dart';
+import 'package:liver3rd/app/page/forum/user/comment_history_fragment.dart';
+import 'package:liver3rd/app/page/forum/user/favorite_fragment.dart';
+import 'package:liver3rd/app/page/forum/user/post_history_fragment.dart';
 
 import 'package:liver3rd/app/store/user.dart';
 
@@ -123,7 +123,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     super.didChangeDependencies();
     _user = Provider.of<User>(context);
     if (_userData.isEmpty) {
-      await refresh();
+      await _refresh();
     }
   }
 
@@ -133,7 +133,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     _tabController?.dispose();
   }
 
-  Future<void> refresh() async {
+  Future<void> _refresh() async {
     Map tmp = await _userApi.fetchUserAllInfo(widget.uid);
 
     if (mounted) {
@@ -214,11 +214,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
       BuildContext context, bool isFollowing, Map currentPost) async {
     if (isFollowing) {
       _userApi.unFollowUser(currentPost['uid']).then((val) async {
-        await refresh();
+        await _refresh();
       }).catchError(() {});
     } else {
       _userApi.followUser(currentPost['uid']).then((val) async {
-        await refresh();
+        await _refresh();
       }).catchError(() {});
     }
   }

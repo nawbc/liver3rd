@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:liver3rd/app/page/forum/forum_comment_page.dart';
+import 'package:liver3rd/app/page/forum/widget/forum_comment_modal.dart';
 import 'package:liver3rd/app/page/forum/widget/self_rich_text.dart';
 import 'package:liver3rd/app/widget/custom_modal_bottom_sheet.dart';
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/app/widget/reply_modal.dart';
 import 'package:liver3rd/app/widget/row_icon_button.dart';
-
 import 'package:liver3rd/app/widget/user_profile_label.dart';
 
 class CommentBlock extends StatefulWidget {
@@ -333,7 +332,7 @@ class _CommentBlockState extends State<CommentBlock>
                                 onTap: () {
                                   showCustomModalBottomSheet(
                                     context: context,
-                                    child: ForumCommentPage(
+                                    child: ForumCommentModal(
                                       postId: widget.reply['post_id'],
                                       floorId: widget.reply['floor_id'],
                                       replyId: widget.reply['reply_id'],

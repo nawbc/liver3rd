@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 
 Map initHomePageRecPostsQuery(id) {
   return {
@@ -15,7 +15,7 @@ Map initHomePageRecPostsQuery(id) {
 }
 
 class Posts with ChangeNotifier {
-  PostApi _postApi = PostApi();
+  ForumApi _forumApi = ForumApi();
 
   Map _appBhHomeData = {};
   Map get appBhHomeData => _appBhHomeData;
@@ -91,10 +91,10 @@ class Posts with ChangeNotifier {
   Future<void> fetchAppHome(int id) async {
     switch (id) {
       case 1:
-        _appBhHomeData = await _postApi.fetchAppHome(1, 20);
+        _appBhHomeData = await _forumApi.fetchAppHome(1, 20);
         break;
       case 2:
-        _appYsHomeData = await _postApi.fetchAppHome(2, 20);
+        _appYsHomeData = await _forumApi.fetchAppHome(2, 20);
     }
 
     notifyListeners();
@@ -103,22 +103,22 @@ class Posts with ChangeNotifier {
   Future<void> fetchPosts(Map config, int id) async {
     switch (id) {
       case 1:
-        _bhPosts = await _postApi.fetchRecPosts(config);
+        _bhPosts = await _forumApi.fetchRecPosts(config);
         break;
       case 2:
-        _ysPosts = await _postApi.fetchRecPosts(config);
+        _ysPosts = await _forumApi.fetchRecPosts(config);
     }
 
     notifyListeners();
   }
 
   Future<void> fetchBhDeckPosts() async {
-    _deckPosts = await _postApi.fetchForumMain(forumId: 1);
+    _deckPosts = await _forumApi.fetchForumMain(forumId: 1);
     notifyListeners();
   }
 
   Future<void> fetchBhFellowPosts() async {
-    _fellowPosts = await _postApi.fetchForumMain(forumId: 4);
+    _fellowPosts = await _forumApi.fetchForumMain(forumId: 4);
     notifyListeners();
   }
 }

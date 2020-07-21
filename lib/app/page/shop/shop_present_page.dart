@@ -21,7 +21,8 @@ class ShopPresentPage extends StatefulWidget {
   }
 }
 
-class _ShopPresentPageState extends State<ShopPresentPage> {
+class _ShopPresentPageState extends State<ShopPresentPage>
+    with AutomaticKeepAliveClientMixin {
   final String heroTag = 'goods_tag';
   ShopApi _shopApi = ShopApi();
   ScrollController _scrollController;
@@ -137,4 +138,8 @@ class _ShopPresentPageState extends State<ShopPresentPage> {
             ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

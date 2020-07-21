@@ -4,10 +4,11 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:liver3rd/app/page/editors/account_editor.dart';
 import 'package:liver3rd/app/page/editors/post_editor_page.dart';
 import 'package:liver3rd/app/page/forum/forum_post_page.dart';
-import 'package:liver3rd/app/page/forum/forum_topic_page.dart';
+import 'package:liver3rd/app/page/forum/topic/topic_full_info_page.dart';
+import 'package:liver3rd/app/page/forum/topic/topic_page.dart';
 import 'package:liver3rd/app/page/forum/login_page.dart';
 import 'package:liver3rd/app/page/forum/search/search_page.dart';
-import 'package:liver3rd/app/page/forum/user_profile_page.dart';
+import 'package:liver3rd/app/page/forum/user/user_profile_page.dart';
 import 'package:liver3rd/app/page/games/bh/bh_comic_content_page.dart';
 import 'package:liver3rd/app/page/games/bh/bh_comic_page.dart';
 import 'package:liver3rd/app/page/games/music_page.dart';
@@ -87,13 +88,14 @@ class _LiverAppState extends State<LiverApp> {
           'userprofile': userProfilePageHandler,
           'posteditor': userPostEditorPageHandler,
           'searchpage': searchPageHandler,
-          'topic': forumTopicPageHandler,
+          'topic': topicPageHandler,
           'about': aboutPageHandler,
           'settingmsg': forumSettingsMsgPageHandler,
           'settingprivacy': forumSettingsPrivacyPageHandler,
           'settingpassport': forumSettingsPassportPagedler,
           'accounteditor': accountEditorPageHandler,
           'webview': webviewPageHandler,
+          'topicinfo': topicFullInfoHandler,
         },
         defualtTransactionType: TransactionType.fromBottom,
         beforeAllNavigate: () {

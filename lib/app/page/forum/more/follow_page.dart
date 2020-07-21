@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
 import 'package:liver3rd/app/page/forum/widget/follow_user_card.dart';
+import 'package:liver3rd/app/page/forum/widget/post_block.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
@@ -16,10 +16,8 @@ import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
-
 import 'package:provider/provider.dart';
 
-import 'widget/post_block.dart';
 
 class FollowPage extends StatefulWidget {
   final ScrollController nestScrollController;
@@ -35,9 +33,9 @@ class _FollowPageState extends State<FollowPage>
     with AutomaticKeepAliveClientMixin {
   SwiperController _swiperController = SwiperController();
   ScrollController _scrollController;
-  EasyRefreshController _controller = EasyRefreshController();
+
   ForumApi _forumApi = ForumApi();
-  PostApi _postApi = PostApi();
+
   User _user;
 
   List _recommendUserList = [];
@@ -76,7 +74,7 @@ class _FollowPageState extends State<FollowPage>
     _refresh(context);
   }
 
-  Future _loadRecUser(BuildContext context) async {
+  Future _loadRecUser() async {
     try {
       if (_loadRecUserLocker) {
         _loadRecUserLocker = false;
@@ -148,7 +146,7 @@ class _FollowPageState extends State<FollowPage>
     if (_user.isLogin) {
       await _loadPost(context);
     }
-    await _loadRecUser(context);
+    await _loadRecUser();
   }
 
   @override
@@ -160,7 +158,6 @@ class _FollowPageState extends State<FollowPage>
       backgroundColor: Colors.white,
       body: EasyRefresh.custom(
         scrollController: _scrollController,
-        controller: _controller,
         header: BezierCircleHeader(
           backgroundColor: Colors.white,
           color: Colors.blue[200],
@@ -190,7 +187,7 @@ class _FollowPageState extends State<FollowPage>
                           loop: false,
                           onIndexChanged: (index) async {
                             if (index == _recommendUserList.length - 2) {
-                              await _loadRecUser(context);
+                              await _loadRecUser();
                             }
                           },
                           itemBuilder: (BuildContext context, int sIndex) {
@@ -199,6 +196,8 @@ class _FollowPageState extends State<FollowPage>
                             } else {
                               Color randomColor = _colorList[sIndex];
                               Map userInfo = _recommendUserList[sIndex];
+                              bool isFollowing = userInfo['is_follow'];
+                              String uid = userInfo['uid'];
 
                               return FollowUserCard(
                                 randomColor: randomColor,
@@ -207,7 +206,9 @@ class _FollowPageState extends State<FollowPage>
                                 label: userInfo['certification']['label'],
                                 type: userInfo['certification']['type'],
                                 avatarUrl: userInfo['avatar_url'],
-                                onFollow: () {},
+                                isFollow: isFollowing,
+                                uid: uid,
+                                onFollow: () async {},
                                 onTap: (heroTag) {
                                   Navigate.navigate(context, 'userprofile',
                                       arg: {
@@ -252,7 +253,7 @@ class _FollowPageState extends State<FollowPage>
                           return PostBlock(
                             imgList: post['image_list'],
                             onTapUpvote: (isUpvoted) {
-                              _postApi.upvotePost(
+                              _forumApi.upvotePost(
                                 postId: post['post_id'],
                                 isCancel: !isUpvoted,
                               );

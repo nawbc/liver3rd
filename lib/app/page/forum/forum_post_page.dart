@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:liver3rd/app/api/forum/post_api.dart';
-import 'package:liver3rd/app/page/forum/forum_utils.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/comment_block.dart';
 import 'package:liver3rd/app/page/forum/widget/self_rich_text.dart';
 import 'package:liver3rd/app/page/forum/widget/self_rich_text_html.dart';
 import 'package:liver3rd/app/store/emojis.dart';
+import 'package:liver3rd/app/store/games.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
@@ -34,7 +33,8 @@ class ForumPostPage extends StatefulWidget {
 
 class _ForumPostPageState extends State<ForumPostPage> {
   String _heroTag = 'speed-dial-hero-tag';
-  PostApi _postApi = PostApi();
+  User _user;
+  Games _games;
   Map _postData = {};
   Map _commentData = {};
   List _commentList = [];
@@ -43,8 +43,8 @@ class _ForumPostPageState extends State<ForumPostPage> {
   bool _loadCommentLocker = true;
   bool _commentLastLocker = false;
   bool _isHtmlPostContent = false;
+  ForumApi _forumApi = ForumApi();
   EasyRefreshController _controller = EasyRefreshController();
-  User _user;
 
   @override
   initState() {
@@ -56,8 +56,10 @@ class _ForumPostPageState extends State<ForumPostPage> {
   didChangeDependencies() async {
     super.didChangeDependencies();
     _user = Provider.of<User>(context);
+    _games = Provider.of<Games>(context);
+
     if (_postData.isEmpty) {
-      Map tmp = await _postApi.fetchFullPost(widget.postId);
+      Map tmp = await _forumApi.fetchFullPost(widget.postId);
       if (mounted) {
         setState(() {
           _postData = tmp;
@@ -69,7 +71,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
   @override
   void dispose() {
     super.dispose();
-    _postApi = null;
+    _forumApi = null;
     _postData = {};
     _commentData = {};
     _commentList = [];
@@ -100,7 +102,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
     _commentList = [];
     _postData = {};
 
-    Map tmp = await _postApi.fetchFullPost(widget.postId);
+    Map tmp = await _forumApi.fetchFullPost(widget.postId);
     if (mounted) {
       setState(() {
         _postData = tmp;
@@ -116,7 +118,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
 
     if (_loadCommentLocker) {
       _loadCommentLocker = false;
-      _postApi
+      _forumApi
           .fetchPostComment(
         postId: widget.postId,
         lastId: _commentData.isEmpty ? "0" : _commentData['data']['last_id'],
@@ -138,11 +140,13 @@ class _ForumPostPageState extends State<ForumPostPage> {
   }
 
   String _topTitle() {
-    return _postData.isEmpty
-        ? ''
-        : (_postData['data']['post']['forum'] == null
-            ? ForumUtils.matchGame(_postData['data']['post']['game_id'])
-            : '${_postData['data']['post']['forum']['name']}');
+    if (_postData.isEmpty) {
+      return '';
+    } else {
+      Map forum = _postData['data']['post']['forum'];
+      int id = _postData['data']['post']['game_id'];
+      return forum == null ? _games.gameList[id]['name'] : forum['name'];
+    }
   }
 
   @override
@@ -381,12 +385,19 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                     spacing: 8,
                                     children: currentPost['topics'].map<Widget>(
                                       (ele) {
-                                        return Chip(
-                                          backgroundColor: Colors.blue[200],
-                                          label: Text(
-                                            ele['name'],
-                                            style: TextStyle(
-                                              color: Colors.white,
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigate.navigate(
+                                                context, 'topicinfo',
+                                                arg: {'forumId': ele['id']});
+                                          },
+                                          child: Chip(
+                                            backgroundColor: Colors.blue[200],
+                                            label: Text(
+                                              ele['name'],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                         );

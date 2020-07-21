@@ -38,6 +38,7 @@ TextSpan parseEmojiText({
   }
 
   if (head != null) textSpanList.add(head);
+
   if (RegExp(r"(_\([\u4e00-\u9fa5]+\))").stringMatch(str) == null) {
     addToTextSpan(str);
   } else {

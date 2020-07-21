@@ -35,12 +35,12 @@ String gameConfigUrl(int gid) =>
     'https://api-takumi.mihoyo.com/reception/api/homePageGetGameConfigs?gid=$gid';
 
 // 游戏列表
-// String gameLisUrl = 'https://api-takumi.mihoyo.com/apihub/api/getGameList';
+String gameListUrl = 'https://api-takumi.mihoyo.com/apihub/api/getGameList';
 
 /// 论A
 /// [forum_id] 1 甲板 4 同人 6 官方 21 问答 5 反馈
 /// forum_id=4&is_good=false&is_hot=false&last_id=&page_size=20&sort_type=1
-final String homeForumPostListUrl =
+final String forumPostListUrl =
     'https://api-takumi.mihoyo.com/post/api/getForumPostList';
 
 // 帖子
@@ -85,8 +85,12 @@ final String upvotePostUrl =
     'https://api-takumi.mihoyo.com/apihub/sapi/upvotePost';
 
 // 获取主题
-String getTopicFullUrl(int id) =>
-    "https://api-static.mihoyo.com/takumi/topic/api/getTopicFullInfo?id=$id";
+final String getTopicFullInfoUrl =
+    "https://api-static.mihoyo.com/takumi/topic/api/getTopicFullInfo";
+
+// 获取主题
+final String getTopicPostListUrl =
+    "https://api-takumi.mihoyo.com/post/api/getTopicPostList";
 
 // 发帖接口
 String releasePostUrl = 'https://api-takumi.mihoyo.com/post/api/releasePost';
@@ -138,8 +142,9 @@ String getCharListUrl =
 // 话题
 final String followTopicUrl =
     'https://api-takumi.mihoyo.com/timeline/api/focus';
+
 final String unFollowTopicUrl =
-    'https://api-takumi.mihoyo.com/timeline/api/focus';
+    'https://api-takumi.mihoyo.com/timeline/api/unfocus';
 
 //============================================================================================================
 
@@ -149,3 +154,10 @@ final String privacySettingUrl =
     'https://api-takumi.mihoyo.com/user/wapi/userPrivacySetting';
 //============================================================================================================
 final String bhLoginUrl = 'https://bbs.mihoyo.com/bh3/#/login';
+
+//============================================================================================================
+// 隐私设置
+// ?gids=1&last_id=&page_size=20&type=1
+final String getNewsListUrl =
+    'https://api-takumi.mihoyo.com/post/api/getNewsList';
+//============================================================================================================

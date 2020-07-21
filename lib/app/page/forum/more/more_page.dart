@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/page/forum/follow_page.dart';
+import 'package:liver3rd/app/page/forum/more/block_page.dart';
+import 'package:liver3rd/app/page/forum/more/follow_page.dart';
+import 'package:liver3rd/app/page/forum/more/message_page.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 
 import 'package:liver3rd/app/widget/sync_scroll_tabbar.dart';
@@ -20,24 +22,29 @@ class _MorePageState extends State<MorePage> {
 
   List<Tab> _tabs;
 
+  String handleMsgCount(int count) {
+    return count >= 99 ? '99+' : '$count';
+  }
+
   @override
   void initState() {
     super.initState();
     _tabs = [
       Tab(child: CommonWidget.tabTitle('关注')),
-      Tab(child: CommonWidget.tabTitle('消息')),
+      Tab(child: CommonWidget.tabTitle('板块')),
       Tab(
         // key: _key,
         child: Badge(
-            key: _key,
-            badgeColor: Colors.blue[200],
-            shape: BadgeShape.square,
-            borderRadius: 30,
-            animationType: BadgeAnimationType.scale,
-            badgeContent: Text('99+',
-                style: TextStyle(color: Colors.white, fontSize: 12)),
-            position: BadgePosition.topRight(),
-            child: CommonWidget.tabTitle('板块')),
+          key: _key,
+          badgeColor: Colors.blue[200],
+          shape: BadgeShape.square,
+          borderRadius: 30,
+          animationType: BadgeAnimationType.scale,
+          badgeContent: Text(handleMsgCount(100),
+              style: TextStyle(color: Colors.white, fontSize: 12)),
+          position: BadgePosition.topRight(),
+          child: CommonWidget.tabTitle('消息'),
+        ),
       ),
     ];
   }
@@ -47,13 +54,14 @@ class _MorePageState extends State<MorePage> {
     return SyncScrollTabBar(
       isScrollable: false,
       tabs: _tabs,
+      onTap: (index) {
+        _key.currentState.changeDisplay(false);
+      },
       syncScrollableChildren: (controller) {
         return <Widget>[
-          FollowPage(
-            nestScrollController: controller,
-          ),
-          Container(child: Text('2')),
-          Container(child: Text('3')),
+          FollowPage(nestScrollController: controller),
+          BlockPage(nestScrollController: controller),
+          MessagePage(nestScrollController: controller),
         ];
       },
     );

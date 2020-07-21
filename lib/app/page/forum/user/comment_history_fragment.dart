@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
-import 'package:liver3rd/app/page/forum/forum_comment_page.dart';
+import 'package:liver3rd/app/page/forum/widget/forum_comment_modal.dart';
 import 'package:liver3rd/app/store/emojis.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/custom_modal_bottom_sheet.dart';
@@ -84,7 +84,7 @@ class CommentHistoryBlock extends StatelessWidget {
                               arg: {'postId': postId})
                           : showCustomModalBottomSheet(
                               context: context,
-                              child: ForumCommentPage(
+                              child: ForumCommentModal(
                                 postId: postId,
                                 floorId: floorId,
                                 replyId: replyId,

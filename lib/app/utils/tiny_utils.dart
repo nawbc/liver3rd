@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/utils/share.dart';
+import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path_provider/path_provider.dart';
@@ -244,6 +245,17 @@ class TinyUtils {
       Navigate.navigate(context, 'inapppurchase');
     } else {
       callback();
+    }
+  }
+
+  static dynamic selectGender(int num, {double width = 15}) {
+    switch (num) {
+      case 0:
+        return CustomIcons.unknown(width: width);
+      case 1:
+        return CustomIcons.male(width: width);
+      case 2:
+        return CustomIcons.female(width: width);
     }
   }
 }

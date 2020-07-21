@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
@@ -29,7 +30,7 @@ class _AboutPageState extends State<AboutPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'assets/images/ic_launcher_round.png',
+              logoPath,
               width: 100,
               height: 100,
             ),
