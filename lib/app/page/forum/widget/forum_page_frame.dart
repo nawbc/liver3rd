@@ -155,12 +155,8 @@ class _ForumPageFrameState extends State<ForumPageFrame>
           backgroundColor: Colors.white,
           color: Colors.blue[200],
         ),
-        onLoad: () async {
-          _onLoad();
-        },
-        onRefresh: () async {
-          _onRefresh();
-        },
+        onLoad: _onLoad,
+        onRefresh: _onRefresh,
         slivers: _postList.isEmpty || _homeDataMid.isEmpty
             ? <Widget>[
                 SliverList(

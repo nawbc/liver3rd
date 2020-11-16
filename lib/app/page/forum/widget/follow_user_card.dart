@@ -5,6 +5,7 @@ import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:uuid/uuid.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class FollowUserCard extends StatefulWidget {
   final Color randomColor;
@@ -103,7 +104,7 @@ class _FollowUserCard extends State<FollowUserCard>
                       children: <Widget>[
                         Container(
                           width: screenWidth - 220,
-                          child: Text(
+                          child: NoScaledText(
                             name,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 22, color: Colors.grey),
@@ -115,7 +116,7 @@ class _FollowUserCard extends State<FollowUserCard>
                           SizedBox(width: 10),
                           Container(
                             width: 110,
-                            child: Text(
+                            child: NoScaledText(
                               label,
                               overflow: TextOverflow.ellipsis,
                               style:
@@ -146,6 +147,7 @@ class _FollowUserCard extends State<FollowUserCard>
                   ),
                 ]),
                 overflow: TextOverflow.ellipsis,
+                textScaleFactor: 1,
               ),
               SizedBox(height: 8),
               Row(

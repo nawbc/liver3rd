@@ -4,6 +4,7 @@ import 'package:liver3rd/app/api/bh/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:liver3rd/app/page/games/bh/widget/bh_comic_wrapper.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
@@ -82,7 +83,7 @@ class _BhComicCollectionCardState extends State<BhComicCollectionCard> {
                         width: ScreenUtil().setWidth(120),
                       ),
                     ),
-                    title: Text(
+                    title: NoScaledText(
                       _collections[index]['title'],
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(45),

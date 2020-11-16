@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class RepairWidget extends StatelessWidget {
   final String type;
@@ -6,6 +7,6 @@ class RepairWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('dmeo');
+    return NoScaledText('dmeo');
   }
 }

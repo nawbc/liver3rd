@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class EmptyWidget extends StatelessWidget {
   final String title;
@@ -26,7 +27,7 @@ class EmptyWidget extends StatelessWidget {
                     left: 10,
                     child: Column(
                       children: <Widget>[
-                        Text(
+                        NoScaledText(
                           title == null ? '施工中' : title,
                           style: TextStyle(
                               fontSize: 22,
@@ -34,7 +35,7 @@ class EmptyWidget extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 10),
-                        Text(
+                        NoScaledText(
                           subTitle == null ? '敬请期待' : subTitle,
                           style: TextStyle(
                             fontSize: 16,
@@ -59,7 +60,7 @@ class EmptyWidget extends StatelessWidget {
                     width: 220,
                     child: Image.asset(emptyPath),
                   ),
-                  Text(
+                  NoScaledText(
                     title == null ? '未发现敌方目标' : title,
                     style: TextStyle(
                         fontSize: 22,
@@ -67,7 +68,7 @@ class EmptyWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
-                  Text(
+                  NoScaledText(
                     subTitle == null ? '布洛妮娅, 请求回收' : subTitle,
                     style: TextStyle(
                       fontSize: 16,

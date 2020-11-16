@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/utils/complish_missions.dart';
 import 'package:liver3rd/app/widget/timing_task.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:provider/provider.dart';
 
 class MyInfoModal extends StatefulWidget {
@@ -74,12 +75,12 @@ class _UserModalState extends State<MyInfoModal> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
+                  NoScaledText(
                     '${ele['name']}',
                     style: TextStyle(fontSize: 14),
                   ),
                   SizedBox(width: 3),
-                  Text(
+                  NoScaledText(
                     '+${ele['points']}米游币',
                     style: TextStyle(
                       fontSize: 10,
@@ -89,16 +90,16 @@ class _UserModalState extends State<MyInfoModal> {
                 ],
               ),
               finished == threshold
-                  ? Text('已完成')
+                  ? NoScaledText('已完成')
                   : Row(
                       children: <Widget>[
-                        Text(
+                        NoScaledText(
                           '$finished',
                           style: TextStyle(
                             color: Colors.orange,
                           ),
                         ),
-                        Text(
+                        NoScaledText(
                           '/${ele['threshold']}',
                           style: TextStyle(),
                         )
@@ -165,7 +166,7 @@ class _UserModalState extends State<MyInfoModal> {
                                         constraints: BoxConstraints(
                                           maxWidth: screenWidth / 3,
                                         ),
-                                        child: Text(
+                                        child: NoScaledText(
                                           info['nickname'],
                                           style: TextStyle(
                                             fontSize: 20,
@@ -185,7 +186,7 @@ class _UserModalState extends State<MyInfoModal> {
                                     constraints: BoxConstraints(
                                       maxWidth: screenWidth / 3,
                                     ),
-                                    child: Text(
+                                    child: NoScaledText(
                                       info['introduce'],
                                       style: TextStyle(
                                           fontSize: ScreenUtil().setSp(40)),
@@ -212,8 +213,8 @@ class _UserModalState extends State<MyInfoModal> {
                                               onSuccess: () {
                                                 Scaffold.of(context)
                                                     .showSnackBar(
-                                                        CommonWidget.snack(
-                                                            '签到完成'));
+                                                  CommonWidget.snack('签到完成'),
+                                                );
                                                 _refresh();
                                               },
                                               onError: (err) {
@@ -241,16 +242,16 @@ class _UserModalState extends State<MyInfoModal> {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Text(info['achieve']['followed_cnt']),
-                            Text('粉丝')
+                            NoScaledText(info['achieve']['followed_cnt']),
+                            NoScaledText('粉丝')
                           ],
                         ),
                         GestureDetector(
                           onTap: () {},
                           child: Column(
                             children: <Widget>[
-                              Text(info['achieve']['follow_cnt']),
-                              Text('关注')
+                              NoScaledText(info['achieve']['follow_cnt']),
+                              NoScaledText('关注')
                             ],
                           ),
                         ),
@@ -258,8 +259,8 @@ class _UserModalState extends State<MyInfoModal> {
                           onTap: () {},
                           child: Column(
                             children: <Widget>[
-                              Text(info['achieve']['like_num']),
-                              Text('获赞')
+                              NoScaledText(info['achieve']['like_num']),
+                              NoScaledText('获赞')
                             ],
                           ),
                         ),
@@ -281,8 +282,8 @@ class _UserModalState extends State<MyInfoModal> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Text('米游币: '),
-                                          Text(
+                                          NoScaledText('米游币: '),
+                                          NoScaledText(
                                             '${_missionsState['data']['total_points']}',
                                             style:
                                                 TextStyle(color: Colors.orange),
@@ -291,13 +292,13 @@ class _UserModalState extends State<MyInfoModal> {
                                       ),
                                       Row(
                                         children: <Widget>[
-                                          Text('今日: '),
-                                          Text(
+                                          NoScaledText('今日: '),
+                                          NoScaledText(
                                             '${_missionsState['data']['already_received_points']}',
                                             style:
                                                 TextStyle(color: Colors.orange),
                                           ),
-                                          Text(
+                                          NoScaledText(
                                             '/${_missionsState['data']['today_total_points']}',
                                           ),
                                         ],
@@ -328,7 +329,7 @@ class _UserModalState extends State<MyInfoModal> {
                         onPressed: () {
                           _user.logout();
                         },
-                        child: Text(
+                        child: NoScaledText(
                           '退出登录',
                           style: TextStyle(color: Colors.white),
                         ),

@@ -13,6 +13,7 @@ import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -179,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             child: CustomIcons.question,
                           ),
-                          Text(
+                          NoScaledText(
                             '请使用米游社区账号登录',
                             style: TextStyle(
                               color: Colors.grey,
@@ -204,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                               );
                             },
-                            child: Text(
+                            child: NoScaledText(
                               '注册',
                               style: TextStyle(
                                 color: Colors.blue,
@@ -246,7 +247,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                   child: Center(
-                                    child: Text(
+                                    child: NoScaledText(
                                       '$_countdown',
                                       style: TextStyle(
                                         fontSize: ScreenUtil().setSp(45),
@@ -262,10 +263,10 @@ class _LoginPageState extends State<LoginPage> {
                                     builder: (context) {
                                       return RaisedButton(
                                         elevation: 3,
-                                        child: Text(
+                                        child: NoScaledText(
                                           '获取',
                                           style: TextStyle(
-                                            fontSize: ScreenUtil().setSp(50),
+                                            fontSize: 20,
                                           ),
                                         ),
                                         onPressed: () =>
@@ -291,10 +292,9 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (BuildContext context) {
                             return RaisedButton(
                               elevation: 0,
-                              child: Text(
+                              child: NoScaledText(
                                 '登录',
-                                style:
-                                    TextStyle(fontSize: ScreenUtil().setSp(50)),
+                                style: TextStyle(fontSize: 20),
                               ),
                               color: Colors.blue[200],
                               colorBrightness: Brightness.dark,

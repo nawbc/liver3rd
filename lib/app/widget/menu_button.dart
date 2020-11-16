@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/widget/menu_button_lib.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class MenuButton extends StatefulWidget {
   final List itemsList;
@@ -46,7 +47,7 @@ class _MenuButtonState extends State<MenuButton> {
         child: Row(
           mainAxisAlignment: widget.mainAxisAlignment,
           children: <Widget>[
-            Text(content, style: TextStyle(color: Colors.grey)),
+            NoScaledText(content, style: TextStyle(color: Colors.grey)),
             Icon(
               Icons.arrow_drop_down,
               color: Colors.grey,
@@ -73,7 +74,9 @@ class _MenuButtonState extends State<MenuButton> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: item is Widget
             ? item
-            : Center(child: Text(item, style: TextStyle(color: Colors.grey))),
+            : Center(
+                child:
+                    NoScaledText(item, style: TextStyle(color: Colors.grey))),
       ),
       toggledChild: Container(
         color: Colors.grey[200],

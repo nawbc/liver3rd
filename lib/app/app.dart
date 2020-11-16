@@ -41,6 +41,7 @@ import 'package:liver3rd/app/widget/bottom_dynamic_display_button.dart';
 import 'package:liver3rd/app/widget/webview_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class LiverApp extends StatefulWidget {
   @override
@@ -60,47 +61,48 @@ class _LiverAppState extends State<LiverApp> {
     super.initState();
 
     Navigate.registerRoutes(
-        routes: {
-          'main': mainPageHandler,
-          'splash': splashPageHandler,
-          'redemptions': redemptionsPageHandler,
-          'valkyries': valkyriesPageHandler,
-          'ys': ysRolePageHandler,
-          'setting': settingsPageHandler,
-          'login': loginPageHandler,
-          'switchgame': selectGamePageHandler,
-          'bhselect': bhSelectPageHandler,
-          'ysselect': ysSelectPageHandler,
-          'arms': armsPageHandler,
-          'bhcomic': bhComicPageHandler,
-          'yscomic': ysComicPageHandler,
-          'bhcomiccontent': bhComicContentPageHandler,
-          'yscomiccontent': ysComicContentPageHandler,
-          'musicplayer': musicPlayerPageHandler,
-          'musicpage': musicPageHandler,
-          'wallpaper': wallPaperPageHandler,
-          'inapppurchase': inAppPurchaseHandler,
-          'pushredemption': pushRedemptionEditorPageHandler,
-          'shop': shopPageHandler,
-          'presentdetail': shopPresentDetailPageHandler,
-          'photoviewpage': photoViewPageHandler,
-          'post': forumPostPageHandler,
-          'userprofile': userProfilePageHandler,
-          'posteditor': userPostEditorPageHandler,
-          'searchpage': searchPageHandler,
-          'topic': topicPageHandler,
-          'about': aboutPageHandler,
-          'settingmsg': forumSettingsMsgPageHandler,
-          'settingprivacy': forumSettingsPrivacyPageHandler,
-          'settingpassport': forumSettingsPassportPagedler,
-          'accounteditor': accountEditorPageHandler,
-          'webview': webviewPageHandler,
-          'topicinfo': topicFullInfoHandler,
-        },
-        defualtTransactionType: TransactionType.fromBottom,
-        beforeAllNavigate: () {
-          bddButton?.remove();
-        });
+      routes: {
+        'main': mainPageHandler,
+        'splash': splashPageHandler,
+        'redemptions': redemptionsPageHandler,
+        'valkyries': valkyriesPageHandler,
+        'ys': ysRolePageHandler,
+        'setting': settingsPageHandler,
+        'login': loginPageHandler,
+        'switchgame': selectGamePageHandler,
+        'bhselect': bhSelectPageHandler,
+        'ysselect': ysSelectPageHandler,
+        'arms': armsPageHandler,
+        'bhcomic': bhComicPageHandler,
+        'yscomic': ysComicPageHandler,
+        'bhcomiccontent': bhComicContentPageHandler,
+        'yscomiccontent': ysComicContentPageHandler,
+        'musicplayer': musicPlayerPageHandler,
+        'musicpage': musicPageHandler,
+        'wallpaper': wallPaperPageHandler,
+        'inapppurchase': inAppPurchaseHandler,
+        'pushredemption': pushRedemptionEditorPageHandler,
+        'shop': shopPageHandler,
+        'presentdetail': shopPresentDetailPageHandler,
+        'photoviewpage': photoViewPageHandler,
+        'post': forumPostPageHandler,
+        'userprofile': userProfilePageHandler,
+        'posteditor': userPostEditorPageHandler,
+        'searchpage': searchPageHandler,
+        'topic': topicPageHandler,
+        'about': aboutPageHandler,
+        'settingmsg': forumSettingsMsgPageHandler,
+        'settingprivacy': forumSettingsPrivacyPageHandler,
+        'settingpassport': forumSettingsPassportPagedler,
+        'accounteditor': accountEditorPageHandler,
+        'webview': webviewPageHandler,
+        'topicinfo': topicFullInfoHandler,
+      },
+      defualtTransactionType: TransactionType.fromBottom,
+      beforeAllNavigate: () {
+        bddButton?.remove();
+      },
+    );
 
     // 储存权限
 
@@ -131,23 +133,27 @@ class _LiverAppState extends State<LiverApp> {
     // MaterialPageRoute(builder: null)
 
     return Storager.init(
-      context: context,
-      child: MaterialApp(
-        title: "肝肝肝",
-        navigatorObservers: <NavigatorObserver>[observer],
-        onUnknownRoute: (RouteSettings rs) => new MaterialPageRoute(
-          builder: (context) => Center(
-            child: Text(
-              '未知页面',
-              style: TextStyle(fontSize: 22),
+      child: MediaQuery(
+        ///不受系统字体缩放影响
+        data: MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+            .copyWith(textScaleFactor: 1),
+        child: MaterialApp(
+          title: "肝肝肝",
+          navigatorObservers: <NavigatorObserver>[observer],
+          onUnknownRoute: (RouteSettings rs) => new MaterialPageRoute(
+            builder: (context) => Center(
+              child: NoScaledText(
+                '未知页面',
+                style: TextStyle(fontSize: 22),
+              ),
             ),
           ),
-        ),
-        home: SplashPage(),
-        theme: ThemeData(
-          primaryColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white,
-          // platform: TargetPlatform.iOS,
+          home: SplashPage(),
+          theme: ThemeData(
+            primaryColor: Colors.white,
+            scaffoldBackgroundColor: Colors.white,
+            // platform: TargetPlatform.iOS,
+          ),
         ),
       ),
     );

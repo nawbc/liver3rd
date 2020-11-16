@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class SendPostPage extends StatefulWidget {
   @override
@@ -40,11 +41,11 @@ class _SendPostPageState extends State<SendPostPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
+                  NoScaledText(
                     title,
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
-                  Text(
+                  NoScaledText(
                     subTitle,
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),

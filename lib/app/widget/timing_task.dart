@@ -12,6 +12,7 @@ import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class TimingTask extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _TimingTaskState extends State<TimingTask> {
   DateTime _dateTime;
   bool _isChecked = false;
   Settings settings;
-  InterstitialAd _interstitialAd;
+  // InterstitialAd _interstitialAd;
 
   @override
   void initState() {
@@ -95,41 +96,41 @@ class _TimingTaskState extends State<TimingTask> {
               Builder(builder: (context) {
                 return GestureDetector(
                   onTap: () async {
-                    _interstitialAd = createInterstitialAd((event) async {
-                      switch (event) {
-                        case MobileAdEvent.leftApplication:
-                          await registerTask();
-                          if (mounted) {
-                            setState(() {
-                              _isChecked = true;
-                            });
-                          }
-                          _interstitialAd?.dispose();
-                          break;
-                        case MobileAdEvent.loaded:
-                          _interstitialAd.show(
-                            anchorType: AnchorType.bottom,
-                            anchorOffset: 0.0,
-                            horizontalCenterOffset: 0.0,
-                          );
-                          break;
-                        case MobileAdEvent.failedToLoad:
-                          await registerTask();
-                          if (mounted) {
-                            setState(() {
-                              _isChecked = true;
-                            });
-                          }
-                          FLog.error(
-                            className: 'TimingTask',
-                            methodName: 'load',
-                            text: 'fail to load ads',
-                          );
-                          break;
-                        default:
-                          break;
-                      }
-                    });
+                    // _interstitialAd = createInterstitialAd((event) async {
+                    //   switch (event) {
+                    //     case MobileAdEvent.leftApplication:
+                    //       await registerTask();
+                    //       if (mounted) {
+                    //         setState(() {
+                    //           _isChecked = true;
+                    //         });
+                    //       }
+                    //       _interstitialAd?.dispose();
+                    //       break;
+                    //     case MobileAdEvent.loaded:
+                    //       _interstitialAd.show(
+                    //         anchorType: AnchorType.bottom,
+                    //         anchorOffset: 0.0,
+                    //         horizontalCenterOffset: 0.0,
+                    //       );
+                    //       break;
+                    //     case MobileAdEvent.failedToLoad:
+                    //       await registerTask();
+                    //       if (mounted) {
+                    //         setState(() {
+                    //           _isChecked = true;
+                    //         });
+                    //       }
+                    //       FLog.error(
+                    //         className: 'TimingTask',
+                    //         methodName: 'load',
+                    //         text: 'fail to load ads',
+                    //       );
+                    //       break;
+                    //     default:
+                    //       break;
+                    //   }
+                    // });
 
                     if (_isChecked) {
                       await Share.setString(TIMING_TASK_TIME, null);
@@ -141,10 +142,16 @@ class _TimingTaskState extends State<TimingTask> {
                           _isChecked = false;
                         });
                     } else {
-                      _interstitialAd..load();
-                      Scaffold.of(context).showSnackBar(CommonWidget.snack(
-                          '广告加载中......',
-                          duration: Duration(milliseconds: 2000)));
+                      if (mounted) {
+                        setState(() {
+                          _isChecked = true;
+                        });
+                      }
+                      await registerTask();
+                      // _interstitialAd..load();
+                      // Scaffold.of(context).showSnackBar(CommonWidget.snack(
+                      //     '广告加载中......',
+                      //     duration: Duration(milliseconds: 2000)));
                     }
                     settings.setTiningTaskTime(isNotify: true);
                   },
@@ -158,7 +165,7 @@ class _TimingTaskState extends State<TimingTask> {
                 );
               }),
               SizedBox(height: 3),
-              Text(
+              NoScaledText(
                 '定时签到',
                 style: TextStyle(color: Colors.grey),
               )

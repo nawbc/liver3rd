@@ -10,6 +10,7 @@ import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class PayCard extends StatelessWidget {
   final Color buttonColor;
@@ -34,7 +35,7 @@ class PayCard extends StatelessWidget {
           child: Container(
             constraints: BoxConstraints.expand(),
             padding: EdgeInsets.all(ScreenUtil().setWidth(50)),
-            child: Text(
+            child: NoScaledText(
               text,
               softWrap: true,
               style: TextStyle(color: Colors.grey[400], fontSize: textSize),
@@ -64,7 +65,7 @@ class PayCard extends StatelessWidget {
                       ),
                     ),
                     onPressed: onPressed != null ? onPressed : () {},
-                    child: Text(
+                    child: NoScaledText(
                       '跳转(不支付也能解锁)',
                       style: TextStyle(
                         color: Colors.white,
@@ -96,7 +97,7 @@ class _InAppPurchasePageState extends State<InAppPurchase> {
 
   List<Tab> _inAppPurchaseTabList = [
     Tab(
-      child: Text(
+      child: NoScaledText(
         '微信',
         style: TextStyle(
           fontSize: 18,
@@ -106,7 +107,7 @@ class _InAppPurchasePageState extends State<InAppPurchase> {
       ),
     ),
     Tab(
-      child: Text(
+      child: NoScaledText(
         '支付宝',
         style: TextStyle(
           fontSize: 18,

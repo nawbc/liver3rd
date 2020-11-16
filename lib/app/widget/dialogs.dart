@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 // ignore: must_be_immutable
 class ListDialog extends Dialog {
@@ -42,7 +43,7 @@ class ListDialog extends Dialog {
                     children: [
                       if (title != null)
                         ListTile(
-                          title: Text(
+                          title: NoScaledText(
                             title,
                             style: TextStyle(color: Colors.grey, fontSize: 20),
                           ),
@@ -71,7 +72,7 @@ class Dialogs {
               Radius.circular(5),
             ),
           ),
-          title: Text(
+          title: NoScaledText(
             content,
             style: color ?? TextStyle(color: Colors.grey),
           ),
@@ -98,7 +99,7 @@ class Dialogs {
               Radius.circular(5),
             ),
           ),
-          title: Text(
+          title: NoScaledText(
             title,
             style: color ?? TextStyle(color: Colors.grey),
           ),

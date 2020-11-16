@@ -1,15 +1,10 @@
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
-import 'package:f_logs/model/flog/flog.dart';
 import 'package:firebase_admob/firebase_admob.dart';
-import 'package:liver3rd/app/page/ads.dart';
 import 'package:liver3rd/app/page/forum/more/more_page.dart';
 import 'package:liver3rd/app/page/forum/send_post_page.dart';
 import 'package:liver3rd/app/page/forum/widget/forum_page_frame.dart';
 import 'package:liver3rd/app/store/user.dart';
-import 'package:liver3rd/app/utils/app_text.dart';
-import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/col_icon_button.dart';
-import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/custom_modal_bottom_sheet.dart';
 import 'package:liver3rd/app/page/forum/user/my_info_modal.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +17,7 @@ import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -76,7 +72,7 @@ class _MainPageState extends State<MainPage> {
 
   List<Tab> _mainPageTabList = ['崩坏3', '原神', '更多', '发帖'].map((val) {
     return Tab(
-      child: Text(
+      child: NoScaledText(
         val,
         style: TextStyle(fontSize: 16, color: Colors.grey[600]),
       ),
@@ -98,38 +94,39 @@ class _MainPageState extends State<MainPage> {
         return FloatingActionButton(
           heroTag: _heroTag,
           onPressed: () async {
-            TinyUtils.checkPurchase(context, () {
-              _interstitialAd = createInterstitialAd((event) {
-                switch (event) {
-                  case MobileAdEvent.leftApplication:
-                    Navigate.navigate(context, 'redemptions');
-                    _interstitialAd?.dispose();
-                    break;
-                  case MobileAdEvent.loaded:
-                    _interstitialAd.show(
-                      anchorType: AnchorType.bottom,
-                      anchorOffset: 0.0,
-                      horizontalCenterOffset: 0.0,
-                    );
-                    break;
-                  case MobileAdEvent.failedToLoad:
-                    Navigate.navigate(context, 'redemptions');
-                    FLog.error(
-                      className: "MobileAdEvent",
-                      methodName: "load",
-                      text: "fail to load ads",
-                    );
-                    break;
-                  default:
-                    break;
-                }
-              });
-              _interstitialAd..load();
-              Scaffold.of(context).showSnackBar(
-                CommonWidget.snack(TextSnack['loadingAds'],
-                    duration: Duration(milliseconds: 2000)),
-              );
-            });
+            Navigate.navigate(context, 'redemptions');
+            // TinyUtils.checkPurchase(context, () {
+            // _interstitialAd = createInterstitialAd((event) {
+            //   switch (event) {
+            //     case MobileAdEvent.leftApplication:
+            //       Navigate.navigate(context, 'redemptions');
+            //       _interstitialAd?.dispose();
+            //       break;
+            //     case MobileAdEvent.loaded:
+            //       _interstitialAd.show(
+            //         anchorType: AnchorType.bottom,
+            //         anchorOffset: 0.0,
+            //         horizontalCenterOffset: 0.0,
+            //       );
+            //       break;
+            //     case MobileAdEvent.failedToLoad:
+            //       Navigate.navigate(context, 'redemptions');
+            //       FLog.error(
+            //         className: "MobileAdEvent",
+            //         methodName: "load",
+            //         text: "fail to load ads",
+            //       );
+            //       break;
+            //     default:
+            //       break;
+            //   }
+            // });
+            //   _interstitialAd..load();
+            //   Scaffold.of(context).showSnackBar(
+            //     CommonWidget.snack(TextSnack['loadingAds'],
+            //         duration: Duration(milliseconds: 2000)),
+            //   );
+            // });
           },
           child: CustomIcons.present,
           backgroundColor: Colors.blue[200],

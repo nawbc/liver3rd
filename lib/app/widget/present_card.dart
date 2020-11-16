@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class PresentCard extends StatelessWidget {
   final String heroTag;
@@ -76,7 +77,7 @@ class PresentCard extends StatelessWidget {
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     fit: StackFit.expand,
                     children: <Widget>[
-                      Text(
+                      NoScaledText(
                         goodsName,
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(45),
@@ -85,7 +86,7 @@ class PresentCard extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(
+                        child: NoScaledText(
                           '限购 $accountExchangeNum/$accountCycleLimit',
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -98,7 +99,7 @@ class PresentCard extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: Transform.rotate(
                             angle: pi / 8,
-                            child: Text(
+                            child: NoScaledText(
                               '已售罄',
                               style: TextStyle(
                                 color: Colors.red,
@@ -117,7 +118,7 @@ class PresentCard extends StatelessWidget {
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  Text(
+                                  NoScaledText(
                                     '$price',
                                     style: TextStyle(
                                       color: Colors.amber,
@@ -125,7 +126,7 @@ class PresentCard extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(width: ScreenUtil().setHeight(10)),
-                                  Text(
+                                  NoScaledText(
                                     '米游币',
                                     style: TextStyle(
                                       color: Colors.grey,
@@ -134,7 +135,7 @@ class PresentCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Text(
+                              NoScaledText(
                                 '库存 ${type == 1 ? total : '∞'}',
                                 style: TextStyle(
                                   color: Colors.grey[400],

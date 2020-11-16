@@ -12,6 +12,7 @@ import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class SearchTopicsFragment extends StatefulWidget {
   final int gids;
@@ -163,7 +164,7 @@ class _SearchTopicsFragment extends State<SearchTopicsFragment>
                           children: <Widget>[
                             Container(
                               width: screenWidth / 2,
-                              child: Text(
+                              child: NoScaledText(
                                 topic['desc'],
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.grey[300]),

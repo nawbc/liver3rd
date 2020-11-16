@@ -20,6 +20,7 @@ import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class ForumPostPage extends StatefulWidget {
   final String postId;
@@ -87,7 +88,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
       padding: EdgeInsets.only(
         right: 10,
       ),
-      child: Text(
+      child: NoScaledText(
         content,
         style: TextStyle(
           fontSize: 18.0,
@@ -291,7 +292,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                   subTitle: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Text(
+                                      NoScaledText(
                                         TinyUtils.humanTime(currentPost['post']
                                                 ['created_at'] *
                                             1000),
@@ -303,7 +304,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                       Container(
                                         constraints: BoxConstraints(
                                             maxWidth: screenWidth / 4),
-                                        child: Text(
+                                        child: NoScaledText(
                                           currentPost['user']['certification']
                                               ['label'],
                                           style: TextStyle(
@@ -345,7 +346,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                       left: 12, right: 12, top: 15, bottom: 25),
                                   child: Wrap(
                                     children: <Widget>[
-                                      Text(
+                                      NoScaledText(
                                         currentPost['post']['subject'],
                                         style: TextStyle(
                                           fontSize: 26,
@@ -372,7 +373,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                 ),
                                 SizedBox(height: 8),
                                 Container(
-                                  child: Text(
+                                  child: NoScaledText(
                                     '浏览数: ${currentPost['stat']['view_num']}',
                                     style: TextStyle(
                                       color: Colors.grey[400],
@@ -393,7 +394,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                           },
                                           child: Chip(
                                             backgroundColor: Colors.blue[200],
-                                            label: Text(
+                                            label: NoScaledText(
                                               ele['name'],
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -409,7 +410,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                   Container(
                                     height: 70,
                                     child: Center(
-                                      child: Text(
+                                      child: NoScaledText(
                                         '上滑加载评论',
                                         style: TextStyle(
                                           color: Colors.grey,

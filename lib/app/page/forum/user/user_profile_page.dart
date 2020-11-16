@@ -8,7 +8,7 @@ import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/page/forum/user/comment_history_fragment.dart';
 import 'package:liver3rd/app/page/forum/user/favorite_fragment.dart';
 import 'package:liver3rd/app/page/forum/user/post_history_fragment.dart';
-
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:liver3rd/app/store/user.dart';
 
 import 'package:liver3rd/app/store/wallpapers.dart';
@@ -64,7 +64,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   };
 
   List<Widget> _userTabbars = ['帖子', '评论', '收藏'].map<Widget>((val) {
-    return Text(
+    return NoScaledText(
       val,
       style: TextStyle(
         fontSize: 18,
@@ -172,7 +172,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
+                NoScaledText(
                   title,
                   style: TextStyle(
                     fontSize: 24,
@@ -181,7 +181,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ),
                 ),
                 SizedBox(height: 4),
-                Text(
+                NoScaledText(
                   content,
                   style: TextStyle(
                     fontSize: 16,
@@ -202,9 +202,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
       width: (width - 80) / 3,
       child: Column(
         children: <Widget>[
-          Text('$up', style: TextStyle(fontSize: 18)),
+          NoScaledText('$up', style: TextStyle(fontSize: 18)),
           SizedBox(height: 4),
-          Text('$down', style: TextStyle(color: Colors.grey))
+          NoScaledText('$down', style: TextStyle(color: Colors.grey))
         ],
       ),
     );
@@ -331,7 +331,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                     Container(
                                       constraints: BoxConstraints(
                                           maxWidth: mediaSize.width - 240),
-                                      child: Text(
+                                      child: NoScaledText(
                                         userInfo['nickname'],
                                         style: TextStyle(
                                             color: Colors.white,
@@ -366,7 +366,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                   MainAxisAlignment.center,
                                               children: isFollowing
                                                   ? [
-                                                      Text(
+                                                      NoScaledText(
                                                         '已关注',
                                                         style: TextStyle(
                                                             fontSize: 12),
@@ -374,7 +374,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                     ]
                                                   : <Widget>[
                                                       Icon(Icons.add, size: 12),
-                                                      Text(
+                                                      NoScaledText(
                                                         '关注',
                                                         style: TextStyle(
                                                             fontSize: 12),
@@ -398,7 +398,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 children: [
                                   CustomIcons.badge(width: 20),
                                   SizedBox(width: 5),
-                                  Text(
+                                  NoScaledText(
                                     userLabel == '' ? '路人甲' : userLabel,
                                     style: TextStyle(
                                       color: Colors.white,
@@ -422,7 +422,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             constraints: BoxConstraints(
                                 maxWidth: mediaSize.width - avatarSize + 40),
                             padding: EdgeInsets.only(left: avatarSize + 40),
-                            child: Text(
+                            child: NoScaledText(
                               '签名: $introduce',
                               style: TextStyle(
                                 color: Colors.black87,
@@ -467,7 +467,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         Container(
                           height: 25,
                           padding: EdgeInsets.only(left: 22),
-                          child: Text(
+                          child: NoScaledText(
                             '社区等级',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),

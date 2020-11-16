@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/custom_chip.dart';
@@ -8,6 +7,7 @@ import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/app/widget/row_icon_button.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class PostBlock extends StatefulWidget {
   final Function(bool) onTapUpvote;
@@ -89,10 +89,10 @@ class _PostBlockState extends State<PostBlock>
                 children: <Widget>[
                   Container(
                     width: screenWidth,
-                    child: Text(
+                    child: NoScaledText(
                       widget.title.trim(),
                       style: TextStyle(
-                        fontSize: ScreenUtil().setSp(50),
+                        fontSize: 16,
                         color: Colors.grey[600],
                       ),
                       softWrap: true,
@@ -102,7 +102,7 @@ class _PostBlockState extends State<PostBlock>
                   SizedBox(height: 6),
                   Container(
                     width: screenWidth,
-                    child: Text(
+                    child: NoScaledText(
                       widget.postContent,
                       style: TextStyle(
                         fontSize: 15,
@@ -205,7 +205,7 @@ class _PostBlockState extends State<PostBlock>
                       Navigate.navigate(context, 'topicinfo',
                           arg: {'forumId': widget.topics[0]['id']});
                     },
-                    content: Text(
+                    content: NoScaledText(
                       widget.topics[0]['name'],
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

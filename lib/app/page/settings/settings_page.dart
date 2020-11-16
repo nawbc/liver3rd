@@ -8,7 +8,7 @@ import 'package:liver3rd/app/widget/title_divider.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
-
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 class SettingsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -47,20 +47,21 @@ class _SettingsPageState extends State<SettingsPage> {
                     if (_user.isLogin) ...[
                       TitleDivider(
                         height: 60,
-                        title: Text('社区', style: TextStyle(fontSize: 14)),
+                        title:
+                            NoScaledText('社区', style: TextStyle(fontSize: 14)),
                         color: Colors.blue[200],
                       ),
                       ForumSettingsFragment(),
                     ],
                     TitleDivider(
                       height: 60,
-                      title: Text('软件', style: TextStyle(fontSize: 14)),
+                      title: NoScaledText('软件', style: TextStyle(fontSize: 14)),
                       color: Colors.blue[200],
                     ),
                     SoftwareSettingsFragment(),
                     TitleDivider(
                       height: 60,
-                      title: Text('其他', style: TextStyle(fontSize: 14)),
+                      title: NoScaledText('其他', style: TextStyle(fontSize: 14)),
                       color: Colors.blue[200],
                     ),
                     OtherSettingsFragment(),

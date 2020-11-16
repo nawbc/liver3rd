@@ -9,6 +9,7 @@ import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class PostHistoryFragment extends StatefulWidget {
   final String uid;
@@ -155,7 +156,7 @@ class _PostHistoryFragment extends State<PostHistoryFragment>
                     headBlock: Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(left: 15, bottom: 15),
-                      child: Text(
+                      child: NoScaledText(
                         post['created_at'],
                         style: TextStyle(fontSize: 20, color: Colors.grey),
                       ),

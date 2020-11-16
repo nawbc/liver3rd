@@ -11,6 +11,7 @@ import 'package:liver3rd/app/widget/option_item_widget.dart';
 import 'package:liver3rd/custom/extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:liver3rd/custom/extended_nested_scroll_view/src/old_extended_nested_scroll_view.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class TopicType0 extends StatefulWidget {
   final List<Widget> tabViews;
@@ -119,7 +120,7 @@ class _TopicType0 extends State<TopicType0> {
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(120),
                 child: Column(children: [
-                  Text(
+                  NoScaledText(
                     widget.name,
                     style: TextStyle(color: Colors.white, fontSize: 22),
                   ),
@@ -128,7 +129,7 @@ class _TopicType0 extends State<TopicType0> {
                     width: 50,
                     height: 30,
                     onPressed: () {},
-                    child: Text(
+                    child: NoScaledText(
                       '关注',
                       style: TextStyle(fontSize: 14),
                     ),
@@ -137,7 +138,7 @@ class _TopicType0 extends State<TopicType0> {
                   SizedBox(height: 8),
                   Container(
                     width: screenWidth - 60,
-                    child: Text(
+                    child: NoScaledText(
                       '简介: ' + widget.introduce,
                       style: TextStyle(color: Colors.white, fontSize: 12),
                       overflow: TextOverflow.ellipsis,
@@ -163,7 +164,7 @@ class _TopicType0 extends State<TopicType0> {
                                           arg: {'forumId': val['id']});
                                     },
                                     child: Chip(
-                                      label: Text(
+                                      label: NoScaledText(
                                         '${val['name']}',
                                       ),
                                       backgroundColor: Colors.white,
@@ -215,7 +216,7 @@ class _TopicType0 extends State<TopicType0> {
                               width: 40,
                               height: 26,
                               onPressed: () {},
-                              child: Text('顶置'),
+                              child: NoScaledText('顶置'),
                             ),
                           ),
                         ),
@@ -257,7 +258,7 @@ class _TopicType0 extends State<TopicType0> {
                     onPressed: () {
                       widget.onSortButtonPressed(widget.sortType);
                     },
-                    child: Text(
+                    child: NoScaledText(
                       widget.sortType == 1 ? '按发帖顺序' : '按时间顺序',
                       style: TextStyle(color: Colors.white, fontSize: 11),
                     ),

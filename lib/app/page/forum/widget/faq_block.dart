@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class FaqBlock extends StatelessWidget {
   final Function onTap;
@@ -40,7 +41,7 @@ class FaqBlock extends StatelessWidget {
                     ),
                     color: Colors.orange),
                 child: Center(
-                  child: Text(
+                  child: NoScaledText(
                     '问',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -49,7 +50,7 @@ class FaqBlock extends StatelessWidget {
               SizedBox(width: 20),
               Container(
                 width: MediaQuery.of(context).size.width - 100,
-                child: Text(question, softWrap: true),
+                child: NoScaledText(question, softWrap: true),
               )
             ],
           ),
@@ -66,7 +67,7 @@ class FaqBlock extends StatelessWidget {
                     ),
                     color: Colors.blue),
                 child: Center(
-                  child: Text(
+                  child: NoScaledText(
                     '答',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -75,7 +76,7 @@ class FaqBlock extends StatelessWidget {
               SizedBox(width: 20),
               Container(
                 width: MediaQuery.of(context).size.width - 100,
-                child: Text(answer, softWrap: true),
+                child: NoScaledText(answer, softWrap: true),
               )
             ],
           ),
@@ -94,10 +95,10 @@ class FaqBlock extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 20),
-                  Text(name)
+                  NoScaledText(name)
                 ],
               ),
-              Text('全部$answerCount个回答')
+              NoScaledText('全部$answerCount个回答')
             ],
           ),
         ]),

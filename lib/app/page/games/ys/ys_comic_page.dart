@@ -6,6 +6,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:liver3rd/app/api/ys/ys_comics_api.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class YsComicPage extends StatefulWidget {
   final ScrollController nestController;
@@ -92,7 +93,7 @@ class _YsComicPageState extends State<YsComicPage> {
                                     right: ScreenUtil().setWidth(40),
                                   ),
                                   child: Center(
-                                    child: Text(
+                                    child: NoScaledText(
                                       _comics[index]['title'],
                                       style: TextStyle(
                                         fontSize: ScreenUtil().setSp(50),

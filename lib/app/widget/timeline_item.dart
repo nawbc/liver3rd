@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:uuid/uuid.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class Timeline extends StatelessWidget {
   final String avatarUrl;
@@ -90,7 +91,7 @@ class Timeline extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
+                            NoScaledText(
                               username,
                               style: TextStyle(
                                 fontSize: 20,
@@ -98,7 +99,7 @@ class Timeline extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 2),
-                            Text(
+                            NoScaledText(
                               'UID: $uid',
                               style: TextStyle(
                                   fontSize: 12, color: Colors.grey[700]),
@@ -199,7 +200,7 @@ class Timeline extends StatelessWidget {
                                         scrollDirection: Axis.vertical,
                                         padding: EdgeInsets.all(0.0),
                                         physics: BouncingScrollPhysics(),
-                                        child: Text(
+                                        child: NoScaledText(
                                           '内容: $description',
                                           style: TextStyle(
                                             color: Colors.black38,
@@ -212,7 +213,7 @@ class Timeline extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  Text(
+                                  NoScaledText(
                                     '过期时间:  ${expire?.substring(0, 19)}',
                                     style: TextStyle(
                                       color: Colors.red[400],
@@ -231,7 +232,7 @@ class Timeline extends StatelessWidget {
                   padding: EdgeInsets.only(
                     right: 20,
                   ),
-                  child: Text(
+                  child: NoScaledText(
                     '时间:  $createAt',
                     style: TextStyle(color: Colors.grey[600]),
                   ),

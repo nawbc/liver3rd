@@ -12,6 +12,7 @@ import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -282,7 +283,7 @@ class _SplashPage extends State<SplashPage> with TickerProviderStateMixin {
                   borderRadius: BorderRadius.circular(6)),
               margin: EdgeInsets.only(bottom: 20, left: 25),
               padding: EdgeInsets.all(2),
-              child: Text(
+              child: NoScaledText(
                 '长按保存图片',
                 style: TextStyle(
                   color: Colors.white,

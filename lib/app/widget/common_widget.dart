@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:liver3rd/app/widget/empty_widget.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   SliverAppBarDelegate({
@@ -39,7 +40,7 @@ class CommonWidget {
   static Widget snack(String content, {Duration duration, bool isError}) {
     return SnackBar(
       duration: duration != null ? duration : Duration(milliseconds: 4000),
-      content: Text(
+      content: NoScaledText(
         content,
         style: TextStyle(color: Colors.white, fontSize: 18),
       ),
@@ -72,14 +73,17 @@ class CommonWidget {
               Radius.circular(12),
             ),
           ),
-          child: child != null ? child : Text(content, style: textStyle),
+          child: child != null
+              ? child
+              : NoScaledText(content,
+                  style: textStyle, overflow: TextOverflow.ellipsis),
           onPressed: onPressed,
         ),
       );
 
   static tabTitle(String val,
           {double fontSize = 18, color = const Color(0xFF9E9E9E)}) =>
-      Text(
+      NoScaledText(
         val,
         style: TextStyle(
           fontSize: fontSize,
@@ -111,13 +115,14 @@ class CommonWidget {
               Radius.circular(12),
             ),
           ),
-          child: child != null ? child : Text(content, style: textStyle),
+          child:
+              child != null ? child : NoScaledText(content, style: textStyle),
           onPressed: onPressed,
         ),
       );
 
   static Widget titleText(String text) {
-    return Text(
+    return NoScaledText(
       text,
       style: TextStyle(color: Colors.grey, fontSize: 20),
     );
@@ -138,7 +143,7 @@ class CommonWidget {
               Icons.lock,
               color: Colors.grey,
             ),
-            Text(
+            NoScaledText(
               "没有权限",
               style: TextStyle(color: Colors.grey),
             )

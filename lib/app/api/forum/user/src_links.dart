@@ -71,3 +71,12 @@ final String editUserInfoUrl =
 //设置头像
 final String setUserAvatarsUrl =
     'https://api-static.mihoyo.com/takumi/misc/wapi/avatar_set';
+
+// 密码登录
+
+// 创建一个时间戳 返回的参数给极验
+final String createTimestamp =
+    'https://webapi.account.mihoyo.com/Api/create_mmt?scene_type=1&now=1605538910336&reason=bbs.mihoyo.com';
+
+final String loginWithPwdUrl =
+    'https://webapi.account.mihoyo.com/Api/create_mmt?scene_type=1&now=1605538910336&reason=bbs.mihoyo.com';

@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class PushCodeEditorPage extends StatefulWidget {
   final String targetType;
@@ -181,7 +182,7 @@ class _PushCodeEditorPageState extends State<PushCodeEditorPage> {
                     padding: EdgeInsets.only(left: 5),
                     child: Row(
                       children: <Widget>[
-                        Text(
+                        NoScaledText(
                           '过期日期',
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(50),
@@ -189,7 +190,7 @@ class _PushCodeEditorPageState extends State<PushCodeEditorPage> {
                           ),
                         ),
                         SizedBox(width: 10),
-                        Text(
+                        NoScaledText(
                           '${_selectedValue.year}/${_selectedValue.month}/${_selectedValue.day}',
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(50),
@@ -214,7 +215,7 @@ class _PushCodeEditorPageState extends State<PushCodeEditorPage> {
                   SizedBox(height: ScreenUtil().setHeight(60)),
                   Padding(
                     padding: EdgeInsets.only(left: 5),
-                    child: Text(
+                    child: NoScaledText(
                       '请不要随意发布无关兑换码',
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(30),

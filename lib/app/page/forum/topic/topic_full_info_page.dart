@@ -11,6 +11,7 @@ import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:liver3rd/custom/extended_nested_scroll_view/src/old_extended_nested_scroll_view.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class TopicFullTopicPage extends StatefulWidget {
   final int forumId;
@@ -167,7 +168,7 @@ class _TopicFullTopicPageState extends State<TopicFullTopicPage> {
                     bottom: PreferredSize(
                       preferredSize: Size.fromHeight(120),
                       child: Column(children: [
-                        Text(
+                        NoScaledText(
                           '${_topicData['topic']['name']}',
                           style: TextStyle(color: Colors.white, fontSize: 22),
                         ),
@@ -176,7 +177,7 @@ class _TopicFullTopicPageState extends State<TopicFullTopicPage> {
                           width: 50,
                           height: 30,
                           onPressed: () {},
-                          child: Text(
+                          child: NoScaledText(
                             '关注',
                             style: TextStyle(fontSize: 14),
                           ),
@@ -185,7 +186,7 @@ class _TopicFullTopicPageState extends State<TopicFullTopicPage> {
                         SizedBox(height: 8),
                         Container(
                           width: screenWidth - 60,
-                          child: Text(
+                          child: NoScaledText(
                             '简介: ${_topicData['topic']['desc']}',
                             style: TextStyle(color: Colors.white, fontSize: 12),
                             overflow: TextOverflow.ellipsis,

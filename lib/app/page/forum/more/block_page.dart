@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/store/games.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
@@ -138,8 +139,8 @@ class _BlockPageState extends State<BlockPage>
                                                     ),
                                                   ),
                                                 ),
-                                                Text('${val['name']}'),
-                                                Text(
+                                                NoScaledText('${val['name']}'),
+                                                NoScaledText(
                                                   '热度:${val['hot_score']}',
                                                   overflow:
                                                       TextOverflow.ellipsis,

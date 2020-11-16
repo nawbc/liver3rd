@@ -12,6 +12,7 @@ import 'package:liver3rd/app/widget/user_profile_label.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/app/page/forum/search/search_result_fragment.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class SearchHistoryList extends StatefulWidget {
   final Function(String) onChipTap;
@@ -45,7 +46,7 @@ class _SearchHistoryListState extends State<SearchHistoryList> {
           child: Chip(
             backgroundColor: Colors.grey[100],
             deleteIcon: Icon(Icons.delete_outline, color: Colors.blue[100]),
-            label: Text(actor, style: TextStyle(color: Colors.grey)),
+            label: NoScaledText(actor, style: TextStyle(color: Colors.grey)),
             onDeleted: () {
               setState(() {
                 _history.removeWhere((String entry) {
@@ -68,7 +69,7 @@ class _SearchHistoryListState extends State<SearchHistoryList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(children: <Widget>[
-            Text(
+            NoScaledText(
               '历史记录',
               style: TextStyle(
                   fontSize: 20,
@@ -197,7 +198,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(title,
+                      NoScaledText(title,
                           style: TextStyle(color: Colors.grey, fontSize: 20)),
                       Text.rich(
                         TextSpan(
@@ -206,7 +207,8 @@ class _SearchPageState extends State<SearchPage> {
                                 color: Colors.blue[200], fontSize: 16),
                             recognizer: TapGestureRecognizer()
                               ..onTap = onMoreTap),
-                      )
+                        textScaleFactor: 1,
+                      ),
                     ]),
                 padding: EdgeInsets.only(left: _lrp, right: _lrp),
               );
@@ -302,7 +304,7 @@ class _SearchPageState extends State<SearchPage> {
                                   Container(
                                     constraints: BoxConstraints(
                                         maxWidth: screenWidth / 2),
-                                    child: Text(
+                                    child: NoScaledText(
                                       user['introduce'],
                                       style: TextStyle(
                                           fontSize: 14,
@@ -418,7 +420,7 @@ class _SearchPageState extends State<SearchPage> {
                                   Container(
                                     constraints: BoxConstraints(
                                         maxWidth: screenWidth / 2),
-                                    child: Text(
+                                    child: NoScaledText(
                                       topic['desc'],
                                       style: TextStyle(
                                           fontSize: 14,

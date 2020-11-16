@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class ValkyrieCard extends StatelessWidget {
   final String coverUrl;
@@ -87,7 +88,7 @@ class ValkyrieCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
+                      NoScaledText(
                         armorName,
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(80),
@@ -101,14 +102,14 @@ class ValkyrieCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(20)),
-                      Text(
+                      NoScaledText(
                         '姓名:  $valkyrieName',
                         style: TextStyle(
                             fontSize: ScreenUtil().setSp(50),
                             color: Colors.white),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(15)),
-                      Text(
+                      NoScaledText(
                         '生日:  $birthday',
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(50),
@@ -116,14 +117,14 @@ class ValkyrieCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(15)),
-                      Text(
+                      NoScaledText(
                         '装甲:  $armorName',
                         style: TextStyle(
                             fontSize: ScreenUtil().setSp(50),
                             color: Colors.white),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(15)),
-                      Text(
+                      NoScaledText(
                         '作战方式:  $combatMode',
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(50),
@@ -156,7 +157,7 @@ class ValkyrieCard extends StatelessWidget {
                             SizedBox(
                               height: ScreenUtil().setHeight(5),
                             ),
-                            Text(
+                            NoScaledText(
                               ele['name'],
                               style: TextStyle(color: Colors.white),
                               overflow: TextOverflow.ellipsis,

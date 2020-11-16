@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:uuid/uuid.dart';
@@ -80,10 +80,10 @@ class UserProfileLabel extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             title ??
-                                Text(
+                                NoScaledText(
                                   nickName,
                                   style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(45),
+                                    fontSize: 16,
                                     color: Colors.grey,
                                   ),
                                 ),
@@ -99,10 +99,10 @@ class UserProfileLabel extends StatelessWidget {
                                 ),
                                 height: 18,
                                 padding: EdgeInsets.only(left: 5, right: 5),
-                                child: Text(
+                                child: NoScaledText(
                                   'Lv$level',
                                   style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(38),
+                                    fontSize: 12,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -116,7 +116,7 @@ class UserProfileLabel extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
+                                NoScaledText(
                                   createAt is String
                                       ? createAt
                                       : DateTime.fromMillisecondsSinceEpoch(
@@ -124,7 +124,7 @@ class UserProfileLabel extends StatelessWidget {
                                           .toString()
                                           .substring(5, 16),
                                   style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(40),
+                                    fontSize: 14,
                                     color: Colors.grey[300],
                                   ),
                                 ),

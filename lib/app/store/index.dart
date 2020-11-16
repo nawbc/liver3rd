@@ -12,10 +12,7 @@ import 'package:liver3rd/app/store/redemption.dart';
 import 'package:provider/provider.dart';
 
 class Storager {
-  static BuildContext widgetContext;
-  Widget child;
-
-  static MultiProvider init({context, child}) {
+  static MultiProvider init({child}) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Valkyries>(

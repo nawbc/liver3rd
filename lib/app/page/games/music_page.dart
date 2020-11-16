@@ -6,7 +6,7 @@ import 'package:liver3rd/app/api/netease/src_links.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
-
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 
 import 'package:share/share.dart';
@@ -102,8 +102,9 @@ class _MusicPageState extends State<MusicPage> {
                             ),
                           ),
                         ),
-                        subtitle: Text(playList[index]['ar'][0]['name']),
-                        title: Text(
+                        subtitle:
+                            NoScaledText(playList[index]['ar'][0]['name']),
+                        title: NoScaledText(
                           playList[index]['name'],
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(45),
@@ -115,7 +116,7 @@ class _MusicPageState extends State<MusicPage> {
                           itemBuilder: (BuildContext context) {
                             return <PopupMenuItem<String>>[
                               PopupMenuItem<String>(
-                                child: Text("分享"),
+                                child: NoScaledText("分享"),
                                 value: "share",
                                 textStyle: TextStyle(
                                     color: Color(0xff242424),

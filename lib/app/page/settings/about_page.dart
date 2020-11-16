@@ -5,6 +5,7 @@ import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _AboutPageState extends State<AboutPage> {
               onPress: () async {
                 Navigate.navigate(context, 'inapppurchase');
               },
-              extend: Text('sewerganger'),
+              extend: NoScaledText('sewerganger'),
               shadow: null,
             ),
             OptionItem(
@@ -54,7 +55,7 @@ class _AboutPageState extends State<AboutPage> {
               onPress: () async {
                 Navigate.navigate(context, 'about');
               },
-              extend: Text('GPL-3.0'),
+              extend: NoScaledText('GPL-3.0'),
               shadow: null,
             ),
             OptionItem(

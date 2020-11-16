@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class ColIconButton extends StatelessWidget {
   final Widget icon;
@@ -25,7 +26,7 @@ class ColIconButton extends StatelessWidget {
               child: icon,
             ),
             SizedBox(height: 4),
-            Text(
+            NoScaledText(
               title,
               style: TextStyle(
                 fontSize: 16,

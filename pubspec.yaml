@@ -67,7 +67,8 @@ dependencies:
   firebase_admob: ^0.9.3+2
   firebase_analytics: ^5.0.15
   f_logs: ^1.2.2
-  admob_flutter: ^1.0.0-beta.5
+  # disk_space: ^0.0.3
+  # admob_flutter: ^1.0.0-beta.5
   
   
   
@@ -94,49 +95,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/present.svg
-    - assets/images/setting.svg
-    - assets/images/user.svg
-    - assets/images/question.svg
-    - assets/images/copy.svg
-    - assets/images/game.svg
-    - assets/images/shop.svg
-    - assets/images/back.svg
-    - assets/images/male.svg
-    - assets/images/female.svg
-    - assets/images/bh_logo.png
-    - assets/images/ys_logo.png
-    - assets/images/female.svg
-    - assets/images/comic.svg
-    - assets/images/load_error.svg
-    - assets/images/community.svg
-    - assets/images/home.svg
-    - assets/images/empty.png
-    - assets/images/wechatpay.jpg
-    - assets/images/alipay.jpg
-    - assets/images/play.svg
-    - assets/images/pause.svg
-    - assets/images/next.svg
-    - assets/images/music_mode.svg
-    - assets/images/download.svg
-    - assets/images/send.svg
-    - assets/images/flower.svg
-    - assets/images/ship.svg
-    - assets/images/pointer.svg
-    - assets/images/workspace.svg
-    - assets/images/badge.svg
-    - assets/images/star.svg
-    - assets/images/like.svg
-    - assets/images/comment.svg
-    - assets/images/eye.svg
-    - assets/images/picture.svg
-    - assets/images/mirror.svg
-    - assets/images/anchor.svg
-    - assets/images/bh_level.png
-    - assets/images/ys_level.png
-    - assets/images/donut.svg
-    - assets/images/film.svg
-    - assets/images/magnet.svg
-    - assets/images/crown.svg
-    - assets/images/ic_launcher_round.png
-    - assets/images/background1.jpg
+    - assets/images/

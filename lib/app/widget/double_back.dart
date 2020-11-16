@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class DoubleClickBackWrapper
     extends StatelessWidget /* State<DoubleClickBackWrapper> */ {
@@ -20,7 +21,7 @@ class DoubleClickBackWrapper
           Scaffold.of(context).showSnackBar(
             SnackBar(
               duration: Duration(seconds: 1),
-              content: Text(
+              content: NoScaledText(
                 "再次滑动或点击,退出程序",
                 style: TextStyle(fontSize: ScreenUtil().setSp(40)),
               ),

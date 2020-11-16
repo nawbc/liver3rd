@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class RowIconButton extends StatelessWidget {
   final Widget icon;
@@ -18,7 +19,7 @@ class RowIconButton extends StatelessWidget {
           children: <Widget>[
             icon,
             SizedBox(width: 5),
-            Text(
+            NoScaledText(
               text,
               style: TextStyle(color: Colors.grey, fontSize: 15),
             )

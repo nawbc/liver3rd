@@ -9,7 +9,7 @@ import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/lyrics/lyric_controller.dart';
 import 'package:liver3rd/custom/lyrics/lyric_util.dart';
 import 'package:liver3rd/custom/lyrics/lyric_widget.dart';
-
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 
 class MusicPlayerPage extends StatefulWidget {
@@ -197,7 +197,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(
+                  NoScaledText(
                     _playList[_index]['name'],
                     style: TextStyle(
                       color: Colors.grey[600],
@@ -205,7 +205,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                     ),
                   ),
                   SizedBox(height: 5),
-                  Text(
+                  NoScaledText(
                     _playList[_index]['ar'][0]['name'],
                     style: TextStyle(
                       color: Colors.grey[400],
@@ -291,8 +291,10 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(_position.toString().substring(2, 7)),
-                                Text(_duration.toString().substring(2, 7))
+                                NoScaledText(
+                                    _position.toString().substring(2, 7)),
+                                NoScaledText(
+                                    _duration.toString().substring(2, 7))
                               ],
                             ),
                           ),

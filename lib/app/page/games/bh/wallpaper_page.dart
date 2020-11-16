@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/store/wallpapers.dart';
@@ -7,6 +6,7 @@ import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class WallPaperPage extends StatefulWidget {
   final String coverUrl;
@@ -58,14 +58,14 @@ class _WallPaperPageState extends State<WallPaperPage> {
                     itemBuilder: (BuildContext context) {
                       return <PopupMenuItem<String>>[
                         PopupMenuItem<String>(
-                          child: Text("保存"),
+                          child: NoScaledText("保存"),
                           value: "download",
                           textStyle: TextStyle(
                               color: Color(0xff242424),
                               fontSize: ScreenUtil().setSp(45)),
                         ),
                         PopupMenuItem<String>(
-                          child: Text("分享"),
+                          child: NoScaledText("分享"),
                           value: "share",
                           textStyle: TextStyle(
                               color: Color(0xff242424),

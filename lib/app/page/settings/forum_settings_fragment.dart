@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:liver3rd/app/widget/dialogs.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class ForumSettingsFragment extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _ForumSettingsFragmentState extends State<ForumSettingsFragment> {
               Navigate.navigate(context, 'settingmsg');
             },
             shadow: null,
-            extend: Text('暂未实现', style: TextStyle(color: Colors.red)),
+            extend: NoScaledText('暂未实现', style: TextStyle(color: Colors.red)),
           ),
           OptionItem(
             title: '隐私',
@@ -56,7 +57,7 @@ class _ForumSettingsFragmentState extends State<ForumSettingsFragment> {
               Dialogs.showConfirmDialog(
                 context,
                 title: '注销账号',
-                children: [Text('请联系: 021-34203305')],
+                children: [NoScaledText('请联系: 021-34203305')],
                 onCannel: () {
                   Navigator.pop(context);
                 },

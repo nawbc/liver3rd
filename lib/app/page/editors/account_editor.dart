@@ -10,6 +10,8 @@ import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
+
 
 class AccountEditorPage extends StatefulWidget {
   final String replyTarget;
@@ -134,7 +136,7 @@ class _AccountEditorPageState extends State<AccountEditorPage> {
                       ),
                     ),
                     SizedBox(height: 6),
-                    Text(
+                    NoScaledText(
                       '点击更换',
                       style: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
@@ -149,7 +151,7 @@ class _AccountEditorPageState extends State<AccountEditorPage> {
                     SizedBox(height: 20),
                     Row(
                       children: [
-                        Text(
+                        NoScaledText(
                           '性别:',
                           style: TextStyle(
                             color: Colors.grey,

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class CardNews extends StatelessWidget {
   final dynamic imgUrl;
@@ -41,7 +42,7 @@ class CardNews extends StatelessWidget {
                 ),
               SizedBox(width: 25),
               Expanded(
-                child: Text(content,
+                child: NoScaledText(content,
                     softWrap: true, style: TextStyle(fontSize: 16)),
               )
             ],

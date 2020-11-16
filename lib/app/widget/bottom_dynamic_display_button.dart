@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class BottomDynamicDisplayButton {
   OverlayEntry overlayEntry;
@@ -26,7 +27,7 @@ class BottomDynamicDisplayButton {
                       Radius.circular(20),
                     ),
                   ),
-                  child: Text(
+                  child: NoScaledText(
                     content,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(40),

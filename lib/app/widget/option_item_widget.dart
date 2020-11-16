@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class OptionItem extends StatelessWidget {
   final String title;
@@ -70,7 +71,7 @@ class OptionItem extends StatelessWidget {
                       children: <Widget>[
                         if (title != null)
                           Container(
-                            child: Text(
+                            child: NoScaledText(
                               title,
                               style: TextStyle(
                                 fontSize: 18,
@@ -85,7 +86,7 @@ class OptionItem extends StatelessWidget {
                               maxWidth: MediaQuery.of(context).size.width -
                                   outSidePadding,
                             ),
-                            child: Text(
+                            child: NoScaledText(
                               subTitle,
                               style: TextStyle(
                                 fontSize: 14,

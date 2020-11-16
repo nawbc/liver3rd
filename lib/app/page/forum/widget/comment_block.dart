@@ -10,6 +10,7 @@ import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/app/widget/reply_modal.dart';
 import 'package:liver3rd/app/widget/row_icon_button.dart';
 import 'package:liver3rd/app/widget/user_profile_label.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class CommentBlock extends StatefulWidget {
   final bool isUpvoted;
@@ -115,11 +116,11 @@ class _CommentBlockState extends State<CommentBlock>
               padding:
                   EdgeInsets.only(left: 20, right: 30, top: 10, bottom: 10),
               title: Row(children: [
-                Text(widget.user['nickname']),
+                NoScaledText(widget.user['nickname']),
                 if (widget.isLz)
                   Container(
                     padding: EdgeInsets.only(left: 5),
-                    child: Text(
+                    child: NoScaledText(
                       '楼主',
                       style: TextStyle(color: Colors.amber),
                     ),
@@ -128,7 +129,7 @@ class _CommentBlockState extends State<CommentBlock>
               subTitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  NoScaledText(
                     DateTime.fromMillisecondsSinceEpoch(
                             widget.reply['created_at'])
                         .toString()
@@ -139,7 +140,7 @@ class _CommentBlockState extends State<CommentBlock>
                     ),
                   ),
                   SizedBox(width: 8),
-                  Text(
+                  NoScaledText(
                     'F${widget.reply['floor_id'] + 1}',
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(40),
@@ -165,7 +166,7 @@ class _CommentBlockState extends State<CommentBlock>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(Icons.add, size: 13),
-                        Text(
+                        NoScaledText(
                           '关注',
                           style: TextStyle(fontSize: 13),
                         )
@@ -189,7 +190,7 @@ class _CommentBlockState extends State<CommentBlock>
                       String structContent = widget.reply['struct_content'];
                       if (structContent != 'null' && structContent != '') {
                         jsonDecode(widget.reply['struct_content'])
-                            .forEach((val) {
+                            ?.forEach((val) {
                           comments.add(val as Map);
                         });
                       } else {
@@ -273,10 +274,13 @@ class _CommentBlockState extends State<CommentBlock>
                                 .map(
                                   (i, ele) {
                                     List<Map> subComments = [];
-                                    if (ele['reply']['struct_content'] !=
-                                        "null") {
-                                      jsonDecode(ele['reply']['struct_content'])
-                                          .forEach((val) {
+                                    var struct_content =
+                                        ele['reply']['struct_content'];
+                                    if (struct_content != null &&
+                                        struct_content != "null" &&
+                                        struct_content != '') {
+                                      jsonDecode(struct_content)
+                                          ?.forEach((val) {
                                         subComments.add(val as Map);
                                       });
                                     } else {
@@ -339,7 +343,7 @@ class _CommentBlockState extends State<CommentBlock>
                                     ),
                                   );
                                 },
-                                child: Text(
+                                child: NoScaledText(
                                   '查看全部${widget.subCommentsCount}评论',
                                   style: TextStyle(color: Colors.blue[200]),
                                 ),

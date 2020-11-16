@@ -4,7 +4,7 @@ import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
 import 'package:liver3rd/app/widget/title_divider.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
-
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 class ForumSettingsMsgPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -30,7 +30,8 @@ class _ForumSettingsMsgPageState extends State<ForumSettingsMsgPage> {
               children: [
                 TitleDivider(
                   height: 60,
-                  title: Text('有以下消息通知我', style: TextStyle(fontSize: 14)),
+                  title:
+                      NoScaledText('有以下消息通知我', style: TextStyle(fontSize: 14)),
                   color: Colors.blue[200],
                 ),
                 OptionItem(
@@ -110,7 +111,8 @@ class _ForumSettingsMsgPageState extends State<ForumSettingsMsgPage> {
                 ),
                 TitleDivider(
                   height: 60,
-                  title: Text('陌生人私信过滤', style: TextStyle(fontSize: 14)),
+                  title:
+                      NoScaledText('陌生人私信过滤', style: TextStyle(fontSize: 14)),
                   color: Colors.blue[200],
                 ),
                 OptionItem(

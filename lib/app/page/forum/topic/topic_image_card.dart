@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:liver3rd/app/store/user.dart';
@@ -195,7 +196,7 @@ class _TopicImageCardState extends State<TopicImageCard>
                                 padding: EdgeInsets.only(bottom: 5),
                                 width: screenWidth - widget.marginX - 100,
                                 alignment: Alignment.center,
-                                child: Text(
+                                child: NoScaledText(
                                   widget.nickName,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -209,7 +210,7 @@ class _TopicImageCardState extends State<TopicImageCard>
                               child: Container(
                                 width: screenWidth / 2,
                                 alignment: Alignment.center,
-                                child: Text(
+                                child: NoScaledText(
                                   widget.introduce,
                                   overflow: TextOverflow.ellipsis,
                                   // softWrap: true,
@@ -230,7 +231,7 @@ class _TopicImageCardState extends State<TopicImageCard>
                         padding: EdgeInsets.only(bottom: 10, left: 20),
                         child: Transform.translate(
                           offset: Offset(0, 3),
-                          child: Text(
+                          child: NoScaledText(
                             '$_likedNum',
                             style: TextStyle(fontSize: 18, color: Colors.grey),
                           ),

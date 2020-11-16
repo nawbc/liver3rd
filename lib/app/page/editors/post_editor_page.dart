@@ -23,6 +23,8 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
+
 
 class TextImage extends SpecialText {
   final int startIndex;
@@ -278,7 +280,7 @@ class _PostEditorPageState extends State<PostEditorPage> {
                 CachedNetworkImage(
                     imageUrl: val['icon_pure'], width: 30, height: 30),
                 SizedBox(width: 5),
-                Text(
+                NoScaledText(
                   val['name'],
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 )
@@ -474,7 +476,7 @@ class _PostEditorPageState extends State<PostEditorPage> {
                                       ? [
                                           _forumSelectItem(
                                             width: forumSelectWidth,
-                                            content: Text(
+                                            content: NoScaledText(
                                               '板块',
                                               style: TextStyle(
                                                 fontSize: 16,

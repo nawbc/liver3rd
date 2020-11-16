@@ -13,6 +13,7 @@ import 'package:liver3rd/app/widget/dialogs.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
 import 'package:package_info/package_info.dart';
 import 'package:version/version.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class SoftwareSettingsFragment extends StatefulWidget {
   @override
@@ -112,7 +113,7 @@ class SoftwareSettingsFragmentState extends State<SoftwareSettingsFragment> {
             titleColor: Colors.grey,
             subTitleColor: Colors.grey[400],
             color: Colors.grey[200],
-            extend: Text(
+            extend: NoScaledText(
               _splashMode == null ? SPLASH_MODE_1 : _splashMode,
             ),
             onPress: () async {
@@ -156,7 +157,7 @@ class SoftwareSettingsFragmentState extends State<SoftwareSettingsFragment> {
               });
             },
             shadow: null,
-            extend: Text(_cacheSize == null ? '' : _cacheSize),
+            extend: NoScaledText(_cacheSize == null ? '' : _cacheSize),
           ),
           OptionItem(
             title: '检查更新',
@@ -169,7 +170,7 @@ class SoftwareSettingsFragmentState extends State<SoftwareSettingsFragment> {
               }
             },
             shadow: null,
-            extend: Text(
+            extend: NoScaledText(
               _version,
               style: _canUpdate ? TextStyle(color: Colors.red) : null,
             ),

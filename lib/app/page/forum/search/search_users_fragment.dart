@@ -13,6 +13,7 @@ import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class SearchUsersFragment extends StatefulWidget {
   final int gids;
@@ -164,7 +165,7 @@ class _SearchUsersFragment extends State<SearchUsersFragment>
                           children: <Widget>[
                             Container(
                               width: screenWidth / 2,
-                              child: Text(
+                              child: NoScaledText(
                                 user['introduce'],
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.grey[300]),

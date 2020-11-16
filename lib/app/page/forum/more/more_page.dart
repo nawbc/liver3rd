@@ -3,7 +3,7 @@ import 'package:liver3rd/app/page/forum/more/block_page.dart';
 import 'package:liver3rd/app/page/forum/more/follow_page.dart';
 import 'package:liver3rd/app/page/forum/more/message_page.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
-
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:liver3rd/app/widget/sync_scroll_tabbar.dart';
 import 'package:liver3rd/custom/badge/badge.dart';
 import 'package:liver3rd/custom/badge/badge_animation_type.dart';
@@ -40,7 +40,7 @@ class _MorePageState extends State<MorePage> {
           shape: BadgeShape.square,
           borderRadius: 30,
           animationType: BadgeAnimationType.scale,
-          badgeContent: Text(handleMsgCount(100),
+          badgeContent: NoScaledText(handleMsgCount(100),
               style: TextStyle(color: Colors.white, fontSize: 12)),
           position: BadgePosition.topRight(),
           child: CommonWidget.tabTitle('消息'),

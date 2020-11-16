@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:liver3rd/app/page/games/bh/widget/bh_comic_wrapper.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class BhComicIntroCard extends StatelessWidget {
   final String coverUrl;
@@ -27,7 +28,7 @@ class BhComicIntroCard extends StatelessWidget {
                 constraints: BoxConstraints.expand(),
                 child: Stack(
                   children: <Widget>[
-                    Text(
+                    NoScaledText(
                       title,
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(60),
@@ -61,7 +62,7 @@ class BhComicIntroCard extends StatelessWidget {
                   left: ScreenUtil().setWidth(40),
                 ),
                 physics: BouncingScrollPhysics(),
-                child: Text(
+                child: NoScaledText(
                   description,
                   softWrap: true,
                   style: TextStyle(color: Colors.white),

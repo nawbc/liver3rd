@@ -8,6 +8,7 @@ import 'package:liver3rd/app/api/shop/shop_api.dart';
 import 'package:liver3rd/app/page/shop/widget/order_drawer.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class PresentDetailPage extends StatefulWidget {
   final String coverImgUrl;
@@ -103,7 +104,7 @@ class _PresentDetailPageState extends State<PresentDetailPage> {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Text(
+                  NoScaledText(
                     widget.goodsName,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(55),
@@ -114,7 +115,7 @@ class _PresentDetailPageState extends State<PresentDetailPage> {
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(30)),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
+                      child: NoScaledText(
                         '限购 ${widget.accountExchangeNum}/${widget.accountCycleLimit}',
                         style: TextStyle(
                           color: Colors.grey[400],
@@ -128,7 +129,7 @@ class _PresentDetailPageState extends State<PresentDetailPage> {
                       alignment: Alignment.centerRight,
                       child: Transform.rotate(
                         angle: pi / 8,
-                        child: Text(
+                        child: NoScaledText(
                           '已售罄',
                           style: TextStyle(
                             color: Colors.red,
@@ -149,7 +150,7 @@ class _PresentDetailPageState extends State<PresentDetailPage> {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                Text(
+                                NoScaledText(
                                   '${widget.price}',
                                   style: TextStyle(
                                     color: Colors.amber,
@@ -157,7 +158,7 @@ class _PresentDetailPageState extends State<PresentDetailPage> {
                                   ),
                                 ),
                                 SizedBox(width: ScreenUtil().setHeight(10)),
-                                Text(
+                                NoScaledText(
                                   '米游币',
                                   style: TextStyle(
                                     color: Colors.grey,
@@ -166,7 +167,7 @@ class _PresentDetailPageState extends State<PresentDetailPage> {
                                 ),
                               ],
                             ),
-                            Text(
+                            NoScaledText(
                               '库存${widget.type == 1 ? widget.total : '∞'}',
                               style: TextStyle(
                                 color: Colors.grey[400],
@@ -202,7 +203,7 @@ class _PresentDetailPageState extends State<PresentDetailPage> {
               builder: (BuildContext context) => OrderDarwer(),
             );
           },
-          child: Text(
+          child: NoScaledText(
             '立即兑换',
             style: TextStyle(
               fontSize: ScreenUtil().setSp(50),

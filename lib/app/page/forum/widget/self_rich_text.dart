@@ -125,6 +125,7 @@ class _SelfRichTextState extends State<SelfRichText> {
                 )
               ],
             ),
+            textScaleFactor: 1,
           ),
         );
       }
@@ -195,6 +196,7 @@ class _SelfRichTextState extends State<SelfRichText> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = widget.onContentTap),
                   textAlign: _matchAlign(currentAttr),
+                  textScaleFactor: 1,
                 ),
               ),
             );
@@ -206,6 +208,7 @@ class _SelfRichTextState extends State<SelfRichText> {
                   TextSpan(
                     children: textSpanBlock,
                   ),
+                  textScaleFactor: 1,
                 ),
               ),
             );

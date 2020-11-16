@@ -59,10 +59,8 @@ void _callbackDispatcher() {
     return Future.value(true);
   });
 }
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   FlutterError.onError = (FlutterErrorDetails details) async {
     if (TinyUtils.isDev) {
       FlutterError.dumpErrorToConsole(details);
