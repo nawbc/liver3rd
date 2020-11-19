@@ -50,7 +50,7 @@ class SoftwareSettingsFragmentState extends State<SoftwareSettingsFragment> {
 
   _renderSplashMode() async {
     if (mounted) {
-      String mode = await Share.shareString(SPLASH_MODE);
+      String mode = await Share.getString(SPLASH_MODE);
       setState(() {
         _splashMode = mode;
       });
@@ -127,7 +127,7 @@ class SoftwareSettingsFragmentState extends State<SoftwareSettingsFragment> {
                   Share.setString(SPLASH_MODE, selected).then((val) async {
                     Scaffold.of(context)
                         .showSnackBar(CommonWidget.snack('设置成功'));
-                    String mode = await Share.shareString(SPLASH_MODE);
+                    String mode = await Share.getString(SPLASH_MODE);
                     setState(() {
                       _splashMode = mode;
                     });

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
-import 'package:liver3rd/app/store/user.dart';
+
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
@@ -121,7 +122,7 @@ class _SearchPageState extends State<SearchPage> {
   List _posts = [];
   List _topics = [];
   List _users = [];
-  User _user;
+  GlobalModel _globalModel;
   double _lrp = 20;
   bool _isSearchSubmit = false;
   int _resultIndex;
@@ -166,7 +167,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
   }
 
   @override
@@ -322,7 +323,7 @@ class _SearchPageState extends State<SearchPage> {
                                       : Colors.blue[200],
                                   content: isFollowing ? '已关注' : '关注',
                                   onPressed: () {
-                                    if (_user.isLogin) {
+                                    if (_globalModel.isLogin) {
                                       TinyUtils.followUserOperate(
                                         isFollowing,
                                         user['uid'],
@@ -438,7 +439,7 @@ class _SearchPageState extends State<SearchPage> {
                                       : Colors.blue[200],
                                   content: isFollowing ? '已关注' : '关注',
                                   onPressed: () {
-                                    if (_user.isLogin) {
+                                    if (_globalModel.isLogin) {
                                       TinyUtils.followTopicOperate(
                                         isFollowing,
                                         topic['id'],

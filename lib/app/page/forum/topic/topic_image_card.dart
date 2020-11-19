@@ -2,10 +2,11 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_thief_flutter/color_thief_flutter.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:liver3rd/app/store/user.dart';
+
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -50,7 +51,7 @@ class TopicImageCard extends StatefulWidget {
 class _TopicImageCardState extends State<TopicImageCard>
     with AutomaticKeepAliveClientMixin {
   List<int> _filterColor = [150, 255, 255, 255];
-  User _user;
+  GlobalModel _globalModel;
   bool _colorLocker = false;
   bool _isUpvote;
   int _likedNum;
@@ -65,7 +66,7 @@ class _TopicImageCardState extends State<TopicImageCard>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     if (!_colorLocker) {
       getColorFromUrl(widget.coverUrl).then((color) {
         if (color is List) {

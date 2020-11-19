@@ -14,111 +14,108 @@ Map initHomePageRecPostsQuery(id) {
   };
 }
 
-class Posts with ChangeNotifier {
+class PostModel with ChangeNotifier {
   ForumApi _forumApi = ForumApi();
 
-  Map _appBhHomeData = {};
-  Map get appBhHomeData => _appBhHomeData;
-  set appBhHomeData(val) {
-    _appBhHomeData = val;
+  Map _firstScreenBlock = {};
+  Map get firstScreenBlock => _firstScreenBlock;
+
+  Map _firstScreenPosts = {};
+  Map get firstScreenPosts => _firstScreenPosts;
+
+  Future<void> fetchFirstScreen(int num, Map config) async {
+    print(num);
+    print("=========================");
+    _firstScreenPosts = await _forumApi.fetchAppHome(num);
+    _firstScreenBlock = await _forumApi.fetchRecPosts(config);
   }
 
-  Map _appYsHomeData = {};
-  Map get appYsHomeData => _appYsHomeData;
-  set appYsHomeData(val) {
-    _appYsHomeData = val;
-  }
+  // Map _appBhHomeData = {};
+  // Map get appBhHomeData => _appBhHomeData;
+  // set appBhHomeData(val) {
+  //   _appBhHomeData = val;
+  // }
 
-  Map _bhPosts = {};
-  Map get bhPosts => _bhPosts;
-  set bhPosts(val) {
-    _bhPosts = val;
-  }
+  // Map _appYsHomeData = {};
+  // Map get appYsHomeData => _appYsHomeData;
+  // set appYsHomeData(val) {
+  //   _appYsHomeData = val;
+  // }
 
-  Map _ysPosts = {};
-  Map get ysPosts => _ysPosts;
-  set ysPosts(val) {
-    _ysPosts = val;
-  }
+  // Map _bhPosts = {};
+  // Map get bhPosts => _bhPosts;
+  // set bhPosts(val) {
+  //   _bhPosts = val;
+  // }
 
-  Map _deckPosts = {};
-  Map get deckPosts => _deckPosts;
-  set deckPosts(val) {
-    _deckPosts = val;
-  }
+  // Map _ysPosts = {};
+  // Map get ysPosts => _ysPosts;
+  // set ysPosts(val) {
+  //   _ysPosts = val;
+  // }
 
-  Map _fellowPosts = {};
-  Map get fellowPosts => _fellowPosts;
-  set fellowPosts(val) {
-    _fellowPosts = val;
-  }
+  // Map _fellowPosts = {};
+  // Map get fellowPosts => _fellowPosts;
+  // set fellowPosts(val) {
+  //   _fellowPosts = val;
+  // }
 
-  void clear(id) {
-    switch (id) {
-      case 1:
-        {
-          _bhPosts = {};
-          _appBhHomeData = {};
-        }
-        break;
-      case 2:
-        {
-          _ysPosts = {};
-          _appYsHomeData = {};
-        }
-        break;
-      default:
-        {
-          _bhPosts = {};
-          _appBhHomeData = {};
-          _ysPosts = {};
-          _appYsHomeData = {};
-        }
-    }
-  }
+  // void clear(id) {
+  //   switch (id) {
+  //     case 1:
+  //       {
+  //         _bhPosts = {};
+  //         _appBhHomeData = {};
+  //       }
+  //       break;
+  //     case 2:
+  //       {
+  //         _ysPosts = {};
+  //         _appYsHomeData = {};
+  //       }
+  //       break;
+  //     default:
+  //       {
+  //         _bhPosts = {};
+  //         _appBhHomeData = {};
+  //         _ysPosts = {};
+  //         _appYsHomeData = {};
+  //       }
+  //   }
+  // }
 
-  void clearPosts(id) {
-    switch (id) {
-      case 1:
-        _bhPosts = {};
-        break;
-      case 2:
-        _ysPosts = {};
-        break;
-    }
-  }
+  // void clearPosts(id) {
+  //   switch (id) {
+  //     case 1:
+  //       _bhPosts = {};
+  //       break;
+  //     case 2:
+  //       _ysPosts = {};
+  //       break;
+  //   }
+  // }
 
-  Future<void> fetchAppHome(int id) async {
-    switch (id) {
-      case 1:
-        _appBhHomeData = await _forumApi.fetchAppHome(1, 20);
-        break;
-      case 2:
-        _appYsHomeData = await _forumApi.fetchAppHome(2, 20);
-    }
+  // Future<void> fetchAppHome(int id) async {
+  //   switch (id) {
+  //     case 1:
 
-    notifyListeners();
-  }
+  //       break;
+  //     case 2:
+  // _appYsHomeData = await _forumApi.fetchAppHome(2, 20);
+  //   }
 
-  Future<void> fetchPosts(Map config, int id) async {
-    switch (id) {
-      case 1:
-        _bhPosts = await _forumApi.fetchRecPosts(config);
-        break;
-      case 2:
-        _ysPosts = await _forumApi.fetchRecPosts(config);
-    }
+  //   notifyListeners();
+  // }
 
-    notifyListeners();
-  }
+  // Future<void> fetchPosts(Map config, int id) async {
+  //   switch (id) {
+  //     case 1:
+  // _bhPosts = await _forumApi.fetchRecPosts(config);
+  //     //   break;
+  //     // case 2:
+  //     //   _ysPosts = await _forumApi.fetchRecPosts(config);
+  //   }
 
-  Future<void> fetchBhDeckPosts() async {
-    _deckPosts = await _forumApi.fetchForumMain(forumId: 1);
-    notifyListeners();
-  }
-
-  Future<void> fetchBhFellowPosts() async {
-    _fellowPosts = await _forumApi.fetchForumMain(forumId: 4);
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 }

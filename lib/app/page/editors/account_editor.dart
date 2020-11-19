@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/custom_modal_bottom_sheet.dart';
@@ -11,7 +12,6 @@ import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
-
 
 class AccountEditorPage extends StatefulWidget {
   final String replyTarget;
@@ -24,7 +24,7 @@ class AccountEditorPage extends StatefulWidget {
 }
 
 class _AccountEditorPageState extends State<AccountEditorPage> {
-  User _user;
+  GlobalModel _globalModel;
   int _gender;
   Map _info;
   UserApi _userApi = UserApi();
@@ -37,8 +37,8 @@ class _AccountEditorPageState extends State<AccountEditorPage> {
   @override
   void initState() {
     super.initState();
-    _user = Provider.of<User>(context, listen: false);
-    _info = _user.info['data']['user_info'];
+    _globalModel = Provider.of<GlobalModel>(context, listen: false);
+    _info = _globalModel.userInfo['data']['user_info'];
     _avatarInfo = {'icon': _info['avatar_url'], 'id': _info['avatar']};
     _gender = _info['gender'];
 
@@ -224,7 +224,7 @@ class _AccountEditorPageState extends State<AccountEditorPage> {
                             Scaffold.of(context).showSnackBar(
                               CommonWidget.snack(TextSnack['saveSuccess']),
                             );
-                            await _user.getMyFullInfo();
+                            await _globalModel.fetchUserFullInfo();
                           }).catchError((err) {
                             FLog.error(text: err, className: 'AccountEditor');
                             Scaffold.of(context).showSnackBar(

@@ -8,8 +8,8 @@ import 'package:liver3rd/app/page/forum/widget/comment_block.dart';
 import 'package:liver3rd/app/page/forum/widget/self_rich_text.dart';
 import 'package:liver3rd/app/page/forum/widget/self_rich_text_html.dart';
 import 'package:liver3rd/app/store/emojis.dart';
-import 'package:liver3rd/app/store/games.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/icons.dart';
@@ -34,8 +34,7 @@ class ForumPostPage extends StatefulWidget {
 
 class _ForumPostPageState extends State<ForumPostPage> {
   String _heroTag = 'speed-dial-hero-tag';
-  User _user;
-  Games _games;
+  GlobalModel _globalModel;
   Map _postData = {};
   Map _commentData = {};
   List _commentList = [];
@@ -56,8 +55,8 @@ class _ForumPostPageState extends State<ForumPostPage> {
   @override
   didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
-    _games = Provider.of<Games>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
 
     if (_postData.isEmpty) {
       Map tmp = await _forumApi.fetchFullPost(widget.postId);
@@ -146,7 +145,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
     } else {
       Map forum = _postData['data']['post']['forum'];
       int id = _postData['data']['post']['game_id'];
-      return forum == null ? _games.gameList[id]['name'] : forum['name'];
+      return forum == null ? _globalModel.gameList[id]['name'] : forum['name'];
     }
   }
 
@@ -326,7 +325,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                           : Colors.blue[200],
                                       content: isFollowing ? '已关注' : '关注',
                                       onPressed: () {
-                                        if (_user.isLogin) {
+                                        if (_globalModel.isLogin) {
                                           TinyUtils.followUserOperate(
                                               isFollowing,
                                               currentPost['user']['uid'],

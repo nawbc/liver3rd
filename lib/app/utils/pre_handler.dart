@@ -1,15 +1,11 @@
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/store/emojis.dart';
-import 'package:liver3rd/app/store/games.dart';
-
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/store/posts.dart';
 import 'package:liver3rd/app/store/redemption.dart';
 import 'package:liver3rd/app/store/settings.dart';
 import 'package:liver3rd/app/store/tim.dart';
-import 'package:liver3rd/app/store/user.dart';
 import 'package:liver3rd/app/store/wallpapers.dart';
-
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:provider/provider.dart';
 // import 'package:tencent_im_plugin/tencent_im_plugin.dart';
@@ -17,7 +13,7 @@ import 'const_settings.dart';
 
 class NotificationCodeUpdate {
   Future<void> handleCodeHasUpdated(DateTime nowTime, Function callback) async {
-    var lastUpdateCode = await Share.shareString(REDEMPTION_UPDATE_TIME);
+    var lastUpdateCode = await Share.getString(REDEMPTION_UPDATE_TIME);
     if (lastUpdateCode != null) {
       DateTime lastUpdateTime = DateTime.parse(lastUpdateCode);
       if (lastUpdateTime.difference(nowTime).inMilliseconds < 0) {
@@ -31,8 +27,6 @@ class NotificationCodeUpdate {
 
 class PreHandler {
   bool _redemptionCodeLocker = true;
-  bool _userLocker = true;
-  bool _postsLocker = true;
   bool _emoticonSetLocker = true;
   bool _timLocker = true;
 
@@ -61,19 +55,17 @@ class PreHandler {
     }
   }
 
-  Future<void> preLoadMyInfo(BuildContext context) async {
-    String uid = await Share.shareString(UID);
-    String stoken = await Share.shareString(STOKEN);
+  Future<void> preLoadGlobalInfo(BuildContext context) async {
+    GlobalModel _globalModel = Provider.of<GlobalModel>(context, listen: false);
+    await _globalModel.fetchGameList();
+    await _globalModel.fetchUserFullInfo();
+    await _globalModel.fetchEmoticonSet();
 
-    if (uid != null && stoken != null) {
-      if (_userLocker) {
-        _userLocker = false;
-        User user = Provider.of<User>(context, listen: false);
-        await user.getMyFullInfo();
-        if (user.info.isNotEmpty && user.info['data'] != null) {
-          user.setLogin(true);
-        }
-      }
+    if (_globalModel.userInfo.isNotEmpty &&
+        _globalModel.userInfo['uid'] != null &&
+        _globalModel.userInfo['stoken'] != null &&
+        _globalModel.userInfo['data'] != null) {
+      _globalModel.setLogin(true);
     }
   }
 
@@ -84,33 +76,14 @@ class PreHandler {
     }
   }
 
-  Future<void> preLoadGameList(BuildContext context) async {
-    Games games = Provider.of<Games>(context, listen: false);
-    if (games.gameList.isEmpty) {
-      await games.fetchGameList();
-    }
-  }
-
-  Future<void> preLoadNotifications(BuildContext context) async {
-    // Notifications notification =
-    //     Provider.of<Notifications>(context, listen: false);
-    // if (notification.newest.isEmpty && _notifcationLocker) {
-    //   // await notification.fetchAllNotifcations();
-    //   _notifcationLocker = false;
-    // }
-  }
-
-  Future<void> preLoadEmoticons(BuildContext context) async {
-    if (_emoticonSetLocker) {
-      Emojis emoticons = Provider.of<Emojis>(context, listen: false);
-      await emoticons.fetchEmoticonSet();
-      _emoticonSetLocker = false;
-    }
-  }
+  // Future<void> preLoadGameList(BuildContext context) async {
+  //   GlobalModel gamesModel = Provider.of<GlobalModel>(context, listen: false);
+  //   if (gamesModel.gameList.isEmpty) {}
+  // }
 
   Future<void> preLoginTim(BuildContext context) async {
     try {
-      String uid = await Share.shareString(UID);
+      String uid = await Share.getString(UID);
       if (_timLocker) {
         _timLocker = false;
         Tim tim = Provider.of<Tim>(context, listen: false);
@@ -131,18 +104,13 @@ class PreHandler {
   }
 
   //预加载首页数据
-  Future<void> preLoadHomePosts(BuildContext context) async {
-    Posts posts = Provider.of<Posts>(context, listen: false);
-    if ((posts.appBhHomeData.isEmpty ||
-            posts.bhPosts.isEmpty ||
-            posts.ysPosts.isEmpty ||
-            posts.appYsHomeData.isEmpty) &&
-        _postsLocker) {
-      _postsLocker = false;
-      await posts.fetchPosts(initHomePageRecPostsQuery(1), 1);
-      await posts.fetchAppHome(1);
-      await posts.fetchPosts(initHomePageRecPostsQuery(2), 2);
-      await posts.fetchAppHome(2);
+  Future<void> preRenderFirstScreen(BuildContext context) async {
+    PostModel postModel = Provider.of<PostModel>(context, listen: false);
+    GlobalModel gamesModel = Provider.of<GlobalModel>(context, listen: false);
+    Map firstGame = gamesModel?.gameList[0];
+    if (firstGame != null) {
+      postModel.fetchFirstScreen(
+          firstGame['id'], initHomePageRecPostsQuery(firstGame['id']));
     }
   }
 }

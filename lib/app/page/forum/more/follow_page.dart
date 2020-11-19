@@ -7,7 +7,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/follow_user_card.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/empty_widget.dart';
@@ -17,7 +18,6 @@ import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
-
 
 class FollowPage extends StatefulWidget {
   final ScrollController nestScrollController;
@@ -36,7 +36,7 @@ class _FollowPageState extends State<FollowPage>
 
   ForumApi _forumApi = ForumApi();
 
-  User _user;
+  GlobalModel _globalModel;
 
   List _recommendUserList = [];
   bool _loadPostLocker = true;
@@ -70,7 +70,7 @@ class _FollowPageState extends State<FollowPage>
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     _refresh(context);
   }
 
@@ -143,7 +143,7 @@ class _FollowPageState extends State<FollowPage>
 
   Future _refresh(BuildContext context) async {
     _clear();
-    if (_user.isLogin) {
+    if (_globalModel.isLogin) {
       await _loadPost(context);
     }
     await _loadRecUser();
@@ -167,7 +167,7 @@ class _FollowPageState extends State<FollowPage>
           color: Colors.blue[200],
         ),
         onLoad: () async {
-          if (_user.isLogin) await _loadPost(context);
+          if (_globalModel.isLogin) await _loadPost(context);
         },
         onRefresh: () async {
           await _refresh(context);
@@ -241,7 +241,7 @@ class _FollowPageState extends State<FollowPage>
                 ),
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
-              return _user.isLogin
+              return _globalModel.isLogin
                   ? Builder(
                       builder: (context) {
                         if (_postList.isEmpty) {

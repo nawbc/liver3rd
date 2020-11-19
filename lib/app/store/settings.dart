@@ -7,7 +7,7 @@ class Settings with ChangeNotifier {
   DateTime get timgTaskTime => _timingTaskTime;
 
   setTiningTaskTime({bool isNotify = false}) async {
-    String taskTime = await Share.shareString(TIMING_TASK_TIME);
+    String taskTime = await Share.getString(TIMING_TASK_TIME);
     _timingTaskTime = taskTime == null ? null : DateTime.parse(taskTime);
     if (isNotify) notifyListeners();
   }

@@ -37,7 +37,7 @@ void _callbackDispatcher() {
   Workmanager.executeTask((task, inputData) async {
     String time = inputData['registerTime'];
 
-    await complishMissions(onSuccess: () {
+    await complishMissions(true, onSuccess: () {
       debugPrint("success");
     }, onError: (err) {
       FLog.error(
@@ -59,6 +59,7 @@ void _callbackDispatcher() {
     return Future.value(true);
   });
 }
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (FlutterErrorDetails details) async {

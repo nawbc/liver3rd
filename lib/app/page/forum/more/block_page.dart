@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
-import 'package:liver3rd/app/store/games.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
@@ -23,7 +24,7 @@ class _BlockPageState extends State<BlockPage>
   bool _locker;
   ForumApi _forumApi;
   ScrollController _scrollController;
-  Games _games;
+  GlobalModel _globalModel;
   List _forums;
 
   @override
@@ -41,7 +42,7 @@ class _BlockPageState extends State<BlockPage>
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    _games = Provider.of<Games>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
 
     if (_locker) {
       Map tmp = await _forumApi.fetchAllGamesForum();
@@ -100,7 +101,7 @@ class _BlockPageState extends State<BlockPage>
                           child: Column(
                             children: <Widget>[
                               CommonWidget.tabTitle(
-                                  '${_games.gameList[id]['name']}'),
+                                  '${_globalModel.gameList[id]['name']}'),
                               SizedBox(height: 20),
                               Wrap(
                                 spacing: 15,

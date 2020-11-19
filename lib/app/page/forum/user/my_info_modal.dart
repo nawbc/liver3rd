@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/store/user.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
@@ -20,7 +21,7 @@ class MyInfoModal extends StatefulWidget {
 }
 
 class _UserModalState extends State<MyInfoModal> {
-  User _user;
+  GlobalModel _globalModel;
   Map _missions = {};
   Map _missionsState = {};
   UserApi _userApi = UserApi();
@@ -28,7 +29,7 @@ class _UserModalState extends State<MyInfoModal> {
   @override
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     if (_missions.isEmpty || _missionsState.isEmpty) {
       await _refresh();
     }
@@ -117,10 +118,10 @@ class _UserModalState extends State<MyInfoModal> {
     Widget content;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    if (!Provider.of<User>(context).isLogin) {
+    if (!Provider.of<GlobalModel>(context).isLogin) {
       content = CommonWidget.loading();
     } else {
-      Map info = _user.info['data']['user_info'];
+      Map info = _globalModel.userInfo['data']['user_info'];
       bool isCompleteMissions = _missionsState.isNotEmpty
           ? _missionsState['data']['can_get_points'] == 0
           : false;
@@ -210,6 +211,7 @@ class _UserModalState extends State<MyInfoModal> {
                                           context,
                                           () async {
                                             await complishMissions(
+                                              false,
                                               onSuccess: () {
                                                 Scaffold.of(context)
                                                     .showSnackBar(
@@ -327,7 +329,7 @@ class _UserModalState extends State<MyInfoModal> {
                           ),
                         ),
                         onPressed: () {
-                          _user.logout();
+                          _globalModel.logout();
                         },
                         child: NoScaledText(
                           '退出登录',

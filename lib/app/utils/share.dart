@@ -1,17 +1,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Share {
-  static Future<String> shareString(String key) async {
+  static Future<String> getString(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
 
-  static Future<int> shareNumber(String key) async {
+  static Future<int> getNumber(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getInt(key);
   }
 
-  static Future<bool> shareBool(String key) async {
+  static Future<bool> getBool(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool(key);
   }

@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:provider/provider.dart';
 
@@ -27,16 +28,18 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  User _user;
+  GlobalModel _globalModel;
 
   @override
   didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
   }
 
   dynamic userAvatarUrl() {
-    return _user.isLogin ? _user.info['data']['user_info']['avatar_url'] : null;
+    return _globalModel.isLogin
+        ? _globalModel.userInfo['data']['user_info']['avatar_url']
+        : null;
   }
 
   @override

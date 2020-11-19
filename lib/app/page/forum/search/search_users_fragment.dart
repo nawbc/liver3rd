@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 
@@ -43,12 +44,12 @@ class _SearchUsersFragment extends State<SearchUsersFragment>
   Map _tmpData = {};
   List _userList = [];
   bool _isLoadEmpty = false;
-  User _user;
+  GlobalModel _globalModel;
 
   @override
   didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
   }
 
   Future<void> _onLoadUser(BuildContext context) async {
@@ -183,7 +184,7 @@ class _SearchUsersFragment extends State<SearchUsersFragment>
                                 : Colors.blue[200],
                             content: user['is_following'] ? '已关注' : '关注',
                             onPressed: () {
-                              if (_user.isLogin) {
+                              if (_globalModel.isLogin) {
                                 TinyUtils.followTopicOperate(
                                   user['is_following'],
                                   user['id'],

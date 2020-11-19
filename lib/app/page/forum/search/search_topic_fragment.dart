@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:liver3rd/app/store/user.dart';
+
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
@@ -41,12 +42,12 @@ class _SearchTopicsFragment extends State<SearchTopicsFragment>
   Map _tmpData = {};
   List _topicList = [];
   bool _isLoadEmpty = false;
-  User _user;
+  GlobalModel _globalModel;
 
   @override
   didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
   }
 
   Future<void> _onLoadTopic(BuildContext context) async {
@@ -182,7 +183,7 @@ class _SearchTopicsFragment extends State<SearchTopicsFragment>
                                 : Colors.blue[200],
                             content: topic['is_focus'] ? '已关注' : '关注',
                             onPressed: () {
-                              if (_user.isLogin) {
+                              if (_globalModel.isLogin) {
                                 TinyUtils.followTopicOperate(
                                   topic['is_focus'],
                                   topic['id'],

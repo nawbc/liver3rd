@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/api/forum/src_links.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
@@ -26,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _captchaController = TextEditingController();
   UserApi _userApi = UserApi();
-  User _user;
+  GlobalModel _globalModel;
   int _countdown = 59;
   bool _isClickedSend = false;
   Timer _captchaTimer;
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _user = Provider.of<User>(context, listen: false);
+    _globalModel = Provider.of<GlobalModel>(context, listen: false);
   }
 
   @override
@@ -48,15 +49,16 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _sendMobileCaptcha(BuildContext context) async {
     if (TinyUtils.isLegalChinesePN(_phoneController.text)) {
-      String msg =
-          await _user.sendMobileCaptcha(_phoneController.text, onSuccess: () {
+      Map data = await _userApi.createMobileCaptcha(_phoneController.text);
+      if (data['data']['status'] == 1) {
         setState(() {
           _isClickedSend = true;
         });
         _startCountdown();
-      });
-
-      Scaffold.of(context).showSnackBar(CommonWidget.snack(msg));
+      }
+      Scaffold.of(context)
+          .showSnackBar(CommonWidget.snack(data['data']['msg']));
+      return data['data']['msg'];
     } else {
       Scaffold.of(context).showSnackBar(CommonWidget.snack('输入正确的手机号'));
     }
@@ -104,9 +106,10 @@ class _LoginPageState extends State<LoginPage> {
             uid: uid,
             webLoginToken: webLoginToken,
           );
-          await _user.getMyFullInfo();
-          if (_user.info.isNotEmpty && _user.info['data'] != null) {
-            _user.setLogin(true);
+          await _globalModel.fetchUserFullInfo();
+          if (_globalModel.userInfo.isNotEmpty &&
+              _globalModel.userInfo['data'] != null) {
+            _globalModel.setLogin(true);
             Navigate.navigate(context, 'main');
           } else {
             Scaffold.of(context)

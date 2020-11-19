@@ -18,9 +18,9 @@ import 'package:provider/provider.dart';
 
 class ForumPageFrame extends StatefulWidget {
   final int typeId;
-  final List<Widget> Function(Map) topics;
+  // final List<Widget> Function(Map) topics;
 
-  const ForumPageFrame({Key key, this.typeId, this.topics}) : super(key: key);
+  const ForumPageFrame({Key key, this.typeId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -34,43 +34,17 @@ class _ForumPageFrameState extends State<ForumPageFrame>
   ScrollController _scrollController;
 
   bool _loadPostLocker = true;
+  bool _mutex = true;
   ForumApi _forumApi = ForumApi();
-  Posts _posts;
+  PostModel _postModel;
   List _postList = [];
   Map _pageConfig = {};
-  Map _postsMid = {};
-  Map _homeDataMid = {};
-  List<int> upvotedList = [];
 
-  void _switchForBlock(id) {
-    switch (id) {
-      case 1:
-        _postsMid = _posts.bhPosts;
-        _homeDataMid = _posts.appBhHomeData;
-        break;
-      case 2:
-        _postsMid = _posts.ysPosts;
-        _homeDataMid = _posts.appYsHomeData;
-        break;
-    }
-  }
+  Map _funcBlockData = {};
 
   @override
   void initState() {
     super.initState();
-    _posts = Provider.of<Posts>(context, listen: false);
-    _switchForBlock(widget.typeId);
-
-    if (_postsMid.isNotEmpty) {
-      _postList
-          .addAll(_postsMid['data'] != null ? _postsMid['data']['list'] : []);
-      _pageConfig = _postsMid['data']['page_config'] != null
-          ? _postsMid['data']['page_config']
-          : initHomePageRecPostsQuery(widget.typeId);
-    } else {
-      _onRefresh();
-    }
-
     _scrollController = ScrollController()
       ..addListener(
         () {
@@ -90,12 +64,23 @@ class _ForumPageFrameState extends State<ForumPageFrame>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _postModel = Provider.of<PostModel>(context);
+
+    if (_mutex) {
+      _mutex = false;
+      _funcBlockData = _postModel.firstScreenBlock;
+    }
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _scrollController?.dispose();
     _swiperController?.dispose();
     bddButton?.remove();
-    upvotedList = [];
   }
 
   void _fixGestureConfliction(DragEndDetails details) {
@@ -108,33 +93,33 @@ class _ForumPageFrameState extends State<ForumPageFrame>
 
   Future _onRefresh() async {
     _postList = [];
-    _posts.clear(widget.typeId);
-
-    await _posts.fetchPosts(_pageConfig, widget.typeId);
-    await _posts.fetchAppHome(widget.typeId);
+    await _forumApi.fetchRecPosts(_pageConfig);
+    // await .fetchPosts(_pageConfig, widget.typeId);
+    await _forumApi.fetchAppHome(2);
+    // await _posts.fetchAppHome(widget.typeId);
     if (mounted) {
-      List recPosts = _homeDataMid['data']['recommended_posts'];
-      setState(() {
-        _switchForBlock(widget.typeId);
-        _pageConfig = _postsMid['data']['page_config'];
-        _postList.addAll(_postsMid['data']['list'] ?? []);
-        if (recPosts != null && recPosts.isNotEmpty)
-          _postList = TinyUtils.arrayRandomAssgin(_postList, recPosts);
-      });
+      // List recPosts = _homeDataMid['data']['recommended_posts'];
+      // setState(() {
+      //   // _switchForBlock(widget.typeId);
+      //   _pageConfig = _postsMid['data']['page_config'];
+      //   _postList.addAll(_postsMid['data']['list'] ?? []);
+      //   if (recPosts != null && recPosts.isNotEmpty)
+      //     _postList = TinyUtils.arrayRandomAssgin(_postList, recPosts);
+      // });
     }
   }
 
   Future _onLoad() async {
-    _posts.clearPosts(widget.typeId);
+    // _posts.clearPosts(widget.typeId);
     if (_loadPostLocker) {
       _loadPostLocker = false;
-      await _posts.fetchPosts(_pageConfig, widget.typeId);
+      await _forumApi.fetchRecPosts(_pageConfig);
       _loadPostLocker = true;
       if (mounted) {
         setState(() {
-          _switchForBlock(widget.typeId);
-          _pageConfig = _postsMid['data']['page_config'];
-          _postList.addAll(_postsMid['data']['list'] ?? []);
+          // _switchForBlock(widget.typeId);
+          // _pageConfig = _postsMid['data']['page_config'];
+          // _postList.addAll(_postsMid['data']['list'] ?? []);
         });
       }
     }
@@ -157,7 +142,7 @@ class _ForumPageFrameState extends State<ForumPageFrame>
         ),
         onLoad: _onLoad,
         onRefresh: _onRefresh,
-        slivers: _postList.isEmpty || _homeDataMid.isEmpty
+        slivers: _postList.isEmpty
             ? <Widget>[
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
@@ -171,45 +156,45 @@ class _ForumPageFrameState extends State<ForumPageFrame>
                 ),
               ]
             : <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    return Container(
-                      height: MediaQuery.of(context).size.width / (16 / 8) + 10,
-                      child: GestureDetector(
-                        onHorizontalDragEnd: _fixGestureConfliction,
-                        child: Swiper(
-                          itemBuilder: (BuildContext context, int index) {
-                            List carousels = _homeDataMid['data']['carousels'];
-                            return GestureDetector(
-                              onTap: () {
-                                String postId = RegExp(r'\d+')
-                                    .stringMatch(carousels[index]['app_path']);
-                                Navigate.navigate(context, 'post',
-                                    arg: {'postId': postId});
-                              },
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                child: CachedNetworkImage(
-                                  imageUrl: carousels[index]['cover'],
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            );
-                          },
-                          controller: _swiperController,
-                          itemCount: _homeDataMid['data']['carousels'].length,
-                          itemWidth: MediaQuery.of(context).size.width,
-                          itemHeight:
-                              MediaQuery.of(context).size.width / (16 / 8),
-                          layout: SwiperLayout.TINDER,
-                          autoplay: true,
-                          autoplayDelay: 6000,
-                        ),
-                      ),
-                    );
-                  }, childCount: 1),
-                ),
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate((context, index) {
+                //     return Container(
+                //       height: MediaQuery.of(context).size.width / (16 / 8) + 10,
+                //       child: GestureDetector(
+                //         onHorizontalDragEnd: _fixGestureConfliction,
+                //         child: Swiper(
+                //           itemBuilder: (BuildContext context, int index) {
+                //             // List carousels = _homeDataMid['data']['carousels'];
+                //             return GestureDetector(
+                //               onTap: () {
+                //                 // String postId = RegExp(r'\d+')
+                //                 //     .stringMatch(carousels[index]['app_path']);
+                //                 // Navigate.navigate(context, 'post',
+                //                 //     arg: {'postId': postId});
+                //               },
+                //               child: ClipRRect(
+                //                 borderRadius:
+                //                     BorderRadius.all(Radius.circular(12)),
+                //                 child: CachedNetworkImage(
+                //                   imageUrl: carousels[index]['cover'],
+                //                   fit: BoxFit.fill,
+                //                 ),
+                //               ),
+                //             );
+                //           },
+                //           controller: _swiperController,
+                //           itemCount: _homeDataMid['data']['carousels'].length,
+                //           itemWidth: MediaQuery.of(context).size.width,
+                //           itemHeight:
+                //               MediaQuery.of(context).size.width / (16 / 8),
+                //           layout: SwiperLayout.TINDER,
+                //           autoplay: true,
+                //           autoplayDelay: 6000,
+                //         ),
+                //       ),
+                //     );
+                //   }, childCount: 1),
+                // ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return Container(
@@ -221,73 +206,73 @@ class _ForumPageFrameState extends State<ForumPageFrame>
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: widget.topics(_homeDataMid),
+                        // children: _homeDataMid.map((val) {}).toList(),
                       ),
                     );
                   }, childCount: 1),
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      Map post = _postList[index];
-                      bool isUpvoted = post['self_operation']['attitude'] == 1;
-                      return PostBlock(
-                        imgList: post['image_list'],
-                        onTapUpvote: (isCancel) async {
-                          await _forumApi
-                              .upvotePost(
-                            postId: post['post']['post_id'],
-                            isCancel: isCancel,
-                          )
-                              .catchError((err) {
-                            FLog.error(
-                                className: 'ForumPageFrame', text: '$err');
-                          });
-                        },
-                        postContent: post['post']['content'],
-                        title: post['post']['subject'],
-                        stat: post['stat'],
-                        topics: post['topics'],
-                        isUpvoted: isUpvoted,
-                        onImageTap: (i) {
-                          Navigate.navigate(
-                            context,
-                            'photoviewpage',
-                            arg: {
-                              'images': post['image_list'],
-                              'index': i,
-                            },
-                          );
-                        },
-                        onContentTap: () {
-                          Navigate.navigate(context, 'post',
-                              arg: {'postId': post['post']['post_id']});
-                        },
-                        headBlock: UserProfileLabel(
-                          avatarUrl: post['user']['avatar_url'],
-                          certificationType: post['user']['certification']
-                              ['type'],
-                          createAt: post['post']['created_at'],
-                          level: post['user']['level_exp']['level'],
-                          nickName: post['user']['nickname'],
-                          onAvatarTap: (String heroTag) {
-                            Navigate.navigate(
-                              context,
-                              'userprofile',
-                              arg: {
-                                'heroTag': heroTag,
-                                'uid': post['user']['uid'],
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    addRepaintBoundaries: false,
-                    childCount: _postList.length,
-                    addAutomaticKeepAlives: true,
-                  ),
-                ),
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate(
+                //     (context, index) {
+                //       Map post = _postList[index];
+                //       bool isUpvoted = post['self_operation']['attitude'] == 1;
+                //       return PostBlock(
+                //         imgList: post['image_list'],
+                //         onTapUpvote: (isCancel) async {
+                //           await _forumApi
+                //               .upvotePost(
+                //             postId: post['post']['post_id'],
+                //             isCancel: isCancel,
+                //           )
+                //               .catchError((err) {
+                //             FLog.error(
+                //                 className: 'ForumPageFrame', text: '$err');
+                //           });
+                //         },
+                //         postContent: post['post']['content'],
+                //         title: post['post']['subject'],
+                //         stat: post['stat'],
+                //         topics: post['topics'],
+                //         isUpvoted: isUpvoted,
+                //         onImageTap: (i) {
+                //           Navigate.navigate(
+                //             context,
+                //             'photoviewpage',
+                //             arg: {
+                //               'images': post['image_list'],
+                //               'index': i,
+                //             },
+                //           );
+                //         },
+                //         onContentTap: () {
+                //           Navigate.navigate(context, 'post',
+                //               arg: {'postId': post['post']['post_id']});
+                //         },
+                //         headBlock: UserProfileLabel(
+                //           avatarUrl: post['user']['avatar_url'],
+                //           certificationType: post['user']['certification']
+                //               ['type'],
+                //           createAt: post['post']['created_at'],
+                //           level: post['user']['level_exp']['level'],
+                //           nickName: post['user']['nickname'],
+                //           onAvatarTap: (String heroTag) {
+                //             Navigate.navigate(
+                //               context,
+                //               'userprofile',
+                //               arg: {
+                //                 'heroTag': heroTag,
+                //                 'uid': post['user']['uid'],
+                //               },
+                //             );
+                //           },
+                //         ),
+                //       );
+                //     },
+                //     addRepaintBoundaries: false,
+                //     childCount: _postList.length,
+                //     addAutomaticKeepAlives: true,
+                //   ),
+                // ),
               ],
       ),
     );

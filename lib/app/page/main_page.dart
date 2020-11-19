@@ -3,7 +3,9 @@ import 'package:firebase_admob/firebase_admob.dart';
 import 'package:liver3rd/app/page/forum/more/more_page.dart';
 import 'package:liver3rd/app/page/forum/send_post_page.dart';
 import 'package:liver3rd/app/page/forum/widget/forum_page_frame.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+import 'package:liver3rd/app/store/posts.dart';
+
 import 'package:liver3rd/app/widget/col_icon_button.dart';
 import 'package:liver3rd/app/widget/custom_modal_bottom_sheet.dart';
 import 'package:liver3rd/app/page/forum/user/my_info_modal.dart';
@@ -32,7 +34,9 @@ class _MainPageState extends State<MainPage> {
   bool _screenUtilLocker;
   String _heroTag;
   bool _locker;
-  User _user;
+  GlobalModel _globalModel;
+  GlobalModel _postModel;
+  List<Tab> _tabList = [];
 
   @override
   void initState() {
@@ -41,26 +45,36 @@ class _MainPageState extends State<MainPage> {
     _locker = true;
     _screenUtilLocker = true;
     _heroTag = 'redemptions';
-
-    _tabController = TabController(
-      length: _mainPageTabList.length,
-      vsync: ScrollableState(),
-    );
   }
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
+    _postModel = Provider.of<GlobalModel>(context);
 
     if (_locker) {
-      bool isInited = await Share.shareBool(IS_INIT_APP);
-
-      if (isInited == null || !isInited) {
-        Dialogs.showPureDialog(context, '一切版权归米忽悠所有');
-        await Share.setBool(IS_INIT_APP, true);
-      }
       _locker = false;
+      _tabList = _postModel.gameList.map((val) {
+        return Tab(
+          child: NoScaledText(
+            val['name'],
+            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+          ),
+        );
+      }).toList();
+
+      _tabController = TabController(
+        length: _tabList.length,
+        vsync: ScrollableState(),
+      );
+
+      // bool isInited = await Share.getBool(IS_INIT_APP);
+
+      // if (isInited == null || !isInited) {
+      //   Dialogs.showPureDialog(context, '一切版权归米忽悠所有');
+      //   await Share.setBool(IS_INIT_APP, true);
+      // }
     }
   }
 
@@ -69,15 +83,6 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
     _tabController?.dispose();
   }
-
-  List<Tab> _mainPageTabList = ['崩坏3', '原神', '更多', '发帖'].map((val) {
-    return Tab(
-      child: NoScaledText(
-        val,
-        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-      ),
-    );
-  }).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -95,38 +100,6 @@ class _MainPageState extends State<MainPage> {
           heroTag: _heroTag,
           onPressed: () async {
             Navigate.navigate(context, 'redemptions');
-            // TinyUtils.checkPurchase(context, () {
-            // _interstitialAd = createInterstitialAd((event) {
-            //   switch (event) {
-            //     case MobileAdEvent.leftApplication:
-            //       Navigate.navigate(context, 'redemptions');
-            //       _interstitialAd?.dispose();
-            //       break;
-            //     case MobileAdEvent.loaded:
-            //       _interstitialAd.show(
-            //         anchorType: AnchorType.bottom,
-            //         anchorOffset: 0.0,
-            //         horizontalCenterOffset: 0.0,
-            //       );
-            //       break;
-            //     case MobileAdEvent.failedToLoad:
-            //       Navigate.navigate(context, 'redemptions');
-            //       FLog.error(
-            //         className: "MobileAdEvent",
-            //         methodName: "load",
-            //         text: "fail to load ads",
-            //       );
-            //       break;
-            //     default:
-            //       break;
-            //   }
-            // });
-            //   _interstitialAd..load();
-            //   Scaffold.of(context).showSnackBar(
-            //     CommonWidget.snack(TextSnack['loadingAds'],
-            //         duration: Duration(milliseconds: 2000)),
-            //   );
-            // });
           },
           child: CustomIcons.present,
           backgroundColor: Colors.blue[200],
@@ -134,7 +107,7 @@ class _MainPageState extends State<MainPage> {
       }),
       bottomNavigationBar: BottomBar(
         onDrawerTap: () {
-          _user.isLogin
+          _globalModel.isLogin
               ? showCustomModalBottomSheet(
                   context: context, child: MyInfoModal())
               : Navigate.navigate(context, 'login');
@@ -143,7 +116,7 @@ class _MainPageState extends State<MainPage> {
           Navigate.navigate(context, 'switchgame');
         },
         onShopTap: () {
-          _user.isLogin
+          _globalModel.isLogin
               ? Navigate.navigate(context, 'shop')
               : Navigate.navigate(context, 'login');
         },
@@ -160,7 +133,7 @@ class _MainPageState extends State<MainPage> {
               centerTitle: true,
               elevation: 0,
               title: TabBar(
-                tabs: _mainPageTabList,
+                tabs: _tabList,
                 controller: _tabController,
                 indicatorPadding: EdgeInsets.all(0),
                 isScrollable: true,
@@ -176,122 +149,13 @@ class _MainPageState extends State<MainPage> {
           ),
           body: TabBarView(
             controller: _tabController,
-            children: <Widget>[
-              ForumPageFrame(
-                  typeId: 1,
-                  topics: (homeData) {
-                    return <Widget>[
-                      ColIconButton(
-                        icon: CustomIcons.ship(),
-                        onPressed: () {
-                          Navigate.navigate(
-                            context,
-                            'topic',
-                            arg: {'forum_id': 1, 'src_type': 0},
-                          );
-                        },
-                        title: '甲板',
-                      ),
-                      ColIconButton(
-                        icon: CustomIcons.flower(),
-                        onPressed: () {
-                          Navigate.navigate(
-                            context,
-                            'topic',
-                            arg: {'forum_id': 4, 'src_type': 0},
-                          );
-                        },
-                        title: '同人',
-                      ),
-                      ColIconButton(
-                        icon: CustomIcons.workspace(),
-                        onPressed: () {
-                          Navigate.navigate(
-                            context,
-                            'topic',
-                            arg: {'forum_id': 41, 'src_type': 0},
-                          );
-                        },
-                        title: '同人文',
-                      ),
-                      ColIconButton(
-                        icon: CustomIcons.badge(),
-                        onPressed: () async {
-                          Navigate.navigate(
-                            context,
-                            'topic',
-                            arg: {'forum_id': 6, 'src_type': 2},
-                          );
-                        },
-                        title: '官方',
-                      ),
-                      ColIconButton(
-                        icon: CustomIcons.mirror(),
-                        onPressed: () {
-                          Navigate.navigate(
-                            context,
-                            'searchpage',
-                            arg: {'gids': 1},
-                          );
-                        },
-                        title: '搜索',
-                      ),
-                    ];
-                  }),
-              ForumPageFrame(
-                typeId: 2,
-                topics: (homeData) {
-                  return <Widget>[
-                    ColIconButton(
-                      icon: CustomIcons.anchor(),
-                      onPressed: () {
-                        Navigate.navigate(
-                          context,
-                          'topic',
-                          arg: {'forum_id': 26, 'src_type': 0},
-                        );
-                      },
-                      title: '酒馆',
-                    ),
-                    ColIconButton(
-                      icon: CustomIcons.picture(),
-                      onPressed: () {
-                        Navigate.navigate(
-                          context,
-                          'topic',
-                          arg: {'forum_id': 29, 'src_type': 0},
-                        );
-                      },
-                      title: '图片',
-                    ),
-                    ColIconButton(
-                      icon: CustomIcons.badge(),
-                      onPressed: () {
-                        Navigate.navigate(
-                          context,
-                          'topic',
-                          arg: {'forum_id': 28, 'src_type': 2},
-                        );
-                      },
-                      title: '官方',
-                    ),
-                    ColIconButton(
-                      icon: CustomIcons.mirror(),
-                      onPressed: () {
-                        Navigate.navigate(
-                          context,
-                          'searchpage',
-                          arg: {'gids': 2},
-                        );
-                      },
-                      title: '搜索',
-                    ),
-                  ];
-                },
-              ),
-              MorePage(),
-              SendPostPage(),
-            ],
+            children: _postModel.gameList.map(
+              (val) {
+                return ForumPageFrame(
+                  typeId: val['id'],
+                );
+              },
+            ).toList(),
           ),
         ),
       ),

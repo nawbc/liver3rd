@@ -1,30 +1,46 @@
 import 'package:dio/dio.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:path_provider/path_provider.dart';
 
-class _CookieInterceptors extends InterceptorsWrapper {
-  @override
-  Future onRequest(RequestOptions options) async {
-    String uid = await Share.shareString(UID);
-    String stoken = await Share.shareString(STOKEN);
-    String ltoken = await Share.shareString(LTOKEN);
-    if (uid != null && stoken != null) {
-      options.headers['cookie'] =
-          'stuid=$uid;uid=$uid;stoken=$stoken;account_id=$uid;ltoken=$ltoken;ltuid=$uid';
-    }
-    return super.onRequest(options);
-  }
-}
-
 class ReqUtils {
   DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
   Dio _dio;
-  ReqUtils() {
-    _dio = Dio();
-    _dio.interceptors.add(_CookieInterceptors());
+  ReqUtils({String baseUrl}) {
+    _dio = baseUrl != null ? Dio(BaseOptions(baseUrl: baseUrl)) : Dio();
+
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (RequestOptions options) async {
+          String uid = await Share.getString(UID);
+          String stoken = await Share.getString(STOKEN);
+          String ltoken = await Share.getString(LTOKEN);
+          if (uid != null && stoken != null) {
+            options.headers['cookie'] =
+                'stuid=$uid;uid=$uid;stoken=$stoken;account_id=$uid;ltoken=$ltoken;ltuid=$uid';
+          }
+          return options;
+        },
+        onResponse: (Response response) async {
+          if (response.data == null || response.data['retcode'] != 0) {
+            Fluttertoast.showToast(
+              msg: '请求出错: ' + response.data['message'],
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red[300],
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+          }
+          return response;
+        },
+      ),
+    );
   }
 
   Future<Response> get(
@@ -66,7 +82,7 @@ class ReqUtils {
   Map<String, dynamic> customHeaders(
       {host, referer, origin, cookie, Map others}) {
     Map<String, dynamic> headers = {
-      'User-Agent': 'okhttp/3.14.7',
+      'GlobalModel-Agent': 'okhttp/3.14.7',
       'Accept-Encoding': 'gzip',
       'Connection': 'keep-alive',
       'Accept': '*/*'

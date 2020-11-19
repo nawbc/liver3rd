@@ -1,12 +1,13 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:f_logs/model/flog/flog.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/store/model/redemptionCode.dart';
 import 'package:data_plugin/bmob/response/bmob_saved.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/store/redemption.dart';
 import 'package:liver3rd/app/widget/icons.dart';
-import 'package:liver3rd/app/store/user.dart';
+
 import 'package:provider/provider.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _PushCodeEditorPageState extends State<PushCodeEditorPage> {
   TextEditingController _codeController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
   DateTime _selectedValue = DateTime.now();
-  User _user;
+  GlobalModel _globalModel;
   Redemption _redemption;
 
   @override
@@ -51,7 +52,7 @@ class _PushCodeEditorPageState extends State<PushCodeEditorPage> {
   @override
   didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
   }
 
   Future<void> _sendCode(BuildContext context) async {
@@ -65,8 +66,8 @@ class _PushCodeEditorPageState extends State<PushCodeEditorPage> {
         return;
       }
 
-      if (_user.isLogin) {
-        var user = _user.info['data']['user_info'];
+      if (_globalModel.isLogin) {
+        var user = _globalModel.userInfo['data']['user_info'];
         RedemptionCode redemptionCode = RedemptionCode();
         redemptionCode.code = code;
         redemptionCode.userUid = user['uid'];

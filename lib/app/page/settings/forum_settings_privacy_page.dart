@@ -1,7 +1,8 @@
 import 'package:custom_switch_button/custom_switch_button.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
@@ -17,7 +18,7 @@ class ForumSettingsPrivacyPage extends StatefulWidget {
 
 class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
   ForumApi _forumApi = ForumApi();
-  User _user;
+  GlobalModel _globalModel;
   bool switch1 = false;
   bool switch2 = false;
   bool switch3 = false;
@@ -25,9 +26,9 @@ class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
-    Map p =
-        _user.info['data']['user_info']['community_info']['privacy_invisible'];
+    _globalModel = Provider.of<GlobalModel>(context);
+    Map p = _globalModel.userInfo['data']['user_info']['community_info']
+        ['privacy_invisible'];
 
     switch1 = p['post'];
     switch2 = p['collect'];
@@ -59,7 +60,7 @@ class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
                   collect: switch2,
                   watermark: switch3,
                 );
-                await _user.getMyFullInfo();
+                await _globalModel.fetchUserFullInfo();
                 setState(() {
                   switch1 = !switch1;
                 });
@@ -85,7 +86,7 @@ class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
                   collect: !switch2,
                   watermark: switch3,
                 );
-                await _user.getMyFullInfo();
+                await _globalModel.fetchUserFullInfo();
                 setState(() {
                   switch2 = !switch2;
                 });
@@ -111,7 +112,7 @@ class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
                   collect: switch2,
                   watermark: !switch3,
                 );
-                await _user.getMyFullInfo();
+                await _globalModel.fetchUserFullInfo();
                 setState(() {
                   switch3 = !switch3;
                 });

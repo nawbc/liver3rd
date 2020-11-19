@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/custom_chip.dart';
 import 'package:liver3rd/app/widget/icons.dart';
@@ -45,7 +46,7 @@ class _PostBlockState extends State<PostBlock>
     with AutomaticKeepAliveClientMixin {
   bool _isUpvote;
   int _likedNum;
-  User _user;
+  GlobalModel _globalModel;
   initState() {
     super.initState();
     _isUpvote = widget.isUpvoted;
@@ -54,7 +55,7 @@ class _PostBlockState extends State<PostBlock>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     _likedNum = widget.stat['like_num'] is String
         ? int.parse(widget.stat['like_num'])
         : widget.stat['like_num'];
@@ -238,7 +239,7 @@ class _PostBlockState extends State<PostBlock>
                             : CustomIcons.like(),
                         text: '$_likedNum',
                         onPressed: () {
-                          if (_user.isLogin) {
+                          if (_globalModel.isLogin) {
                             if (widget.onTapUpvote != null)
                               widget.onTapUpvote(_isUpvote);
                             setState(() {

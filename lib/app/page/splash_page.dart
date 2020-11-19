@@ -3,7 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/store/valkyries.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/utils/pre_handler.dart';
@@ -57,7 +58,7 @@ class _SplashPage extends State<SplashPage> with TickerProviderStateMixin {
   @override
   didChangeDependencies() async {
     super.didChangeDependencies();
-    var mode = await Share.shareString(SPLASH_MODE);
+    var mode = await Share.getString(SPLASH_MODE);
     if (mounted) {
       setState(() {
         _splashMode = mode ?? SPLASH_MODE_1;
@@ -113,16 +114,14 @@ class _SplashPage extends State<SplashPage> with TickerProviderStateMixin {
 
   Future<void> _preLoadDataSource() async {
     try {
-      await _preHandler.preLoadMyInfo(context);
-      await _preHandler.preLoadNotifications(context);
-      await _preHandler.preLoadHomePosts(context);
-      await _preHandler.preLoadEmoticons(context);
+      await _preHandler.preLoadGlobalInfo(context);
+      // await _preHandler.preLoadEmoticons(context);
       await _preHandler.preLoadWallpapers(context);
-      await _preHandler.preLoadGameList(context);
+      await _preHandler.preRenderFirstScreen(context);
       await _preHandler.preLoadRedemptionCode(
         context,
         onRedemptionsUpdate: (String updateContent) async {
-          if (Provider.of<User>(context, listen: false).isLogin) {
+          if (Provider.of<GlobalModel>(context, listen: false).isLogin) {
             TinyUtils.showNotification(
               id: NOTIFICATION_DEDEMPTION_ID,
               name: 'redemptionsUpdate',

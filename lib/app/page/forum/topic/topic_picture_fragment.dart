@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/topic/topic_image_card.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
@@ -40,11 +41,11 @@ class TopicFragmentState extends State<TopicPictureFragment>
 
   bool _loadPostLocker = true;
   bool _postLastLocker = false;
-  User _user;
+  GlobalModel _globalModel;
 
   didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     if (_postList.isEmpty) {
       await _refresh();
     }
@@ -164,7 +165,7 @@ class TopicFragmentState extends State<TopicPictureFragment>
                         });
                       },
                       onTapUpvote: (_isUpvote) {
-                        if (_user.isLogin) {
+                        if (_globalModel.isLogin) {
                           return true;
                         } else {
                           Navigate.navigate(context, 'login');

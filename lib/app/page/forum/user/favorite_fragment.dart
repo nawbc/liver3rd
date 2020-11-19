@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/user_profile_label.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
@@ -25,7 +26,7 @@ class FavoriteFragment extends StatefulWidget {
 
 class _FavoriteFragmentState extends State<FavoriteFragment>
     with AutomaticKeepAliveClientMixin {
-  User _user;
+  GlobalModel _globalModel;
   UserApi _userApi = UserApi();
   ForumApi _forumApi = ForumApi();
   bool _loadPostLocker = true;
@@ -39,7 +40,7 @@ class _FavoriteFragmentState extends State<FavoriteFragment>
   @override
   didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     if (_postList.isEmpty) {
       await _onRefreshPost();
     }
@@ -138,7 +139,7 @@ class _FavoriteFragmentState extends State<FavoriteFragment>
                   return PostBlock(
                     imgList: post['image_list'],
                     onTapUpvote: (isCancel) async {
-                      if (_user.isLogin) {
+                      if (_globalModel.isLogin) {
                         await _forumApi.upvotePost(
                           postId: post['post']['post_id'],
                           isCancel: isCancel,

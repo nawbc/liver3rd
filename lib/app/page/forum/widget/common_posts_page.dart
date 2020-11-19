@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/post_block.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+
 import 'package:liver3rd/app/utils/app_text.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/empty_widget.dart';
@@ -47,12 +48,12 @@ class _CommonPostsPage extends State<CommonPostsPage>
   Map _tmpData = {};
   List _postList = [];
   bool _isLoadEmpty = false;
-  User _user;
+  GlobalModel _globalModel;
 
   @override
   didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     if (_postList.isEmpty && !widget.usingAutoRefresh) {
       await _onRefreshPost();
     }
@@ -142,7 +143,7 @@ class _CommonPostsPage extends State<CommonPostsPage>
                   return PostBlock(
                     imgList: post['image_list'],
                     onTapUpvote: (isCancel) async {
-                      if (_user.isLogin) {
+                      if (_globalModel.isLogin) {
                         await _forumApi.upvotePost(
                           postId: post['post']['post_id'],
                           isCancel: isCancel,

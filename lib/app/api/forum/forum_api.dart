@@ -166,7 +166,7 @@ class ForumApi {
     });
   }
 
-  Future<Map> fetchAppHome(int gid, int pageSize) async {
+  Future<Map> fetchAppHome(int gid, {int pageSize = 20}) async {
     return fetcher(appHomeUrl(gid: gid, pageSize: pageSize));
   }
 

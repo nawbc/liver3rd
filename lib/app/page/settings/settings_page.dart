@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:liver3rd/app/page/settings/forum_settings_fragment.dart';
 import 'package:liver3rd/app/page/settings/other_settings_fragment.dart';
 import 'package:liver3rd/app/page/settings/software_settings_fragment.dart';
-import 'package:liver3rd/app/store/user.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/title_divider.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
+
 class SettingsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -17,12 +18,12 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  User _user;
+  GlobalModel _globalModel;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
   }
 
   @override
@@ -44,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
               SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   return Column(children: [
-                    if (_user.isLogin) ...[
+                    if (_globalModel.isLogin) ...[
                       TitleDivider(
                         height: 60,
                         title:

@@ -67,6 +67,7 @@ dependencies:
   firebase_admob: ^0.9.3+2
   firebase_analytics: ^5.0.15
   f_logs: ^1.2.2
+  fluttertoast: ^7.1.1
   # disk_space: ^0.0.3
   # admob_flutter: ^1.0.0-beta.5
   

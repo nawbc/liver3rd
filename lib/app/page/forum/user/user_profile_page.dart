@@ -8,8 +8,8 @@ import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/page/forum/user/comment_history_fragment.dart';
 import 'package:liver3rd/app/page/forum/user/favorite_fragment.dart';
 import 'package:liver3rd/app/page/forum/user/post_history_fragment.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
-import 'package:liver3rd/app/store/user.dart';
 
 import 'package:liver3rd/app/store/wallpapers.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
@@ -40,7 +40,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Wallpapers _wallpapers;
   Map _userData = {};
   int _counter = 0;
-  User _user;
+  GlobalModel _globalModel;
 
   String _defaultBackgroundImageUrl =
       'https://uploadstatic.mihoyo.com/contentweb/20200410/2020041019014847737.png';
@@ -121,7 +121,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    _user = Provider.of<User>(context);
+    _globalModel = Provider.of<GlobalModel>(context);
     if (_userData.isEmpty) {
       await _refresh();
     }
@@ -353,7 +353,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                 ? Colors.grey[300]
                                                 : Colors.blue[200],
                                             onPressed: () {
-                                              if (_user.isLogin) {
+                                              if (_globalModel.isLogin) {
                                                 _followOperate(context,
                                                     isFollowing, userInfo);
                                               } else {

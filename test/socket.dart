@@ -11,7 +11,7 @@ void main() {
       'Host': 'api-takumi.mihoyo.com',
       'Connection': 'Keep-Alive',
       'Accept-Encoding': 'gzip',
-      'User-Agent': 'okhttp/3.14.7'
+      'GlobalModel-Agent': 'okhttp/3.14.7'
     },
   });
 

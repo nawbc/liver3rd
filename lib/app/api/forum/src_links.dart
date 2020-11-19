@@ -15,7 +15,7 @@ String appHomeUrl({int gid, int pageSize = 20}) =>
 
 /// 新增内容list 代表新增的帖子
 /// table_offset=3 随上拉滚动刷新 递增3 sink_offset 增2 其他参数不变
-/// [game_id] 1 崩坏，  2 原神
+/// [game_id] 1 崩坏， 2 原神  3 崩2
 /// [sinkOffset] 初始 -1
 /// [sink_origin_offset] 初始 0 保持不变 根据返回的page_config里的
 /// [table_offset] 初始 0
@@ -36,6 +36,10 @@ String gameConfigUrl(int gid) =>
 
 // 游戏列表
 String gameListUrl = 'https://api-takumi.mihoyo.com/apihub/api/getGameList';
+
+// tab 页排序
+String gameListOrder(String uid) =>
+    'https://api-takumi.mihoyo.com/user/api/getUserBusinesses?uid=$uid';
 
 /// 论A
 /// [forum_id] 1 甲板 4 同人 6 官方 21 问答 5 反馈
@@ -63,20 +67,24 @@ final String searchUsersUrl =
 //============================================================================================================
 
 /// 评论
-String commentsUrl = 'https://api-takumi.mihoyo.com/post/api/getPostReplies';
+final String commentsUrl =
+    'https://api-takumi.mihoyo.com/post/api/getPostReplies';
 // 'https://api-takumi.mihoyo.com/post/api/hotReplyList?post_id=$postId&limit=20&last_id=';
 
-String subCommentsUrl = 'https://api-takumi.mihoyo.com/post/api/getSubReplies';
+final String subCommentsUrl =
+    'https://api-takumi.mihoyo.com/post/api/getSubReplies';
 
-String rootCommentInfoUrl =
+final String rootCommentInfoUrl =
     'https://api-takumi.mihoyo.com/post/api/getRootReplyInfo';
 
 //Post
 // 发布回复
-String releaseReplyUrl = 'https://api-takumi.mihoyo.com/post/api/releaseReply';
+final String releaseReplyUrl =
+    'https://api-takumi.mihoyo.com/post/api/releaseReply';
 
 // 删除回复
-String deleteRelyUrl = 'https://api-takumi.mihoyo.com/post/api/deleteReply';
+final String deleteRelyUrl =
+    'https://api-takumi.mihoyo.com/post/api/deleteReply';
 
 /// POST [post-id] 帖子id
 ///{'is_cancel':false,'post_id':'814553'}
@@ -118,24 +126,24 @@ final String uploadVertificationUrl =
 
 ///获取所有论坛
 /// [header_image] 为空就不能发贴
-String allGamesForumUrl =
+final String allGamesForumUrl =
     "https://api-takumi.mihoyo.com/apihub/api/getAllGamesForums";
 
 //============================================================================================================
 /// 关注
 // 推荐的用户
-String recommendActiveUserListUrl =
+final String recommendActiveUserListUrl =
     'https://api-community.mihoyo.com/community/user/Follow/recommendActiveUserList';
 
 // 关注用户的帖子
-String followerPostUrl =
+final String followerPostUrl =
     'https://api-community.mihoyo.com/community/user/Follow/querytimeline';
 
 //============================================================================================================
 // GET IM即时通讯
-String getTimSigUrl = 'https://api-takumi.mihoyo.com/chat/api/getTIMSig';
+final String getTimSigUrl = 'https://api-takumi.mihoyo.com/chat/api/getTIMSig';
 
-String getCharListUrl =
+final String getCharListUrl =
     'https://api-takumi.mihoyo.com/chat/api/getChatList?last_id=0&size=50';
 
 //============================================================================================================

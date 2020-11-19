@@ -239,7 +239,7 @@ class TinyUtils {
 
   static Future<void> checkPurchase(
       BuildContext context, Function callback) async {
-    if (await Share.shareBool(IS_PURCHASE) == null) {
+    if (await Share.getBool(IS_PURCHASE) == null) {
       Navigate.navigate(context, 'inapppurchase');
     } else {
       callback();

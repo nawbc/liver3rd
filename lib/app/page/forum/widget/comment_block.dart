@@ -192,7 +192,7 @@ class _CommentBlockState extends State<CommentBlock>
                         jsonDecode(widget.reply['struct_content'])
                             ?.forEach((val) {
                           comments.add(val as Map);
-                        });
+                        });  
                       } else {
                         comments.add({"insert": widget.reply['content']});
                       }
