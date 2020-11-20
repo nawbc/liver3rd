@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
-import 'package:liver3rd/app/api/forum/info.dart';
+import 'package:liver3rd/app/api/forum/new_forum.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalModel with ChangeNotifier {
-  InfoApi _infoApi = InfoApi();
+  NewForum _newForum = NewForum();
   UserApi _userApi = UserApi();
 
   List _gameList = [];
@@ -15,9 +15,21 @@ class GlobalModel with ChangeNotifier {
   List _gameOrder = [];
   List get getGameOrder => _gameOrder;
 
-  Future<void> fetchGameList([bool update]) async {
-    Map data = await _infoApi.fetchGameList();
-    this._gameList = data['data']['list'];
+  Future<void> getGameList(uid, [bool update]) async {
+    Map data = await _newForum.fetchGameList();
+    Map orderData = await _newForum.fetchGameListOrder(uid);
+    List list = data['data']['list'];
+
+    List tmpOrderList = orderData['data']['businesses'];
+    _gameOrder = tmpOrderList;
+    Map gameMap = list.asMap().map((index, val) {
+      return MapEntry('${val['id']}', val);
+    });
+
+    _gameList = _gameOrder.map((num) {
+      return gameMap[num];
+    }).toList();
+
     if (update != null && update) {
       notifyListeners();
     }
@@ -33,7 +45,7 @@ class GlobalModel with ChangeNotifier {
   Map _userInfo = {};
   Map get userInfo => _userInfo;
 
-  Future<void> fetchUserFullInfo({bool isNotify = true}) async {
+  Future<void> getUserFullInfo({bool isNotify = true}) async {
     String uid = await Share.getString(UID);
     String stoken = await Share.getString(STOKEN);
     Map _data = {"uid": uid, "stoken": stoken};
@@ -78,8 +90,8 @@ class GlobalModel with ChangeNotifier {
     return tmp;
   }
 
-  Future<void> fetchEmoticonSet() async {
-    Map data = await _infoApi.fetchEmoticonSet();
+  Future<void> getEmoticonSet() async {
+    Map data = await _newForum.fetchEmoticonSet();
     if (data['data'] != null) {
       _emojis = {
         "list_in_all": _handleEmoticonSet(data['data']['list']),
@@ -87,5 +99,16 @@ class GlobalModel with ChangeNotifier {
         "recent": data['data']['recently_emoticon']
       };
     }
+  }
+
+  Map _firstScreenHomeData = {};
+  Map get firstScreenHomeData => _firstScreenHomeData;
+
+  Map _firstScreenPosts = {};
+  Map get firstScreenPosts => _firstScreenPosts;
+
+  Future<void> getFirstScreenData(int gids) async {
+    _firstScreenPosts = await _newForum.fetchNewPostApi(gids);
+    _firstScreenHomeData = await _newForum.fetchNewHomeApi(gids);
   }
 }

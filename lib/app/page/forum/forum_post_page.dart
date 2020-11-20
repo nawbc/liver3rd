@@ -38,7 +38,6 @@ class _ForumPostPageState extends State<ForumPostPage> {
   Map _postData = {};
   Map _commentData = {};
   List _commentList = [];
-  Emojis _emoticonSet;
   // 等待加载完成 才能继续加载
   bool _loadCommentLocker = true;
   bool _commentLastLocker = false;
@@ -49,13 +48,11 @@ class _ForumPostPageState extends State<ForumPostPage> {
   @override
   initState() {
     super.initState();
-    _emoticonSet = Provider.of<Emojis>(context, listen: false);
   }
 
   @override
   didChangeDependencies() async {
     super.didChangeDependencies();
-    _globalModel = Provider.of<GlobalModel>(context);
     _globalModel = Provider.of<GlobalModel>(context);
 
     if (_postData.isEmpty) {
@@ -364,7 +361,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                                       ? SelfRichTextHtml(content: content)
                                       : SelfRichText(
                                           content: postContent,
-                                          emojis: _emoticonSet
+                                          emojis: _globalModel
                                               .emojis['list_in_all'],
                                           imagesList: currentPost['post']
                                               ['images'],
@@ -438,7 +435,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
                           isLz: ele['is_lz'],
                           onTapUpvote: (isUpvoted) {},
                           onPressedFollow: () {},
-                          emojis: _emoticonSet.emojis['list_in_all'],
+                          emojis: _globalModel.emojis['list_in_all'],
                           subCommentsCount: ele['sub_reply_count'],
                         );
                       }, childCount: _commentList.length),

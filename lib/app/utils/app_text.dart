@@ -1,5 +1,3 @@
-const Map TextApp = {};
-
 const Map TextSnack = {
   'saveSuccess': '保存成功',
   'saveError': '保存失败',

@@ -5,9 +5,10 @@ class ColIconButton extends StatelessWidget {
   final Widget icon;
   final VoidCallback onPressed;
   final String title;
+  final double width;
 
   const ColIconButton(
-      {Key key, @required this.icon, this.onPressed, this.title})
+      {Key key, @required this.icon, this.onPressed, this.title, this.width})
       : super(key: key);
 
   @override
@@ -15,8 +16,8 @@ class ColIconButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        height: 60,
-        width: 60,
+        width: width,
+        height: 80,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

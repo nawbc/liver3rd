@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:device_info/device_info.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
@@ -16,6 +14,7 @@ class ReqUtils {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options) async {
+          print(options.uri.toString());
           String uid = await Share.getString(UID);
           String stoken = await Share.getString(STOKEN);
           String ltoken = await Share.getString(LTOKEN);
@@ -25,20 +24,20 @@ class ReqUtils {
           }
           return options;
         },
-        onResponse: (Response response) async {
-          if (response.data == null || response.data['retcode'] != 0) {
-            Fluttertoast.showToast(
-              msg: '请求出错: ' + response.data['message'],
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red[300],
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          }
-          return response;
-        },
+        // onResponse: (Response response) async {
+        //   if (response.data == null || response.data['retcode'] != 0) {
+        //     Fluttertoast.showToast(
+        //       msg: '请求出错: ' + response.data['message'],
+        //       toastLength: Toast.LENGTH_LONG,
+        //       gravity: ToastGravity.CENTER,
+        //       timeInSecForIosWeb: 1,
+        //       backgroundColor: Colors.red[300],
+        //       textColor: Colors.white,
+        //       fontSize: 16.0,
+        //     );l
+        //   }
+        //   return response;
+        // },
       ),
     );
   }

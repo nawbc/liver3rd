@@ -38,8 +38,8 @@ String gameConfigUrl(int gid) =>
 String gameListUrl = 'https://api-takumi.mihoyo.com/apihub/api/getGameList';
 
 // tab 页排序
-String gameListOrder(String uid) =>
-    'https://api-takumi.mihoyo.com/user/api/getUserBusinesses?uid=$uid';
+// String gameListOrder(String uid) =>
+//     'https://api-takumi.mihoyo.com/user/api/getUserBusinesses?uid=$uid';
 
 /// 论A
 /// [forum_id] 1 甲板 4 同人 6 官方 21 问答 5 反馈

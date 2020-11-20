@@ -8,6 +8,7 @@ import 'package:liver3rd/app/api/bilibili/video_api.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/api/utils.dart';
 import 'package:liver3rd/app/store/emojis.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/cached_image_span.dart';
 import 'package:liver3rd/app/widget/custom_modal_bottom_sheet.dart';
@@ -24,7 +25,6 @@ import 'package:extended_text_field/extended_text_field.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
-
 
 class TextImage extends SpecialText {
   final int startIndex;
@@ -189,7 +189,7 @@ class PostEditorPage extends StatefulWidget {
 }
 
 class _PostEditorPageState extends State<PostEditorPage> {
-  Emojis _emojis;
+  GlobalModel _globalModel;
   String htmlContent = "";
   FocusNode _focusNode = FocusNode();
   TextEditingController _uriController;
@@ -217,7 +217,7 @@ class _PostEditorPageState extends State<PostEditorPage> {
   @override
   void initState() {
     super.initState();
-    _emojis = Provider.of<Emojis>(context, listen: false);
+    _globalModel = Provider.of<GlobalModel>(context, listen: false);
     _uriController = TextEditingController();
     _uriTextController = TextEditingController();
     _videoNumController = TextEditingController();
@@ -534,7 +534,7 @@ class _PostEditorPageState extends State<PostEditorPage> {
                     key: _textFieldKey,
                     specialTextSpanBuilder: InnerSpecialTextSpanBuilder(
                       context,
-                      emojis: _emojis.emojis['list_in_all'],
+                      emojis: _globalModel.emojis['list_in_all'],
                       emojiStartFlag: _emojiStartFlag,
                       emojiEndFlag: _emojiEndFlag,
                       imageStartFlag: _imageStartFlag,
@@ -590,7 +590,7 @@ class _PostEditorPageState extends State<PostEditorPage> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     duration: const Duration(milliseconds: 100),
                                     child: EmojiModal(
-                                      emojis: _emojis.emojis,
+                                      emojis: _globalModel.emojis,
                                       onTap: _insertEmoji,
                                     ),
                                   ),

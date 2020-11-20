@@ -60,7 +60,7 @@ class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
                   collect: switch2,
                   watermark: switch3,
                 );
-                await _globalModel.fetchUserFullInfo();
+                await _globalModel.getUserFullInfo();
                 setState(() {
                   switch1 = !switch1;
                 });
@@ -86,7 +86,7 @@ class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
                   collect: !switch2,
                   watermark: switch3,
                 );
-                await _globalModel.fetchUserFullInfo();
+                await _globalModel.getUserFullInfo();
                 setState(() {
                   switch2 = !switch2;
                 });
@@ -112,7 +112,7 @@ class _ForumSettingsPrivacyPageState extends State<ForumSettingsPrivacyPage> {
                   collect: switch2,
                   watermark: !switch3,
                 );
-                await _globalModel.fetchUserFullInfo();
+                await _globalModel.getUserFullInfo();
                 setState(() {
                   switch3 = !switch3;
                 });

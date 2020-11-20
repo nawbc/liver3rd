@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/page/forum/widget/comment_block.dart';
-import 'package:liver3rd/app/store/emojis.dart';
-
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
-
 import 'package:provider/provider.dart';
 
 class ForumCommentModal extends StatefulWidget {
@@ -31,7 +28,7 @@ class _ForumCommentPageState extends State<ForumCommentModal> {
   List _commentList = [];
   Map _commentData = {};
   Map _rootComment = {};
-  Emojis _emoticonSet;
+  GlobalModel _globalModel;
   // 等待加载完成 才能继续加载
   bool _loadCommentLocker = true;
   bool _lastLocker = false;
@@ -39,7 +36,7 @@ class _ForumCommentPageState extends State<ForumCommentModal> {
   @override
   void initState() {
     super.initState();
-    _emoticonSet = Provider.of<Emojis>(context, listen: false);
+    _globalModel = Provider.of<GlobalModel>(context, listen: false);
   }
 
   @override
@@ -105,7 +102,7 @@ class _ForumCommentPageState extends State<ForumCommentModal> {
       isLz: ele['is_lz'],
       onTapUpvote: (isUpvoted) {},
       onPressedFollow: () {},
-      emojis: _emoticonSet.emojis['list_in_all'],
+      emojis: _globalModel.emojis['list_in_all'],
       subCommentsCount: ele['sub_reply_count'],
     );
   }

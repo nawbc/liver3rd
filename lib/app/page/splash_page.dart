@@ -117,7 +117,7 @@ class _SplashPage extends State<SplashPage> with TickerProviderStateMixin {
       await _preHandler.preLoadGlobalInfo(context);
       // await _preHandler.preLoadEmoticons(context);
       await _preHandler.preLoadWallpapers(context);
-      await _preHandler.preRenderFirstScreen(context);
+      // await _preHandler.preRenderFirstScreen(context);
       await _preHandler.preLoadRedemptionCode(
         context,
         onRedemptionsUpdate: (String updateContent) async {

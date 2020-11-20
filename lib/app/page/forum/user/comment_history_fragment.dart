@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/page/forum/widget/forum_comment_modal.dart';
-import 'package:liver3rd/app/store/emojis.dart';
+import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/custom_modal_bottom_sheet.dart';
 import 'package:liver3rd/app/widget/parse_emoji_text.dart';
@@ -130,7 +130,7 @@ class _CommentHistoryFragment extends State<CommentHistoryFragment>
   bool _postLastLocker = false;
   Map _tmpData = {};
   List _postList = [];
-  Emojis _emoticonSet;
+  GlobalModel _globalModel;
   bool _isLoadEmpty = false;
   bool _hasPermission = true;
 
@@ -145,7 +145,7 @@ class _CommentHistoryFragment extends State<CommentHistoryFragment>
   @override
   initState() {
     super.initState();
-    _emoticonSet = Provider.of<Emojis>(context, listen: false);
+    _globalModel = Provider.of<GlobalModel>(context, listen: false);
   }
 
   Future<void> _onLoadPost(BuildContext context) async {
@@ -236,7 +236,7 @@ class _CommentHistoryFragment extends State<CommentHistoryFragment>
                     title: comment['content'],
                     replyContent: comment['f_reply']['content'],
                     postContent: comment['post']['subject'],
-                    emojis: _emoticonSet.emojis['list_in_all'],
+                    emojis: _globalModel.emojis['list_in_all'],
                     createdTime: comment['created_at'],
                     postId: comment['post']['post_id'],
                     replyId: comment['f_reply_id'],

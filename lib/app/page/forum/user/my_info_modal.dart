@@ -11,6 +11,7 @@ import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/utils/complish_missions.dart';
 import 'package:liver3rd/app/widget/timing_task.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
+import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 
 class MyInfoModal extends StatefulWidget {
@@ -24,12 +25,14 @@ class _UserModalState extends State<MyInfoModal> {
   GlobalModel _globalModel;
   Map _missions = {};
   Map _missionsState = {};
+  bool _loading = true;
   UserApi _userApi = UserApi();
 
   @override
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
     _globalModel = Provider.of<GlobalModel>(context);
+
     if (_missions.isEmpty || _missionsState.isEmpty) {
       await _refresh();
     }
@@ -46,12 +49,16 @@ class _UserModalState extends State<MyInfoModal> {
 
   // 默认刷新用户信息
   Future<void> _refresh() async {
+    setState(() {
+      _loading = true;
+    });
     Map missionsState = await _userApi.fetchMyMissionsState();
     Map missions = await _userApi.fetchMyMissions();
     if (mounted) {
       setState(() {
         _missions = missions;
         _missionsState = missionsState;
+        _loading = false;
       });
     }
   }
@@ -130,9 +137,7 @@ class _UserModalState extends State<MyInfoModal> {
           backgroundColor: Colors.white,
           color: Colors.blue[200],
         ),
-        onRefresh: () async {
-          await _refresh();
-        },
+        onRefresh: _refresh,
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -155,7 +160,9 @@ class _UserModalState extends State<MyInfoModal> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigate.navigate(context, 'accounteditor');
+                                },
                               ),
                               SizedBox(width: ScreenUtil().setWidth(40)),
                               Column(
@@ -215,9 +222,8 @@ class _UserModalState extends State<MyInfoModal> {
                                               onSuccess: () {
                                                 Scaffold.of(context)
                                                     .showSnackBar(
-                                                  CommonWidget.snack('签到完成'),
+                                                  CommonWidget.snack('任务完成'),
                                                 );
-                                                _refresh();
                                               },
                                               onError: (err) {
                                                 Scaffold.of(context)
@@ -228,6 +234,7 @@ class _UserModalState extends State<MyInfoModal> {
                                                 );
                                               },
                                             );
+                                            await _refresh();
                                           },
                                         );
                                       },
@@ -272,7 +279,7 @@ class _UserModalState extends State<MyInfoModal> {
                     //任务完成状态
                     Container(
                       height: 230,
-                      child: (_missions.isEmpty && _missionsState.isEmpty)
+                      child: _loading
                           ? CommonWidget.loading()
                           : Wrap(
                               children: <Widget>[

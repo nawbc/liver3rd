@@ -30,9 +30,6 @@ class Storager {
         ChangeNotifierProvider<GlobalModel>(
           create: (_) => GlobalModel(),
         ),
-        ChangeNotifierProvider<PostModel>(
-          create: (_) => PostModel(),
-        ),
         ChangeNotifierProvider<Tim>(
           create: (_) => Tim(),
         ),

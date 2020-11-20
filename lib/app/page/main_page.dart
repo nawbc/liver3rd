@@ -35,7 +35,6 @@ class _MainPageState extends State<MainPage> {
   String _heroTag;
   bool _locker;
   GlobalModel _globalModel;
-  GlobalModel _postModel;
   List<Tab> _tabList = [];
 
   @override
@@ -51,11 +50,10 @@ class _MainPageState extends State<MainPage> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
     _globalModel = Provider.of<GlobalModel>(context);
-    _postModel = Provider.of<GlobalModel>(context);
 
     if (_locker) {
       _locker = false;
-      _tabList = _postModel.gameList.map((val) {
+      _tabList = _globalModel.gameList.map((val) {
         return Tab(
           child: NoScaledText(
             val['name'],
@@ -149,13 +147,21 @@ class _MainPageState extends State<MainPage> {
           ),
           body: TabBarView(
             controller: _tabController,
-            children: _postModel.gameList.map(
-              (val) {
-                return ForumPageFrame(
-                  typeId: val['id'],
-                );
-              },
-            ).toList(),
+            children: _globalModel.gameList
+                .asMap()
+                .map(
+                  (index, val) {
+                    return MapEntry(
+                      index,
+                      ForumPageFrame(
+                        typeId: val['id'],
+                        index: index,
+                      ),
+                    );
+                  },
+                )
+                .values
+                .toList(),
           ),
         ),
       ),

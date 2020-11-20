@@ -224,7 +224,7 @@ class _AccountEditorPageState extends State<AccountEditorPage> {
                             Scaffold.of(context).showSnackBar(
                               CommonWidget.snack(TextSnack['saveSuccess']),
                             );
-                            await _globalModel.fetchUserFullInfo();
+                            await _globalModel.getUserFullInfo();
                           }).catchError((err) {
                             FLog.error(text: err, className: 'AccountEditor');
                             Scaffold.of(context).showSnackBar(

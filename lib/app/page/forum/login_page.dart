@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
             uid: uid,
             webLoginToken: webLoginToken,
           );
-          await _globalModel.fetchUserFullInfo();
+          await _globalModel.getUserFullInfo();
           if (_globalModel.userInfo.isNotEmpty &&
               _globalModel.userInfo['data'] != null) {
             _globalModel.setLogin(true);

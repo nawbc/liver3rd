@@ -1,7 +1,7 @@
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
-import 'package:liver3rd/app/store/posts.dart';
+import 'package:liver3rd/app/utils/pre_handler.dart';
 
 ForumApi _forumApi = ForumApi();
 UserApi _userApi = UserApi();
@@ -12,11 +12,11 @@ Future<void> complishMissions(bool auto,
     if (gameList != null) {
       int count = 0;
       await for (var item in Stream.fromIterable(gameList)) {
-        requestDiffFormMissions(auto, count);
+        await requestDiffFormMissions(auto, count);
         count++;
       }
     } else {
-      requestDiffFormMissions(auto, 1);
+      await requestDiffFormMissions(auto, 1);
     }
     Map data = await _forumApi.fetchRecPosts(initHomePageRecPostsQuery(1));
     List postList = data['data']['list'];
@@ -31,6 +31,7 @@ Future<void> complishMissions(bool auto,
       FLog.error(text: err, className: '_sharePost');
     });
     await _userApi.signIn().catchError((err) {
+      
       FLog.error(text: err, className: '_userApi');
     });
     if (onSuccess != null) onSuccess();
@@ -43,33 +44,29 @@ Future<void> requestDiffFormMissions(bool auto, int form) async {
   Map data = await _forumApi.fetchRecPosts(initHomePageRecPostsQuery(form));
   List postList = data['data']['list'];
 
-  await _upvotePosts(postList, auto: auto).catchError((err) {
-    FLog.error(text: err, className: '_upvotePosts');
-  });
-  await _viewThreePosts(postList, auto: auto).catchError((err) {
-    FLog.error(text: err, className: '_viewThreePosts');
-  });
-  await _sharePost(postList).catchError((err) {
-    FLog.error(text: err, className: '_sharePost');
-  });
+  if (postList != null) {
+    await _upvotePosts(postList, auto: auto).catchError((err) {
+      FLog.error(text: err, className: '_upvotePosts');
+    });
+    await _viewThreePosts(postList, auto: auto).catchError((err) {
+      FLog.error(text: err, className: '_viewThreePosts');
+    });
+    await _sharePost(postList).catchError((err) {
+      FLog.error(text: err, className: '_sharePost');
+    });
+  }
+
   await _userApi.signIn().catchError((err) {
     FLog.error(text: err, className: '_userApi');
   });
 }
 
 Future<void> _sharePost(List postList) async {
-  if (postList != null) {
-    return;
-  }
   String postId = postList[0]['post']['post_id'];
   await _forumApi.sharePost(postId);
 }
 
 Future<void> _upvotePosts(List postList, {bool auto}) async {
-  if (postList != null) {
-    return;
-  }
-
   if (auto) {
     await for (var item in Stream.fromIterable(postList)) {
       String postId = item['post']['post_id'];
@@ -85,10 +82,6 @@ Future<void> _upvotePosts(List postList, {bool auto}) async {
 }
 
 Future<void> _viewThreePosts(List postList, {bool auto}) async {
-  if (postList != null) {
-    return;
-  }
-
   if (auto) {
     await for (var item in Stream.fromIterable(postList)) {
       String postId = item['post']['post_id'];
