@@ -1,0 +1,153 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    compileSdkVersion 28
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.sewerganger.liver3rd"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        flavorDimensions "0.0.1"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+        debug {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.release
+
+            minifyEnabled true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    // productFlavors {
+    //     Alpha {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Alpha]
+    //     }
+
+    //     Tencent {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Tencent]
+    //     }
+        
+    //     Baidu {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Baidu]
+    //     }
+
+    //     Wandoujia {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Wandoujia]
+    //     }
+
+    //     PP {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: PP]
+    //     }
+
+    //     Qihoo {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Qihoo]
+    //     }
+
+    //     Vivo {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Vivo]
+    //     }
+
+    //     Oppo {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Oppo]
+    //     }
+    //     Xiaomi {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Xiaomi]
+    //     }
+
+    //     Meizu {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Meizu]
+    //     }
+
+    //     Huawei {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Huawei]
+    //     }
+      
+    //     Letv {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Letv]
+    //     }
+
+    //     Coolapk {
+    //         manifestPlaceholders = [UMENG_CHANNEL_VALUE: Coolapk]
+    //     }
+
+    // }
+
+    // productFlavors.all {
+    //     flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    // }
+    
+    // applicationVariants.all { variant ->
+    //     variant.outputs.all {
+    //         def formattedDate = new Date().format('yyyy_MM_dd_HH_mm_ss')
+    //         outputFileName = "liver3rd-"  + variant.flavorName + "-"  + buildType.name + "-" + formattedDate + "-v" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk";
+    //     }
+    // }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}

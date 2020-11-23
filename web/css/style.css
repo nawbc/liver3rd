@@ -1,0 +1,210 @@
+@font-face {
+  font-family: "webfont";
+  font-display: swap;
+  src: url("https://at.alicdn.com/t/webfont_q518gqmdjqr.eot");
+  /* IE9*/
+  src: url("https://at.alicdn.com/t/webfont_q518gqmdjqr.eot?#iefix") format("embedded-opentype"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.woff2") format("woff2"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.woff") format("woff"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.ttf") format("truetype"), url("https://at.alicdn.com/t/webfont_q518gqmdjqr.svg#Alibaba-PuHuiTi-Regular") format("svg");
+  /* iOS 4.1- */ }
+
+body,
+h1,
+h4 {
+  margin: 0;
+  padding: 0; }
+
+* {
+  user-select: none;
+  font-family: "webfont";
+  color: #6b6b6b; }
+
+a {
+  text-decoration: none; }
+
+body {
+  overflow-x: hidden; }
+
+button {
+  border: none;
+  outline: none; }
+
+#paper-back {
+  width: 100%;
+  height: 100vh;
+  background-color: #243040;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 33px; }
+  #paper-back nav {
+    padding: 120px 34px; }
+    #paper-back nav a {
+      display: block;
+      margin-bottom: 25px;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7); }
+  #paper-back .close {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer; }
+    #paper-back .close:before, #paper-back .close:after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 30px;
+      height: 5px;
+      top: 50%;
+      background-color: #fdfdfd;
+      border-radius: 2px; }
+    #paper-back .close:before {
+      transform: translateY(-50%) rotate(45deg); }
+    #paper-back .close:after {
+      transform: translateY(-50%) rotate(-45deg); }
+
+#paper-window {
+  height: 100%;
+  width: 100vw;
+  position: relative;
+  z-index: 2;
+  overflow-x: hidden; }
+  #paper-window.tilt {
+    overflow: hidden;
+    pointer-events: none; }
+    #paper-window.tilt #paper-front {
+      transform: rotate(10deg) translateZ(0); }
+  #paper-window #paper-front {
+    width: 100vw;
+    height: 100%;
+    pointer-events: auto;
+    position: relative;
+    z-index: 3;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    transform-origin: center 70%;
+    transition: all 0.3s ease; }
+    #paper-window #paper-front #container {
+      width: 100%;
+      height: 100%; }
+      #paper-window #paper-front #container .app-intro {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 100px 280px; }
+        #paper-window #paper-front #container .app-intro .app-logo {
+          width: 100px;
+          height: 100px; }
+        #paper-window #paper-front #container .app-intro .title-wrapper {
+          display: inline-block; }
+          #paper-window #paper-front #container .app-intro .title-wrapper div {
+            display: inline-block;
+            margin-left: 10px;
+            position: relative;
+            bottom: 10px; }
+        #paper-window #paper-front #container .app-intro .button-wrapper {
+          padding-right: 100px;
+          display: flex; }
+          #paper-window #paper-front #container .app-intro .button-wrapper .download-button {
+            transition: transform 400ms;
+            position: relative;
+            padding-left: 60px; }
+            #paper-window #paper-front #container .app-intro .button-wrapper .download-button .pic-1 {
+              position: absolute;
+              width: 130px;
+              top: -76px;
+              right: -58px; }
+            #paper-window #paper-front #container .app-intro .button-wrapper .download-button div {
+              width: 130px;
+              height: 50px;
+              border-radius: 50px;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center; }
+            #paper-window #paper-front #container .app-intro .button-wrapper .download-button div,
+            #paper-window #paper-front #container .app-intro .button-wrapper .download-button div * {
+              color: #fff; }
+            #paper-window #paper-front #container .app-intro .button-wrapper .download-button:active {
+              transform: scale(0.8); }
+          #paper-window #paper-front #container .app-intro .button-wrapper .download-button:nth-child(1) div {
+            background-color: #64b5f6; }
+          #paper-window #paper-front #container .app-intro .button-wrapper .download-button:nth-child(2) div {
+            background-color: #00a668; }
+            #paper-window #paper-front #container .app-intro .button-wrapper .download-button:nth-child(2) div .pic-2 {
+              width: 30px; }
+      #paper-window #paper-front #container .swiper-container .swiper-slide {
+        display: flex;
+        flex-direction: column;
+        align-items: center; }
+        #paper-window #paper-front #container .swiper-container .swiper-slide img {
+          width: 398px; }
+      #paper-window #paper-front #container .footer {
+        padding: 200px 100px 50px 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+        #paper-window #paper-front #container .footer a img {
+          width: 23px;
+          height: 23px; }
+        #paper-window #paper-front #container .footer a span {
+          vertical-align: super; }
+    @media screen and (max-width: 1048px) {
+      #paper-window #paper-front #container .app-intro {
+        display: block;
+        padding: 40px;
+        padding-top: 80px;
+        position: relative; }
+        #paper-window #paper-front #container .app-intro .app-logo {
+          width: 40px;
+          height: 40px;
+          position: fixed;
+          right: 30px;
+          top: 25px;
+          z-index: 10; }
+        #paper-window #paper-front #container .app-intro h1 {
+          margin: 14px 0px; }
+        #paper-window #paper-front #container .app-intro .button-wrapper {
+          display: flex;
+          flex-direction: column;
+          padding-right: 0px;
+          align-items: center;
+          justify-content: center; }
+          #paper-window #paper-front #container .app-intro .button-wrapper .download-button {
+            margin-top: 80px;
+            padding-left: 0; }
+            #paper-window #paper-front #container .app-intro .button-wrapper .download-button div {
+              width: 70vw; }
+          #paper-window #paper-front #container .app-intro .button-wrapper .download-button:nth-child(2) {
+            margin-top: 40px; } }
+  #paper-window .hamburger {
+    position: fixed;
+    z-index: 4;
+    top: 30px;
+    left: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    user-select: none; }
+    #paper-window .hamburger span {
+      position: relative; }
+      #paper-window .hamburger span, #paper-window .hamburger span:before, #paper-window .hamburger span:after {
+        display: block;
+        width: 30px;
+        height: 5px;
+        background-color: #64b5f6;
+        border-radius: 2px; }
+      #paper-window .hamburger span:before, #paper-window .hamburger span:after {
+        content: "";
+        position: absolute; }
+      #paper-window .hamburger span:before {
+        bottom: -10px; }
+      #paper-window .hamburger span:after {
+        bottom: -20px; }
+
+.md-container {
+  display: flex;
+  justify-content: center; }
+  .md-container .md > ul {
+    border-top: 1px solid #64b5f6;
+    margin: 50px 0; }
