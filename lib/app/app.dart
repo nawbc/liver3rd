@@ -21,15 +21,14 @@ import 'package:liver3rd/app/page/settings/forum_settings_passport_page.dart';
 import 'package:liver3rd/app/page/settings/forum_settings_privacy_page.dart';
 import 'package:liver3rd/app/page/settings/settings_page.dart';
 import 'package:liver3rd/app/page/shop/shop_present_detail.dart';
-import 'package:liver3rd/app/page/shop/shop_page.dart';
 import 'package:liver3rd/app/page/editors/push_redemption_editor_page.dart';
-
 import 'package:liver3rd/app/page/games/bh/bh_select_page.dart';
 import 'package:liver3rd/app/page/games/bh/valkyries_page.dart';
 import 'package:liver3rd/app/page/games/bh/wallpaper_page.dart';
 import 'package:liver3rd/app/page/games/ys/ys_role_page.dart';
 import 'package:liver3rd/app/page/inapp_purchase_page.dart';
 import 'package:liver3rd/app/page/redemptions_page.dart';
+import 'package:liver3rd/app/page/shop/shop_present_page.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/store/index.dart';
 import 'package:liver3rd/app/page/main_page.dart';
@@ -77,7 +76,7 @@ class _LiverAppState extends State<LiverApp> {
         'wallpaper': wallPaperPageHandler,
         'inapppurchase': inAppPurchaseHandler,
         'pushredemption': pushRedemptionEditorPageHandler,
-        'shop': shopPageHandler,
+        'shop': shopPresentPageHandler,
         'presentdetail': shopPresentDetailPageHandler,
         'photoviewpage': photoViewPageHandler,
         'post': forumPostPageHandler,
@@ -92,7 +91,7 @@ class _LiverAppState extends State<LiverApp> {
         'accounteditor': accountEditorPageHandler,
         'webview': webviewPageHandler,
         'topicinfo': topicFullInfoHandler,
-        'inappwebview': inAppWebViewPageHandler
+        // 'inappwebview': inAppWebViewPageHandler
       },
       defualtTransactionType: TransactionType.fromBottom,
       beforeAllNavigate: () {

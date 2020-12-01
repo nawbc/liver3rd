@@ -4,6 +4,10 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:liver3rd/app/utils/tiny_utils.dart';
+
+String webviewUserAgent =
+    'Mozilla/5.0 (Linux; Android 6.0; Redmi Note 4X Build/MRA58K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 Mobile Safari/537.36 miHoYoBBS/2.2.0';
 
 class ReqUtils {
   DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
@@ -14,7 +18,10 @@ class ReqUtils {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options) async {
-          print(options.uri.toString());
+          if (TinyUtils.isDev) {
+            print(options.uri.toString());
+          }
+
           String uid = await Share.getString(UID);
           String stoken = await Share.getString(STOKEN);
           String ltoken = await Share.getString(LTOKEN);
@@ -78,9 +85,9 @@ class ReqUtils {
     'upgrade-insecure-requests': 1
   };
 
-  Map<String, dynamic> customHeaders(
+  Map<String, String> customHeaders(
       {host, referer, origin, cookie, Map others}) {
-    Map<String, dynamic> headers = {
+    Map<String, String> headers = {
       'GlobalModel-Agent': 'okhttp/3.14.7',
       'Accept-Encoding': 'gzip',
       'Connection': 'keep-alive',
@@ -109,17 +116,18 @@ class ReqUtils {
     return headers;
   }
 
-  Future<Map<String, dynamic>> setDeviceHeader(
+  Future<Map<String, String>> setDeviceHeader(
       {host, referer, origin, cookie}) async {
     AndroidDeviceInfo info = await _deviceInfo.androidInfo;
-    Map<String, dynamic> deviceHeaders = {
-      'x-rpc-client_type': 2,
-      'x-rpc-app_version': '1.6.0',
+    Map<String, String> deviceHeaders = {
+      'x-rpc-client_type': '2',
+      'x-rpc-app_version': '2.2.0',
       'x-rpc-sys_version': '${info.version.release}',
       'x-rpc-channel': '${info.brand}',
       'x-rpc-device_id': '${info.androidId}',
       'x-rpc-device_name': '${info.brand} ${info.model}',
       'x-rpc-device_model': '${info.model}',
+      'user-agent': webviewUserAgent,
     };
     deviceHeaders.addAll(
       customHeaders(

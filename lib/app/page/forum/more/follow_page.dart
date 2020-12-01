@@ -20,9 +20,6 @@ import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 
 class FollowPage extends StatefulWidget {
-  final ScrollController nestScrollController;
-
-  const FollowPage({Key key, this.nestScrollController}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _FollowPageState();
@@ -46,7 +43,6 @@ class _FollowPageState extends State<FollowPage>
   int _pageSize = 0;
   Map _tmpData = {};
   List _postList = [];
-  List<Color> _colorList = [];
 
   @override
   void dispose() {
@@ -61,10 +57,7 @@ class _FollowPageState extends State<FollowPage>
   void initState() {
     super.initState();
 
-    _scrollController = ScrollController()
-      ..addListener(() {
-        widget.nestScrollController.jumpTo(_scrollController.offset);
-      });
+    _scrollController = ScrollController();
   }
 
   @override
@@ -83,7 +76,7 @@ class _FollowPageState extends State<FollowPage>
             .fetchRecommendActiveUserList(lastId: '0', pageSize: _pageSize)
             .then((tmp) {
           _loadRecUserLocker = true;
-          _colorList.addAll(TinyUtils.randomColorList(10));
+
           if (mounted) {
             setState(() {
               _recommendUserList =
@@ -177,7 +170,6 @@ class _FollowPageState extends State<FollowPage>
               ? SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return Container(
-                      height: screenWidth / (16 / 8) + 40,
                       child: GestureDetector(
                         onHorizontalDragEnd: (details) {
                           TinyUtils.fixGestureConfliction(
@@ -194,13 +186,11 @@ class _FollowPageState extends State<FollowPage>
                             if (_recommendUserList.isEmpty) {
                               return Container();
                             } else {
-                              Color randomColor = _colorList[sIndex];
                               Map userInfo = _recommendUserList[sIndex];
                               bool isFollowing = userInfo['is_follow'];
                               String uid = userInfo['uid'];
 
                               return FollowUserCard(
-                                randomColor: randomColor,
                                 name: userInfo['nickname'],
                                 intro: userInfo['introduce'],
                                 label: userInfo['certification']['label'],
@@ -221,10 +211,11 @@ class _FollowPageState extends State<FollowPage>
                           },
                           controller: _swiperController,
                           itemCount: _recommendUserList.length,
-                          itemWidth: screenWidth - 50,
-                          itemHeight: screenWidth / 2,
+                          itemWidth: screenWidth,
+                          itemHeight: 120,
                           layout: SwiperLayout.STACK,
                           autoplay: true,
+                          scrollDirection: Axis.vertical,
                           autoplayDelay: 6000,
                         ),
                       ),

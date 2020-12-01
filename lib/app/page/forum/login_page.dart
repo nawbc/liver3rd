@@ -1,19 +1,19 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/api/forum/src_links.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/store/global_model.dart';
 
-import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
 class LoginPage extends StatefulWidget {
@@ -64,14 +64,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> _saveTokenToLocal({stoken, webLoginToken, ltoken, uid}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(STOKEN, stoken);
-    prefs.setString(WEB_LOGIN_TOKEN, webLoginToken);
-    prefs.setString(LTOKEN, ltoken);
-    prefs.setString(UID, uid);
-  }
-
   Future<void> _login(BuildContext context) async {
     if (_captchaController.text == '' && _phoneController.text == '') {
       Scaffold.of(context).showSnackBar(CommonWidget.snack('请输入'));
@@ -100,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
           // 这里获取，跳转后_user.info 就已经带有数据了
           List tokenList = tokens['data']['list'];
           // 存到本地
-          _saveTokenToLocal(
+          await TinyUtils.saveTokenToLocal(
             stoken: tokenList[0]['token'],
             ltoken: tokenList[1]['token'],
             uid: uid,
@@ -112,19 +104,17 @@ class _LoginPageState extends State<LoginPage> {
             _globalModel.setLogin(true);
             Navigate.navigate(context, 'main');
           } else {
-            Scaffold.of(context)
-                .showSnackBar(CommonWidget.snack('登陆失败，请重新登陆', isError: true));
+            BotToast.showText(text: '登陆失败，请重新登陆');
           }
         }).catchError((err) {
-          Scaffold.of(context)
-              .showSnackBar(CommonWidget.snack('token 获取错误', isError: true));
+          BotToast.showText(text: 'token 获取错误');
           setState(() {
             _isClickedSend = false;
           });
         });
       }
     } catch (err) {
-      Scaffold.of(context).showSnackBar(CommonWidget.snack('数据解析错误'));
+      BotToast.showText(text: '数据解析错误');
       setState(() {
         _isClickedSend = false;
       });
@@ -168,151 +158,180 @@ class _LoginPageState extends State<LoginPage> {
         body: Column(
           children: <Widget>[
             Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 5,
-                              right: 10,
-                            ),
-                            child: CustomIcons.question,
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 5,
+                            right: 10,
                           ),
-                          NoScaledText(
-                            '请使用米游社区账号登录',
+                          child: CustomIcons.question,
+                        ),
+                        NoScaledText(
+                          '请使用米游社区账号登录',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: ScreenUtil().setSp(40),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            TinyUtils.openUrl(
+                              bhLoginUrl,
+                              error: () {
+                                Scaffold.of(context).showSnackBar(
+                                  CommonWidget.snack('链接跳转失败'),
+                                );
+                                FLog.error(
+                                  text: 'open url error',
+                                  className: 'LoginPage',
+                                );
+                              },
+                            );
+                          },
+                          child: NoScaledText(
+                            '注册',
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.blue,
                               fontSize: ScreenUtil().setSp(40),
                             ),
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              TinyUtils.openUrl(
-                                bhLoginUrl,
-                                error: () {
-                                  Scaffold.of(context).showSnackBar(
-                                    CommonWidget.snack('链接跳转失败'),
-                                  );
-                                  FLog.error(
-                                    text: 'open url error',
-                                    className: 'LoginPage',
-                                  );
-                                },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(30)),
+                    CommonWidget.borderTextField(
+                      height: 51,
+                      hintText: '请输入手机号',
+                      keyboardType: TextInputType.phone,
+                      textController: _phoneController,
+                      withBorder: true,
+                    ),
+                    SizedBox(height: 17),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        CommonWidget.borderTextField(
+                          width: 110,
+                          height: 51,
+                          hintText: '验证码',
+                          keyboardType: TextInputType.phone,
+                          textController: _captchaController,
+                        ),
+                        SizedBox(width: 10),
+                        _isClickedSend
+                            ? Container(
+                                height: 51,
+                                width: 51,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 2, color: Colors.grey[400]),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: NoScaledText(
+                                    '$_countdown',
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(45),
+                                      color: Colors.grey[400],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height: 51,
+                                width: 70,
+                                child: Builder(
+                                  builder: (context) {
+                                    return RaisedButton(
+                                      elevation: 3,
+                                      child: NoScaledText(
+                                        '获取',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      onPressed: () =>
+                                          _sendMobileCaptcha(context),
+                                      color: Colors.blue[200],
+                                      colorBrightness: Brightness.dark,
+                                      padding: EdgeInsets.all(0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 10),
+                        Container(
+                          width: 220,
+                          height: 51,
+                          child: Builder(
+                            builder: (BuildContext context) {
+                              return RaisedButton(
+                                elevation: 0,
+                                child: NoScaledText(
+                                  '登录',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                color: Colors.blue[200],
+                                colorBrightness: Brightness.dark,
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                onPressed: () => _login(context),
                               );
                             },
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () async {
+                            String jsString = await rootBundle
+                                .loadString('assets/javascript/loginInject.js');
+                            Navigate.navigate(context, 'webview', arg: {
+                              'title': '登录',
+                              'url': 'https://m.bbs.mihoyo.com/bh2/#/login',
+                              'inject': jsString,
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(left: 10),
                             child: NoScaledText(
-                              '注册',
+                              '使用网页登录',
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: ScreenUtil().setSp(40),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: ScreenUtil().setHeight(30)),
-                      CommonWidget.borderTextField(
-                        height: 51,
-                        hintText: '请输入手机号',
-                        keyboardType: TextInputType.phone,
-                        textController: _phoneController,
-                        withBorder: true,
-                      ),
-                      SizedBox(height: 17),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          CommonWidget.borderTextField(
-                            width: 110,
-                            height: 51,
-                            hintText: '验证码',
-                            keyboardType: TextInputType.phone,
-                            textController: _captchaController,
-                          ),
-                          SizedBox(width: 10),
-                          _isClickedSend
-                              ? Container(
-                                  height: 51,
-                                  width: 51,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 2, color: Colors.grey[400]),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: NoScaledText(
-                                      '$_countdown',
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(45),
-                                        color: Colors.grey[400],
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 51,
-                                  width: 70,
-                                  child: Builder(
-                                    builder: (context) {
-                                      return RaisedButton(
-                                        elevation: 3,
-                                        child: NoScaledText(
-                                          '获取',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        onPressed: () =>
-                                            _sendMobileCaptcha(context),
-                                        color: Colors.blue[200],
-                                        colorBrightness: Brightness.dark,
-                                        padding: EdgeInsets.all(0),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                        ],
-                      ),
-                      SizedBox(height: 25),
-                      Container(
-                        width: 220,
-                        height: 51,
-                        child: Builder(
-                          builder: (BuildContext context) {
-                            return RaisedButton(
-                              elevation: 0,
-                              child: NoScaledText(
-                                '登录',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              color: Colors.blue[200],
-                              colorBrightness: Brightness.dark,
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              onPressed: () => _login(context),
-                            );
-                          },
                         ),
-                      )
-                    ],
-                  ),
-                )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

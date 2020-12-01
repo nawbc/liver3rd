@@ -5,3 +5,5 @@
 -keep class io.flutter.view.**  { *; }
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
+-dontwarn com.geetest.sdk.**
+-keep class com.geetest.sdk.**{*;}

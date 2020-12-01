@@ -76,7 +76,6 @@ class _AboutPageState extends State<AboutPage> {
 }
 
 Handler aboutPageHandler = Handler(
-  transactionType: TransactionType.fromRight,
   pageBuilder: (BuildContext context, arg) {
     return AboutPage();
   },

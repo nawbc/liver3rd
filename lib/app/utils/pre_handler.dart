@@ -37,9 +37,6 @@ Map initHomePageRecPostsQuery(id) {
 }
 
 class PreHandler {
-  // bool _redemptionCodeLocker = true;
-  // bool _timLocker = true;
-
   NotificationCodeUpdate _ncp = NotificationCodeUpdate();
 
   Future<void> preLoadSettings(BuildContext context) async {
@@ -65,12 +62,12 @@ class PreHandler {
   Future<void> preLoadGlobalInfo(BuildContext context) async {
     GlobalModel _globalModel = Provider.of<GlobalModel>(context, listen: false);
     await _globalModel.getUserFullInfo();
+
     if (_globalModel.userInfo.isNotEmpty &&
         _globalModel.userInfo['uid'] != null &&
         _globalModel.userInfo['stoken'] != null &&
         _globalModel.userInfo['data'] != null) {
       _globalModel.setLogin(true);
-      // await
     }
 
     await _globalModel.getGameList(_globalModel.userInfo['uid']);

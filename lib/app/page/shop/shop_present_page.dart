@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/api/shop/shop_api.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
+import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/app/widget/present_card.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
@@ -11,10 +11,6 @@ import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 
 class ShopPresentPage extends StatefulWidget {
-  final ScrollController nestController;
-
-  const ShopPresentPage({Key key, this.nestController}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() {
     return _ShopPresentPageState();
@@ -32,11 +28,8 @@ class _ShopPresentPageState extends State<ShopPresentPage>
 
   @override
   initState() {
+    _scrollController = ScrollController();
     super.initState();
-    _scrollController = ScrollController()
-      ..addListener(() {
-        widget.nestController.jumpTo(_scrollController.offset);
-      });
   }
 
   Future<void> _fetchGoods(int page) async {
@@ -79,7 +72,14 @@ class _ShopPresentPageState extends State<ShopPresentPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        title: CommonWidget.titleText('兑换中心'),
+        leading: CustomIcons.back(context),
+        automaticallyImplyLeading: false,
+        elevation: 0,
+      ),
       backgroundColor: Colors.white,
       body: _goods.length <= 0
           ? CommonWidget.loading()
@@ -96,11 +96,6 @@ class _ShopPresentPageState extends State<ShopPresentPage>
               onRefresh: _refreshGoods,
               onLoad: _loadGoods,
               slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    return SizedBox(height: ScreenUtil().setHeight(40));
-                  }, childCount: 1),
-                ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     Map g = _goods[index];
@@ -140,6 +135,12 @@ class _ShopPresentPageState extends State<ShopPresentPage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
+
+var shopPresentPageHandler = Handler(
+  transactionType: TransactionType.fromBottom,
+  pageBuilder: (BuildContext context, arg) {
+    return ShopPresentPage();
+  },
+);

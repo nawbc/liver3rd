@@ -147,29 +147,6 @@ class _TopicPageState extends State<TopicPage>
         widget.srcType != null ? widget.srcType : _topicData['src_type'];
 
     switch (srcType) {
-      case 0:
-        topic = TopicType0(
-          sortType: _sortType,
-          onSortButtonPressed: (type) {
-            setState(() {
-              _sortType = type == 1 ? 2 : 1;
-            });
-          },
-          headerImage: _topicData.isNotEmpty ? _topicData['header_image'] : '',
-          name: _topicData.isNotEmpty ? _topicData['name'] : '',
-          introduce: (_topicData.isNotEmpty
-              ? _topicData['des']
-              : NO_SIGNNATURE_STRING),
-          topicData: _topicData,
-          tabs: <Tab>[
-            Tab(child: CommonWidget.tabTitle('最新')),
-            Tab(child: CommonWidget.tabTitle('热门')),
-            Tab(child: CommonWidget.tabTitle('精华')),
-          ],
-          expandedHeight: _expandedHeight,
-          tabViews: _topic0ShowType(),
-        );
-        break;
       case 1:
         topic = TopicType1(
           name: _topicData.isNotEmpty ? _topicData['name'] : '',
@@ -221,10 +198,28 @@ class _TopicPageState extends State<TopicPage>
         );
         break;
       default:
-        topic = Scaffold(
-          backgroundColor: Colors.transparent,
-          body: EmptyWidget(title: '出错'),
+        topic = TopicType0(
+          sortType: _sortType,
+          onSortButtonPressed: (type) {
+            setState(() {
+              _sortType = type == 1 ? 2 : 1;
+            });
+          },
+          headerImage: _topicData.isNotEmpty ? _topicData['header_image'] : '',
+          name: _topicData.isNotEmpty ? _topicData['name'] : '',
+          introduce: (_topicData.isNotEmpty
+              ? _topicData['des']
+              : NO_SIGNNATURE_STRING),
+          topicData: _topicData,
+          tabs: <Tab>[
+            Tab(child: CommonWidget.tabTitle('最新')),
+            Tab(child: CommonWidget.tabTitle('热门')),
+            Tab(child: CommonWidget.tabTitle('精华')),
+          ],
+          expandedHeight: _expandedHeight,
+          tabViews: _topic0ShowType(),
         );
+        break;
     }
     return topic;
   }

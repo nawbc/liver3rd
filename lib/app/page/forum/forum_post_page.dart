@@ -79,9 +79,7 @@ class _ForumPostPageState extends State<ForumPostPage> {
 
   Widget _labelWidget(String content) {
     return Padding(
-      padding: EdgeInsets.only(
-        right: 10,
-      ),
+      padding: EdgeInsets.only(right: 10),
       child: NoScaledText(
         content,
         style: TextStyle(
@@ -245,7 +243,8 @@ class _ForumPostPageState extends State<ForumPostPage> {
                               currentPost['post']['structured_content'];
                           String content = currentPost['post']['content'];
 
-                          if (structuredContent == 'null') {
+                          if (structuredContent == 'null' ||
+                              structuredContent == '') {
                             try {
                               postContent.add(jsonDecode(content));
                             } catch (err) {

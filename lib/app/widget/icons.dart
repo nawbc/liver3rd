@@ -33,11 +33,15 @@ class CustomIcons {
     width: 24,
   );
 
-  static Widget shop = SvgPicture.asset(
-    'assets/images/shop.svg',
-    color: Colors.grey,
-    width: 26,
-  );
+  static Widget shop({double width}) => SvgPicture.asset(
+        'assets/images/shop.svg',
+        width: width,
+      );
+
+  static Widget coin({double width}) => SvgPicture.asset(
+        'assets/images/coin.svg',
+        width: width,
+      );
 
   static Widget question = SvgPicture.asset(
     'assets/images/question.svg',
@@ -53,14 +57,18 @@ class CustomIcons {
 
   static Widget setting = SvgPicture.asset(
     'assets/images/setting.svg',
-    color: Colors.grey,
-    width: 28,
   );
 
   static Widget game = SvgPicture.asset(
     'assets/images/game.svg',
-    color: Colors.grey,
-    width: 30,
+  );
+
+  static Widget pointer = SvgPicture.asset(
+    'assets/images/pointer.svg',
+  );
+
+  static Widget flower = SvgPicture.asset(
+    'assets/images/flower.svg',
   );
 
   static Widget present = SvgPicture.asset(
@@ -86,12 +94,6 @@ class CustomIcons {
         width: width,
         color: color,
       );
-
-  static Widget home = SvgPicture.asset(
-    'assets/images/home.svg',
-    color: Colors.grey,
-    width: 20,
-  );
 
   static Widget comic = SvgPicture.asset(
     'assets/images/comic.svg',
@@ -162,33 +164,8 @@ class CustomIcons {
         width: width,
       );
 
-  static Widget anchor({double width = 30}) => SvgPicture.asset(
-        'assets/images/anchor.svg',
-        width: width,
-      );
-
-  static Widget ship({double width = 30}) => SvgPicture.asset(
-        'assets/images/ship.svg',
-        width: width,
-      );
-
-  static Widget pointer({double width = 30}) => SvgPicture.asset(
-        'assets/images/pointer.svg',
-        width: width,
-      );
-
-  static Widget flower({double width = 30}) => SvgPicture.asset(
-        'assets/images/flower.svg',
-        width: width,
-      );
-
   static Widget workspace({double width = 30}) => SvgPicture.asset(
         'assets/images/workspace.svg',
-        width: width,
-      );
-
-  static Widget mirror({double width = 30}) => SvgPicture.asset(
-        'assets/images/mirror.svg',
         width: width,
       );
 

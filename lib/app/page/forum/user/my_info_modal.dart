@@ -2,12 +2,15 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/rendering.dart';
+import 'package:liver3rd/app/api/forum/src_links.dart';
+import 'package:liver3rd/app/page/forum/widget/icon_block.dart';
 import 'package:liver3rd/app/store/global_model.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
+import 'package:liver3rd/app/widget/icons.dart';
 import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
 import 'package:liver3rd/custom/easy_refresh/easy_refresh.dart';
 import 'package:liver3rd/app/widget/common_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/utils/complish_missions.dart';
 import 'package:liver3rd/app/widget/timing_task.dart';
@@ -165,7 +168,7 @@ class _UserModalState extends State<MyInfoModal> {
                                   Navigate.navigate(context, 'accounteditor');
                                 },
                               ),
-                              SizedBox(width: ScreenUtil().setWidth(40)),
+                              SizedBox(width: 10),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -185,20 +188,18 @@ class _UserModalState extends State<MyInfoModal> {
                                           softWrap: true,
                                         ),
                                       ),
-                                      SizedBox(
-                                          width: ScreenUtil().setWidth(20)),
+                                      SizedBox(width: 5),
                                       TinyUtils.selectGender(info['gender'])
                                     ],
                                   ),
-                                  SizedBox(height: ScreenUtil().setHeight(15)),
+                                  SizedBox(height: 10),
                                   Container(
                                     constraints: BoxConstraints(
                                       maxWidth: screenWidth / 3,
                                     ),
                                     child: NoScaledText(
                                       info['introduce'],
-                                      style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(40)),
+                                      style: TextStyle(fontSize: 14),
                                       overflow: TextOverflow.ellipsis,
                                       softWrap: true,
                                     ),
@@ -215,26 +216,23 @@ class _UserModalState extends State<MyInfoModal> {
                                 onPressed: isCompleteMissions
                                     ? null
                                     : () async {
-                                        TinyUtils.checkPurchase(
-                                          context,
-                                          () async {
-                                            await complishMissions(
-                                              false,
-                                              onSuccess: () {
-                                                BotToast.showText(text: '任务完成');
-                                              },
-                                              onError: (err) {
-                                                Scaffold.of(context)
-                                                    .showSnackBar(
-                                                  CommonWidget.snack(
-                                                      '一键完成部分任务失败，刷新查看',
-                                                      isError: true),
-                                                );
-                                              },
+                                        setState(() {
+                                          _loading = true;
+                                        });
+                                        await complishMissions(
+                                          false,
+                                          onSuccess: () {
+                                            BotToast.showText(text: '任务完成');
+                                          },
+                                          onError: (err) {
+                                            Scaffold.of(context).showSnackBar(
+                                              CommonWidget.snack(
+                                                  '一键完成部分任务失败，刷新查看',
+                                                  isError: true),
                                             );
-                                            await _refresh();
                                           },
                                         );
+                                        await _refresh();
                                       },
                               );
                             },
@@ -242,7 +240,7 @@ class _UserModalState extends State<MyInfoModal> {
                         ],
                       ),
                     ),
-                    SizedBox(height: ScreenUtil().setHeight(35)),
+                    SizedBox(height: 15),
                     // 个人信息
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -273,7 +271,51 @@ class _UserModalState extends State<MyInfoModal> {
                         ),
                       ],
                     ),
-                    SizedBox(height: ScreenUtil().setHeight(50)),
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: BouncingScrollPhysics(),
+                          child: Row(
+                            children: [
+                              IconBlock(
+                                text: '兑换中心',
+                                icon: CustomIcons.shop(width: 33),
+                                onTap: () {
+                                  Navigate.navigate(context, 'shop');
+                                },
+                              ),
+                              SizedBox(width: 15),
+                              IconBlock(
+                                text: '米游币',
+                                icon: CustomIcons.coin(width: 22),
+                                onTap: () {
+                                  Navigate.navigate(context, 'webview', arg: {
+                                    'title': '米游币',
+                                    'url': myCenterUrl,
+                                    'withAppBar': false,
+                                  });
+                                },
+                              ),
+                              SizedBox(width: 15),
+                              // IconBlock(
+                              //   text: '活动',
+                              //   icon: CustomIcons.donut(width: 30),
+                              //   onTap: () {
+                              //     Navigate.navigate(context, 'webview', arg: {
+                              //       'title': '记录',
+                              //       'url': myCoinRecordUrl,
+                              //     });
+                              //   },
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
                     //任务完成状态
                     Container(
                       height: 230,
@@ -319,13 +361,13 @@ class _UserModalState extends State<MyInfoModal> {
                               ],
                             ),
                     ),
-                    SizedBox(height: ScreenUtil().setHeight(30)),
+                    SizedBox(height: 10),
                     // 设置签到
                     TimingTask(),
                     SizedBox(height: 25),
                     Container(
                       width: double.infinity,
-                      height: ScreenUtil().setHeight(100),
+                      height: 45,
                       child: RaisedButton(
                         color: Colors.red,
                         shape: RoundedRectangleBorder(
@@ -342,7 +384,7 @@ class _UserModalState extends State<MyInfoModal> {
                         ),
                       ),
                     ),
-                    SizedBox(height: ScreenUtil().setHeight(100)),
+                    SizedBox(height: 70),
                   ],
                 );
               },

@@ -57,6 +57,9 @@ class CommonWidget {
     Color color = const Color(0xff90caf9),
     TextStyle textStyle = const TextStyle(fontSize: 12),
     double elevation,
+    BorderRadius borderRadius = const BorderRadius.all(
+      Radius.circular(12),
+    ),
   }) =>
       Container(
         height: height,
@@ -68,11 +71,7 @@ class CommonWidget {
           disabledTextColor: Colors.white,
           color: color,
           colorBrightness: Brightness.dark,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(12),
-            ),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: borderRadius),
           child: child != null
               ? child
               : NoScaledText(content,
@@ -178,6 +177,7 @@ class CommonWidget {
     bool enabled = true,
     EdgeInsetsGeometry contentPadding = const EdgeInsets.only(left: 10),
     void Function(String) onSubmit,
+    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(20)),
     TextInputType keyboardType = TextInputType.text,
   }) =>
       Container(
@@ -185,7 +185,7 @@ class CommonWidget {
         height: height,
         decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: borderRadius,
           border:
               withBorder ? Border.all(width: 2, color: Colors.grey[400]) : null,
         ),

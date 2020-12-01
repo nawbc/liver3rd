@@ -130,7 +130,9 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
 
   String _getlegalSongUrl(Map data) {
     return data.isNotEmpty
-        ? data['data'].length != 0 ? data['data'][0]['url'] : ''
+        ? data['data'].length != 0
+            ? data['data'][0]['url']
+            : ''
         : '';
   }
 
@@ -179,11 +181,10 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
             flex: _isSimpleMode ? 7 : 4,
             child: Container(
               width: double.infinity,
-              // height: ScreenUtil().setHeight(620),
               child: Hero(
                 tag: widget.tag, //唯一标记，前后两个路由页Hero的tag必须相同
                 child: CachedNetworkImage(
-                  imageUrl: _playList[_index]['al']['picUrl'],
+                  imageUrl: _playList[_index]['album']['picUrl'],
                   fit: BoxFit.cover,
                 ),
               ),
@@ -206,7 +207,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                   ),
                   SizedBox(height: 5),
                   NoScaledText(
-                    _playList[_index]['ar'][0]['name'],
+                    _playList[_index]['album']['name'],
                     style: TextStyle(
                       color: Colors.grey[400],
                       fontSize: ScreenUtil().setSp(40),

@@ -620,11 +620,12 @@ class _PostEditorPageState extends State<PostEditorPage> {
                           ],
                         ),
                         CommonWidget.button(
-                            width: 65,
-                            content: '发布',
-                            onPressed: () {
-                              _releasePost(context);
-                            })
+                          width: 65,
+                          content: '发布',
+                          onPressed: () {
+                            _releasePost(context);
+                          },
+                        )
                       ],
                     );
                   },

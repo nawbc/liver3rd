@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:flutter/material.dart';
@@ -102,6 +103,7 @@ class _AccountEditorPageState extends State<AccountEditorPage> {
                                         setState(() {
                                           _avatarInfo = ele;
                                         });
+                                        BotToast.showText(text: '重启软件后显示');
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.all(10),

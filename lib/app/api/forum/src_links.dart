@@ -169,3 +169,16 @@ final String bhLoginUrl = 'https://bbs.mihoyo.com/bh3/#/login';
 final String getNewsListUrl =
     'https://api-takumi.mihoyo.com/post/api/getNewsList';
 //============================================================================================================
+
+final String myCenterUrl =
+    'https://webstatic.mihoyo.com/app/community-shop/index.html?bbs_presentation_style=no_header#/miyobCenter';
+
+final String myCoinRecordUrl =
+    'https://webstatic.mihoyo.com/app/community-shop/index.html?bbs_presentation_style=no_header#/myb/miyobHistory/increase';
+
+// 查找账号
+final String findAccountUrl = 'https://user.mihoyo.com/#/findAccountGuide';
+//
+
+final String gameRecordsUrl =
+    'https://webstatic.mihoyo.com/app/community-game-records/index.html?v=6#/';

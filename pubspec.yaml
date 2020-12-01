@@ -52,7 +52,7 @@ dependencies:
   version: ^1.0.3
   package_info: ^0.4.0+16
   flutter_swiper: ^1.1.6
-  photo_view: ^0.9.2
+  photo_view: ^0.10.3
   flutter_speed_dial: ^1.2.5
   flutter_html: ^0.11.1
   multi_image_picker: ^4.6.6+rc.1
@@ -62,15 +62,17 @@ dependencies:
       url: https://gitee.com/sewerganger/videoPlayerWithHeader.git
   uuid: ^2.0.4
   flutter_cache_manager: ^1.2.2
-  socket_io_client: ^0.9.10
-  socket_io: ^0.9.3
+  # socket_io_client: ^0.9.10
+  # socket_io: ^0.9.3
   # tencent_im_plugin: ^0.2.31
   bubble_showcase: ^0.2.0+3
   color_thief_flutter: ^1.0.2
   preload_page_view: ^0.1.4
   f_logs: ^1.2.2
   bot_toast: ^3.0.5
-  flutter_inappwebview: ^4.0.0+4
+  webview_cookie_manager: ^1.0.4
+  flutter_sticky_header: ^0.5.0
+
 
   
   
@@ -99,3 +101,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/javascript/

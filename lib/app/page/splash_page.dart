@@ -11,7 +11,6 @@ import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/utils/pre_handler.dart';
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/utils/tiny_utils.dart';
-import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
@@ -156,7 +155,7 @@ class _SplashPage extends State<SplashPage> with TickerProviderStateMixin {
       _splashTimer = Timer(
           Duration(milliseconds: _preLoadDuration > duration ? 0 : duration),
           () async {
-        Navigate.navigate(context, "main");
+        Navigate.navigate(context, "main", replaceRoute: ReplaceRoute.all);
         _splashTimer?.cancel();
       });
     }

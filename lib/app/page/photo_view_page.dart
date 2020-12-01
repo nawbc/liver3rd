@@ -20,7 +20,6 @@ class _PhotoViewPageState extends State<PhotoViewPage> {
   int currentIndex;
   PageController controller;
   String _bottomContent;
-  List _savedList;
 
   String _getImgUrl(index) {
     return widget.images[index] is String
@@ -33,7 +32,6 @@ class _PhotoViewPageState extends State<PhotoViewPage> {
     super.initState();
     controller = PageController(initialPage: widget.index);
     currentIndex = widget.index;
-    _savedList = [];
     _bottomContent = '保存';
   }
 

@@ -61,7 +61,7 @@ class NewForum {
       referer: 'https://bbs.mihoyo.com/',
       query: {
         'scene_type': 1,
-        'now': DateTime.now(),
+        'now': DateTime.now().millisecondsSinceEpoch,
         'reason': 'bbs.mihoyo.com'
       },
     );
@@ -71,6 +71,13 @@ class NewForum {
     return getFetcher(
       '/auth/api/getCookieAccountInfoBySToken',
       query: {'stoken': stoken, 'uid': uid},
+    );
+  }
+
+  Future getGameRecordCard(String uid) async {
+    return getFetcher(
+      '/game_record/card/api/getGameRecordCard',
+      query: {'uid': uid},
     );
   }
 }

@@ -12,6 +12,7 @@ import 'package:liver3rd/app/widget/common_widget.dart';
 import 'package:liver3rd/app/widget/dialogs.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
 import 'package:package_info/package_info.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:version/version.dart';
 import 'package:liver3rd/app/widget/no_scaled_text.dart';
 
@@ -147,7 +148,8 @@ class SoftwareSettingsFragmentState extends State<SoftwareSettingsFragment> {
             subTitleColor: Colors.grey[400],
             color: Colors.grey[200],
             onPress: () async {
-              await DefaultCacheManager().emptyCache().then((val) async {
+              var appDir = (await getTemporaryDirectory()).path;
+              Directory(appDir).delete(recursive: true).then((value) async {
                 await _renderCacheSize();
                 Scaffold.of(context).showSnackBar(CommonWidget.snack("清除成功"));
               }).catchError((val) async {

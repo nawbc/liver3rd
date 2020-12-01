@@ -10,9 +10,6 @@ import 'package:liver3rd/custom/navigate/navigate.dart';
 import 'package:provider/provider.dart';
 
 class BlockPage extends StatefulWidget {
-  final ScrollController nestScrollController;
-
-  const BlockPage({Key key, this.nestScrollController}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _BlockPageState();
@@ -33,10 +30,7 @@ class _BlockPageState extends State<BlockPage>
     _locker = true;
     _forums = [];
     _forumApi = ForumApi();
-    _scrollController = ScrollController()
-      ..addListener(() {
-        widget.nestScrollController.jumpTo(_scrollController.offset);
-      });
+    _scrollController = ScrollController();
   }
 
   @override
@@ -88,83 +82,89 @@ class _BlockPageState extends State<BlockPage>
             : _forums
                 .toList()
                 .asMap()
-                .map((index, val) {
-                  List innerForums = val['forums'];
-                  int id = val['game_id'];
+                .map(
+                  (index, val) {
+                    List innerForums = val['forums'];
+                    int id = val['game_id'];
 
-                  return MapEntry(
-                    index,
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        return Container(
-                          margin: EdgeInsets.all(5),
-                          child: Column(
-                            children: <Widget>[
-                              CommonWidget.tabTitle(
-                                  '${_globalModel.gameList[id]['name']}'),
-                              SizedBox(height: 20),
-                              Wrap(
-                                spacing: 15,
-                                runSpacing: 15,
-                                children: innerForums.map((val) {
-                                  return ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15)),
-                                    child: Material(
-                                      color: Colors.grey[200],
-                                      child: Ink(
-                                        child: InkWell(
-                                          onTap: () {
-                                            _navigatorToAccordSrcType(
-                                                context, val);
-                                          },
-                                          child: Container(
-                                            width: 110,
-                                            height: 140,
-                                            padding: EdgeInsets.only(
-                                                top: 8, bottom: 8),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: <Widget>[
-                                                ClipOval(
-                                                  child: Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding: EdgeInsets.all(8),
-                                                    color: Colors.white,
-                                                    child: CachedNetworkImage(
-                                                      imageUrl:
-                                                          val['icon_pure'],
-                                                      fit: BoxFit.cover,
+                    return MapEntry(
+                      index,
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                top: 5, left: 5, right: 5, bottom: 40),
+                            child: Column(
+                              children: <Widget>[
+                                CommonWidget.tabTitle(
+                                    '${_globalModel.gameMap['$id']['name']}'),
+                                SizedBox(height: 20),
+                                Wrap(
+                                  spacing: 15,
+                                  runSpacing: 15,
+                                  children: innerForums.map((val) {
+                                    return ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
+                                      child: Material(
+                                        color: Colors.grey[200],
+                                        child: Ink(
+                                          child: InkWell(
+                                            onTap: () {
+                                              _navigatorToAccordSrcType(
+                                                  context, val);
+                                            },
+                                            child: Container(
+                                              width: 110,
+                                              height: 140,
+                                              padding: EdgeInsets.only(
+                                                  top: 8, bottom: 8),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: <Widget>[
+                                                  ClipOval(
+                                                    child: Container(
+                                                      height: 50,
+                                                      width: 50,
+                                                      padding:
+                                                          EdgeInsets.all(8),
+                                                      color: Colors.white,
+                                                      child: CachedNetworkImage(
+                                                        imageUrl:
+                                                            val['icon_pure'],
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                NoScaledText('${val['name']}'),
-                                                NoScaledText(
-                                                  '热度:${val['hot_score']}',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.grey),
-                                                )
-                                              ],
+                                                  NoScaledText(
+                                                      '${val['name']}'),
+                                                  NoScaledText(
+                                                    '热度:${val['hot_score']}',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.grey),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                        );
-                      }, childCount: 1),
-                    ),
-                  );
-                })
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
+                          );
+                        }, childCount: 1),
+                      ),
+                    );
+                  },
+                )
                 .values
                 .toList(),
       ),

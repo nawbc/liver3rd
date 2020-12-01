@@ -4,6 +4,7 @@ import 'package:liver3rd/app/api/forum/user/user_api.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/utils/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class GlobalModel with ChangeNotifier {
   NewForum _newForum = NewForum();
@@ -11,6 +12,9 @@ class GlobalModel with ChangeNotifier {
 
   List _gameList = [];
   List get gameList => _gameList;
+
+  Map _gameMap = {};
+  Map get gameMap => _gameMap;
 
   List _gameOrder = [];
   List get getGameOrder => _gameOrder;
@@ -21,18 +25,18 @@ class GlobalModel with ChangeNotifier {
     List list = data['data']['list'];
 
     List tmpOrderList;
+    _gameMap = list.asMap().map((index, val) {
+      return MapEntry('${val['id']}', val);
+    });
+
     if (orderData['data'] == null) {
       _gameList = list;
     } else {
       tmpOrderList = orderData['data']['businesses'];
       _gameOrder = tmpOrderList;
 
-      Map gameMap = list.asMap().map((index, val) {
-        return MapEntry('${val['id']}', val);
-      });
-
       _gameList = _gameOrder.map((num) {
-        return gameMap[num];
+        return _gameMap[num];
       }).toList();
     }
 
@@ -75,6 +79,8 @@ class GlobalModel with ChangeNotifier {
     _userInfo = {};
     _isLogin = false;
     notifyListeners();
+    final cookieManager = WebviewCookieManager();
+    await cookieManager.clearCookies();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       await prefs.remove(UID);

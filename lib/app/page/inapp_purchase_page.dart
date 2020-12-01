@@ -31,7 +31,7 @@ class PayCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         Expanded(
-          flex: 1,
+          flex: 2,
           child: Container(
             constraints: BoxConstraints.expand(),
             padding: EdgeInsets.all(ScreenUtil().setWidth(50)),
@@ -47,7 +47,7 @@ class PayCard extends StatelessWidget {
           child: Image.asset(imgUrl),
         ),
         Expanded(
-          flex: 1,
+          flex: 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -55,7 +55,7 @@ class PayCard extends StatelessWidget {
                 padding: EdgeInsets.only(top: 20),
                 child: Container(
                   width: double.infinity,
-                  height: ScreenUtil().setHeight(100),
+                  height: 45,
                   padding: EdgeInsets.only(left: 20, right: 20),
                   child: RaisedButton(
                     color: buttonColor,
@@ -66,10 +66,40 @@ class PayCard extends StatelessWidget {
                     ),
                     onPressed: onPressed != null ? onPressed : () {},
                     child: NoScaledText(
-                      '跳转(不支付也能解锁)',
+                      '直接前去打赏',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: ScreenUtil().setSp(50),
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Container(
+                  width: double.infinity,
+                  height: 45,
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: RaisedButton(
+                    color: Colors.pink[300],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                    ),
+                    onPressed: () {
+                      TinyUtils.openUrl('https://space.bilibili.com/178944900',
+                          error: () {
+                        Scaffold.of(context).showSnackBar(
+                            CommonWidget.snack('链接打开失败', isError: true));
+                      });
+                    },
+                    child: NoScaledText(
+                      '关注作者b站(后期有其他软件发布)',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -92,8 +122,7 @@ class InAppPurchase extends StatefulWidget {
 
 class _InAppPurchasePageState extends State<InAppPurchase> {
   TabController _controller;
-  String _readme = '支持下, 开发掉头。会自动保存二维码到相册, 之后自行删除     蹦蹦蹦NB';
-  String _notication = '支付宝可能无法弹出转账界面， 可以使用扫一扫';
+  String _readme = '软件的所有版权归米忽悠所有 \n喜欢的可以支持下作者 \n点击会自动保存二维码 之后不会再打开此界面';
 
   List<Tab> _inAppPurchaseTabList = [
     Tab(
@@ -209,15 +238,13 @@ class _InAppPurchasePageState extends State<InAppPurchase> {
                 });
                 Timer(Duration(seconds: 1), () async {
                   TinyUtils.openUrl(
-                      'alipayqr://platformapi/startapp?saId=10000007&qrcode=https://qr.alipay.com/tsx12024wt2admr8ftunwe4',
-                      // 'alipays://platformapi/startapp?appId=09999988&actionType=toAccount&goBack=NO&userId=2088722095158050&amount=3',
-                      error: () {
-                    Scaffold.of(context).showSnackBar(
-                        CommonWidget.snack('跳转失败', isError: true));
-                  });
+                    'alipayqr://platformapi/startapp?saId=10000007&qrcode=https://qr.alipay.com/tsx12024wt2admr8ftunwe4',
+                    // 'alipays://platformapi/startapp?appId=09999988&actionType=toAccount&goBack=NO&userId=2088722095158050&amount=3',
+                    error: () {},
+                  );
                 });
               },
-              text: _notication,
+              text: _readme,
             ),
           ],
         );

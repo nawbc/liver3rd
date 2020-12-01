@@ -6,9 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:liver3rd/app/api/forum/forum_api.dart';
 import 'package:liver3rd/app/api/forum/user/user_api.dart';
-import 'package:liver3rd/app/utils/share.dart';
 import 'package:liver3rd/app/widget/icons.dart';
-import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -237,14 +236,14 @@ class TinyUtils {
     return list;
   }
 
-  static Future<void> checkPurchase(
-      BuildContext context, Function callback) async {
-    if (await Share.getBool(IS_PURCHASE) == null) {
-      Navigate.navigate(context, 'inapppurchase');
-    } else {
-      callback();
-    }
-  }
+  // static Future<void> checkPurchase(
+  //     BuildContext context, Function callback) async {
+  //   if (await Share.getBool(IS_PURCHASE) == null) {
+  //     Navigate.navigate(context, 'inapppurchase');
+  //   } else {
+  //     callback();
+  //   }
+  // }
 
   static dynamic selectGender(int num, {double width = 15}) {
     switch (num) {
@@ -255,5 +254,14 @@ class TinyUtils {
       case 2:
         return CustomIcons.female(width: width);
     }
+  }
+
+  static Future<void> saveTokenToLocal(
+      {stoken, webLoginToken, ltoken, uid}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(STOKEN, stoken);
+    prefs.setString(WEB_LOGIN_TOKEN, webLoginToken);
+    prefs.setString(LTOKEN, ltoken);
+    prefs.setString(UID, uid);
   }
 }

@@ -1,28 +1,30 @@
-import 'package:bot_toast/bot_toast.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:f_logs/model/flog/flog.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:liver3rd/app/api/forum/new_forum.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:liver3rd/app/app.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:liver3rd/app/api/forum/forum_api.dart';
-import 'package:liver3rd/app/page/forum/topic/topic_page.dart';
-import 'package:liver3rd/app/page/forum/widget/post_block.dart';
-import 'package:liver3rd/app/store/global_model.dart';
-import 'package:liver3rd/app/widget/col_icon_button.dart';
-import 'package:liver3rd/app/widget/empty_widget.dart';
-import 'package:liver3rd/app/widget/user_profile_label.dart';
-import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
-import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
-import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
-import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:flutter/rendering.dart';
+import 'package:liver3rd/app/widget/webview_page.dart';
 import 'package:provider/provider.dart';
+import 'package:f_logs/model/flog/flog.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:liver3rd/app/store/global_model.dart';
+import 'package:liver3rd/app/api/forum/forum_api.dart';
+import 'package:liver3rd/custom/navigate/navigate.dart';
+import 'package:liver3rd/app/widget/empty_widget.dart';
+import 'package:liver3rd/app/api/forum/new_forum.dart';
+import 'package:liver3rd/app/widget/no_scaled_text.dart';
+import 'package:liver3rd/app/widget/col_icon_button.dart';
+import 'package:liver3rd/app/widget/user_profile_label.dart';
+import 'package:liver3rd/app/page/forum/widget/post_block.dart';
+import 'package:liver3rd/custom/easy_refresh/src/refresher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:liver3rd/custom/easy_refresh/bezier_circle_header.dart';
+import 'package:liver3rd/custom/easy_refresh/bezier_bounce_footer.dart';
 
 class ForumPageFrame extends StatefulWidget {
   final int typeId;
   final int index;
-  // final List<Widget> Function(Map) topics;
 
   const ForumPageFrame({Key key, this.typeId, this.index}) : super(key: key);
 
@@ -56,9 +58,14 @@ class _ForumPageFrameState extends State<ForumPageFrame>
           if (!_scrollController.position.outOfRange) {
             if (_scrollController.position.userScrollDirection ==
                 ScrollDirection.reverse) {
-              bddButton.show(context, '回到顶部', onPressed: () {
-                _scrollController.jumpTo(0);
-              }, duration: 5);
+              bddButton.show(
+                context,
+                '回到顶部',
+                onPressed: () {
+                  _scrollController.jumpTo(0);
+                },
+                duration: 5,
+              );
             } else {
               bddButton.remove();
             }
@@ -131,62 +138,16 @@ class _ForumPageFrameState extends State<ForumPageFrame>
     }
   }
 
-  List createNavPage() {
+  List _createNavPage() {
     if (_homeData.isNotEmpty) {
       List navigator = _homeData['data']['navigator'].map<Widget>((val) {
         return ColIconButton(
           width: (MediaQuery.of(context).size.width - 34) / 5,
           icon: CachedNetworkImage(imageUrl: val['icon']),
           onPressed: () {
-            if (val['id'] == 78) {
-              Navigate.navigate(context, 'bhcomic');
-              return;
-            }
-
-            Uri uri = Uri.parse(val['app_path']);
-
-            switch (uri.scheme) {
-              case 'https':
-              case 'http':
-                Navigate.navigate(context, 'webview', arg: {
-                  'title': val['name'],
-                  'url': val['app_path'],
-                  'headers': {
-                    'cookie':
-                        '_MHYUUID=c4ba8758-80d3-4cab-9ca0-47c133b64e79;UM_distinctid=175c62a134a916-077d1dfab35f5d-230346c-144000-175c62a134bb20;account_id=81092022;cookie_token=9krJd6b3IkekPYfJzgugLTMEcN0fEpOEbHoQPFvJ;ltoken=EIpvRHnvTixZV32cHp6FOmnix2zsShuoMF5bdxyL;ltuid=81092022;_gid=GA1.2.1502881436.1605935296; _ga=GA1.1.794644750.1605347449;_ga_SCWM2QBF4E=GS1.1.1606026553.1.1.1606026556.0',
-                  }
-                });
-                break;
-              case 'mihoyobbs':
-                switch (uri.host) {
-                  case 'article':
-                    if (uri.pathSegments.isNotEmpty) {
-                      Navigate.navigate(context, 'post',
-                          arg: {'postId': uri.pathSegments[0]});
-                    }
-                    break;
-                  case 'forum':
-                    if (uri.pathSegments.isNotEmpty) {
-                      Navigate.navigate(context, 'topic', arg: {
-                        'forum_id': uri.pathSegments[0] is String
-                            ? int.parse(uri.pathSegments[0])
-                            : null,
-                      });
-                    }
-                    break;
-                  default:
-                }
-                break;
-              default:
-                BotToast.showText(text: '功能未实现');
-                break;
-            }
-
-            // Navigate.navigate(
-            //   context,
-            //   'topic',
-            //   arg: {'forum_id': 1, 'src_type': 0},
-            // );
+            // Navigate.navigate(context, 'inapppurchase');
+            webNavigationHandler(context, val['app_path'],
+                val: val, isLogin: _globalModel.isLogin);
           },
           title: val['name'],
         );
@@ -215,7 +176,7 @@ class _ForumPageFrameState extends State<ForumPageFrame>
   Widget build(BuildContext context) {
     super.build(context);
 
-    List navPage = createNavPage();
+    List navPage = _createNavPage();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -313,66 +274,107 @@ class _ForumPageFrameState extends State<ForumPageFrame>
                     );
                   }, childCount: 1),
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      Map post = _postList[index];
-                      bool isUpvoted = post['self_operation']['attitude'] == 1;
-                      return PostBlock(
-                        imgList: post['image_list'],
-                        onTapUpvote: (isCancel) async {
-                          await _forumApi
-                              .upvotePost(
-                            postId: post['post']['post_id'],
-                            isCancel: isCancel,
-                          )
-                              .catchError((err) {
-                            FLog.error(
-                                className: 'ForumPageFrame', text: '$err');
-                          });
-                        },
-                        postContent: post['post']['content'],
-                        title: post['post']['subject'],
-                        stat: post['stat'],
-                        topics: post['topics'],
-                        isUpvoted: isUpvoted,
-                        onImageTap: (i) {
-                          Navigate.navigate(
-                            context,
-                            'photoviewpage',
-                            arg: {
-                              'images': post['image_list'],
-                              'index': i,
-                            },
-                          );
-                        },
-                        onContentTap: () {
-                          Navigate.navigate(context, 'post',
-                              arg: {'postId': post['post']['post_id']});
-                        },
-                        headBlock: UserProfileLabel(
-                          avatarUrl: post['user']['avatar_url'],
-                          certificationType: post['user']['certification']
-                              ['type'],
-                          createAt: post['post']['created_at'],
-                          level: post['user']['level_exp']['level'],
-                          nickName: post['user']['nickname'],
-                          onAvatarTap: (String heroTag) {
+                SliverStickyHeader.builder(
+                  builder: (context, state) => Container(
+                    margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Ink(
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigate.navigate(context, 'searchpage',
+                                        arg: {'gids': widget.typeId});
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: 10),
+                                      NoScaledText(
+                                        '点击搜索..',
+                                        style: TextStyle(color: Colors.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        Map post = _postList[index];
+                        bool isUpvoted =
+                            post['self_operation']['attitude'] == 1;
+                        return PostBlock(
+                          imgList: post['image_list'],
+                          onTapUpvote: (isCancel) async {
+                            await _forumApi
+                                .upvotePost(
+                              postId: post['post']['post_id'],
+                              isCancel: isCancel,
+                            )
+                                .catchError((err) {
+                              FLog.error(
+                                  className: 'ForumPageFrame', text: '$err');
+                            });
+                          },
+                          postContent: post['post']['content'],
+                          title: post['post']['subject'],
+                          stat: post['stat'],
+                          topics: post['topics'],
+                          isUpvoted: isUpvoted,
+                          onImageTap: (i) {
                             Navigate.navigate(
                               context,
-                              'userprofile',
+                              'photoviewpage',
                               arg: {
-                                'heroTag': heroTag,
-                                'uid': post['user']['uid'],
+                                'images': post['image_list'],
+                                'index': i,
                               },
                             );
                           },
-                        ),
-                      );
-                    },
-                    addRepaintBoundaries: false,
-                    childCount: _postList.length,
-                    addAutomaticKeepAlives: true,
+                          onContentTap: () {
+                            Navigate.navigate(context, 'post',
+                                arg: {'postId': post['post']['post_id']});
+                          },
+                          headBlock: UserProfileLabel(
+                            avatarUrl: post['user']['avatar_url'],
+                            certificationType: post['user']['certification']
+                                ['type'],
+                            createAt: post['post']['created_at'],
+                            level: post['user']['level_exp']['level'],
+                            nickName: post['user']['nickname'],
+                            onAvatarTap: (String heroTag) {
+                              Navigate.navigate(
+                                context,
+                                'userprofile',
+                                arg: {
+                                  'heroTag': heroTag,
+                                  'uid': post['user']['uid'],
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      addRepaintBoundaries: false,
+                      childCount: _postList.length,
+                      addAutomaticKeepAlives: true,
+                    ),
                   ),
                 ),
               ],

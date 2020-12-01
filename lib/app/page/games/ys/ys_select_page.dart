@@ -28,7 +28,7 @@ class YsSelectPage extends StatelessWidget {
                       },
                       title: '漫画',
                       color: Colors.cyan,
-                      subTitle: '最新: ',
+                      subTitle: 'comic',
                       height: ScreenUtil().setHeight(160),
                     ),
                   ],

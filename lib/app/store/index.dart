@@ -1,5 +1,3 @@
-import 'package:liver3rd/app/store/emojis.dart';
-import 'package:liver3rd/app/store/posts.dart';
 import 'package:liver3rd/app/store/settings.dart';
 import 'package:liver3rd/app/store/tim.dart';
 

@@ -239,6 +239,7 @@ class _SearchPageState extends State<SearchPage> {
               elevation: 0,
               title: Center(
                 child: CommonWidget.borderTextField(
+                  maxLines: 1,
                   hintText: '搜索用户或帖子(点击键盘)',
                   onTap: () {
                     if (mounted) {
@@ -250,6 +251,7 @@ class _SearchPageState extends State<SearchPage> {
                   onSubmit: (keyword) async {
                     await _jumpToResult();
                   },
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                   textController: _searchTextController,
                   withBorder: true,
                   textSize: 16,

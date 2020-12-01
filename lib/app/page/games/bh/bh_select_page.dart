@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liver3rd/app/api/bh/src_links.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:liver3rd/app/widget/option_item_widget.dart';
@@ -30,7 +29,7 @@ class BhSelectPage extends StatelessWidget {
                       title: '漫画',
                       color: Colors.brown,
                       subTitle: 'comic',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                     OptionItem(
                       onPress: () {
@@ -40,7 +39,7 @@ class BhSelectPage extends StatelessWidget {
                       title: '音乐',
                       color: Colors.cyan,
                       subTitle: 'music for honkai impact',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                     OptionItem(
                       onPress: () {
@@ -50,7 +49,7 @@ class BhSelectPage extends StatelessWidget {
                       title: 'MV',
                       color: Colors.indigo,
                       subTitle: 'honkai impact offical mv',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                     OptionItem(
                       onPress: () {
@@ -59,7 +58,7 @@ class BhSelectPage extends StatelessWidget {
                       title: '女武神',
                       color: Colors.amber,
                       subTitle: 'valkyrie collections',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                     OptionItem(
                       onPress: () {
@@ -72,7 +71,7 @@ class BhSelectPage extends StatelessWidget {
                       title: '武器',
                       color: Color(0xff242424),
                       subTitle: 'weapon introduce',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                     OptionItem(
                       onPress: () {
@@ -86,7 +85,7 @@ class BhSelectPage extends StatelessWidget {
                       title: '攻略',
                       color: Colors.blue[300],
                       subTitle: 'raiders',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                     OptionItem(
                       onPress: () {
@@ -96,7 +95,7 @@ class BhSelectPage extends StatelessWidget {
                       title: '圣痕',
                       color: Colors.purple[800],
                       subTitle: 'stigma system',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                     OptionItem(
                       onPress: () {
@@ -105,7 +104,7 @@ class BhSelectPage extends StatelessWidget {
                       title: '官方壁纸',
                       color: Colors.green[300],
                       subTitle: 'wall paper',
-                      height: ScreenUtil().setHeight(160),
+                      height: 70,
                     ),
                   ],
                 ),

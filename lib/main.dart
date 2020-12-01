@@ -11,7 +11,6 @@ import 'package:liver3rd/app/utils/complish_missions.dart';
 import 'package:liver3rd/app/utils/const_settings.dart';
 import 'package:uuid/uuid.dart';
 import 'package:workmanager/workmanager.dart';
-
 import 'app/utils/tiny_utils.dart';
 
 void _enablePlatformOverrideForDesktop() {
@@ -62,6 +61,7 @@ void _callbackDispatcher() {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   FlutterError.onError = (FlutterErrorDetails details) async {
     if (TinyUtils.isDev) {
       FlutterError.dumpErrorToConsole(details);

@@ -71,10 +71,10 @@ class _MusicPageState extends State<MusicPage> {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      List playList = _musicData['playlist']['tracks'];
+                      List playList = _musicData['result']['tracks'];
                       String heroTag = Uuid().v1();
-                      String coverUrl = playList[index]['al']['picUrl'];
-                      String id = playList[index]['id'].toString();
+                      String coverUrl = playList[index]['album']['picUrl'];
+                      String id = playList[index]['id']?.toString();
                       return ListTile(
                         onTap: () {
                           Navigate.navigate(
@@ -103,7 +103,7 @@ class _MusicPageState extends State<MusicPage> {
                           ),
                         ),
                         subtitle:
-                            NoScaledText(playList[index]['ar'][0]['name']),
+                            NoScaledText(playList[index]['album']['name']),
                         title: NoScaledText(
                           playList[index]['name'],
                           style: TextStyle(
@@ -134,7 +134,7 @@ class _MusicPageState extends State<MusicPage> {
                         ),
                       );
                     },
-                    childCount: _musicData['playlist']['tracks'].length,
+                    childCount: _musicData['result']['tracks'].length,
                   ),
                 ),
               ],
