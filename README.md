@@ -3,8 +3,8 @@
 
 <img  width = '150' height ='150' src="./web/images/ic_launcher_round.png" />
 
-**应用**: [https://sewerganger.gitee.io/liver3rd/](https://sewerganger.gitee.io/liver3rd/)
-**下载地址**: [https://gitee.com/sewerganger/liver3rd](https://gitee.com/sewerganger/liver3rd/releases)
+**应用**: [http://dark-flame-bricker.icu/](http://dark-flame-bricker.icu/)
+
 
 **所有版权归米哈游所有**
 
