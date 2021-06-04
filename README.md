@@ -46,10 +46,6 @@
 ## 注意
 1. 如果遇到收不到验证码 多试几次 或 尝试通行证绑定安全手机  官方app也有这问 题 后期加入密码登录
 
-2. App 是有内购的, 当然如果你不想购买, 并想使用此功能, 直接点击支付(不用支付), 也能解锁。
-
-3. App 没有按照官方接设计来渲染, 导致米游社后端更新后, 肝肝肝可能无法使用
-
 #### 对下列包进行了修改
 
 - [flutter_lyrics](https://pub.dev/packages/flutter_lyric)
@@ -57,9 +53,3 @@
 - [extended_nested_scroll_view](https://pub.dev/packages/extended_nested_scroll_view)
 - [navigate](https://pub.dev/packages/navigate)
 
-#### 更好的开发flutter
-
-vsc 插件：[android-adb-wlan](https://github.com/sewerganger/android-adb-wlan)
-个人开发者支付宝收款(无需营业执照) [alipay-for-developer](https://github.com/sewerganger/alipay-for-developer)
-
-作者介绍: 米卫兵，超级兵
